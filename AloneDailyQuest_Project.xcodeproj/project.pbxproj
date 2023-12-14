@@ -7,34 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35206BD42B2D5C640098DED9 /* ProfileCalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BD32B2D5C640098DED9 /* ProfileCalendarController.swift */; };
+		35206BD62B2D5C800098DED9 /* ProfileCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BD52B2D5C800098DED9 /* ProfileCalendarView.swift */; };
+		35206BD82B2D62860098DED9 /* ProfileInquiryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BD72B2D62860098DED9 /* ProfileInquiryController.swift */; };
+		35206BDA2B2D62980098DED9 /* ProfileInquiryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BD92B2D62980098DED9 /* ProfileInquiryView.swift */; };
+		35206BDC2B2D63AA0098DED9 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BDB2B2D63AA0098DED9 /* Profile.swift */; };
+		35206BDE2B2D63D40098DED9 /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BDD2B2D63D40098DED9 /* ProfileDataManager.swift */; };
+		35206BE02B2D6F4A0098DED9 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BDF2B2D6F4A0098DED9 /* ProfileTableCell.swift */; };
+		35206C212B2D7EFC0098DED9 /* ProfileAddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206C202B2D7EFC0098DED9 /* ProfileAddFriendView.swift */; };
+		35206C232B2D7F1E0098DED9 /* ProfileAddFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206C222B2D7F1E0098DED9 /* ProfileAddFriendController.swift */; };
+		35206C252B2FDB260098DED9 /* aloneDailyQuest in Resources */ = {isa = PBXBuildFile; fileRef = 35206C242B2FDB260098DED9 /* aloneDailyQuest */; };
 		358A570D2B29E6ED007CA413 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358A570C2B29E6ED007CA413 /* ProfileViewController.swift */; };
-		358A570F2B29E75A007CA413 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358A570E2B29E75A007CA413 /* ProfileView.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
-		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
-		C10D6C4C2B242250005783BD /* MemberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* MemberData.swift */; };
-		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
-		C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* AccountViewController.swift */; };
-		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
-		C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3F2B0602DE003248C0 /* ViewController.swift */; };
 		C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C442B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld */; };
 		C1D40C482B0602E0003248C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1D40C472B0602E0003248C0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35206BD32B2D5C640098DED9 /* ProfileCalendarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCalendarController.swift; sourceTree = "<group>"; };
+		35206BD52B2D5C800098DED9 /* ProfileCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCalendarView.swift; sourceTree = "<group>"; };
+		35206BD72B2D62860098DED9 /* ProfileInquiryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInquiryController.swift; sourceTree = "<group>"; };
+		35206BD92B2D62980098DED9 /* ProfileInquiryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInquiryView.swift; sourceTree = "<group>"; };
+		35206BDB2B2D63AA0098DED9 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		35206BDD2B2D63D40098DED9 /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
+		35206BDF2B2D6F4A0098DED9 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
+		35206C202B2D7EFC0098DED9 /* ProfileAddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddFriendView.swift; sourceTree = "<group>"; };
+		35206C222B2D7F1E0098DED9 /* ProfileAddFriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddFriendController.swift; sourceTree = "<group>"; };
+		35206C242B2FDB260098DED9 /* aloneDailyQuest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = aloneDailyQuest; sourceTree = "<group>"; };
 		358A570C2B29E6ED007CA413 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		358A570E2B29E75A007CA413 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
-		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
-		C10D6C4B2B242250005783BD /* MemberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberData.swift; sourceTree = "<group>"; };
-		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C159E3912B1967AC00BB67F8 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
-		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C1D40C3F2B0602DE003248C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C1D40C452B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AloneDailyQuest_Project.xcdatamodel; sourceTree = "<group>"; };
 		C1D40C472B0602E0003248C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1D40C4C2B0602E0003248C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +57,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35206BCD2B2D5A3D0098DED9 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				35206BCE2B2D5A6D0098DED9 /* Models */,
+				35206BCF2B2D5A750098DED9 /* Views */,
+				35206BD02B2D5A7D0098DED9 /* Controllers */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		35206BCE2B2D5A6D0098DED9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				35206BDB2B2D63AA0098DED9 /* Profile.swift */,
+				35206BDD2B2D63D40098DED9 /* ProfileDataManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		35206BCF2B2D5A750098DED9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				35206BDF2B2D6F4A0098DED9 /* ProfileTableCell.swift */,
+				35206BD52B2D5C800098DED9 /* ProfileCalendarView.swift */,
+				35206BD92B2D62980098DED9 /* ProfileInquiryView.swift */,
+				35206C202B2D7EFC0098DED9 /* ProfileAddFriendView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		35206BD02B2D5A7D0098DED9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				358A570C2B29E6ED007CA413 /* ProfileViewController.swift */,
+				35206BD32B2D5C640098DED9 /* ProfileCalendarController.swift */,
+				35206BD72B2D62860098DED9 /* ProfileInquiryController.swift */,
+				35206C222B2D7F1E0098DED9 /* ProfileAddFriendController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		C10D6C442B2420B9005783BD /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -59,45 +106,10 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
-		C10D6C4A2B2421D9005783BD /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				C10D6C482B242192005783BD /* StatsType.swift */,
-			);
-			path = Enum;
-			sourceTree = "<group>";
-		};
-		C159E38C2B19671B00BB67F8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C10D6C4B2B242250005783BD /* MemberData.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		C159E38D2B19672400BB67F8 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */,
-				C159E3952B1968F200BB67F8 /* LoginView.swift */,
-				358A570E2B29E75A007CA413 /* ProfileView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		C159E38E2B19672A00BB67F8 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				C1D40C3F2B0602DE003248C0 /* ViewController.swift */,
-				C159E3912B1967AC00BB67F8 /* AccountViewController.swift */,
-				358A570C2B29E6ED007CA413 /* ProfileViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		C1D40C2F2B0602DE003248C0 = {
 			isa = PBXGroup;
 			children = (
+				35206C242B2FDB260098DED9 /* aloneDailyQuest */,
 				C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */,
 				C1D40C392B0602DE003248C0 /* Products */,
 			);
@@ -114,13 +126,10 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
-				C10D6C4A2B2421D9005783BD /* Enum */,
 				C10D6C442B2420B9005783BD /* Font */,
 				C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */,
 				C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */,
-				C159E38C2B19671B00BB67F8 /* Models */,
-				C159E38D2B19672400BB67F8 /* Views */,
-				C159E38E2B19672A00BB67F8 /* Controllers */,
+				35206BCD2B2D5A3D0098DED9 /* Profile */,
 				C1D40C472B0602E0003248C0 /* Assets.xcassets */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
 				C1D40C442B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld */,
@@ -187,8 +196,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1D40C482B0602E0003248C0 /* Assets.xcassets in Resources */,
-				C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */,
 				C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */,
+				35206C252B2FDB260098DED9 /* aloneDailyQuest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,31 +208,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
-				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
-				358A570F2B29E75A007CA413 /* ProfileView.swift in Sources */,
-				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
+				35206BE02B2D6F4A0098DED9 /* ProfileTableCell.swift in Sources */,
+				35206BD82B2D62860098DED9 /* ProfileInquiryController.swift in Sources */,
+				35206BDC2B2D63AA0098DED9 /* Profile.swift in Sources */,
+				35206BD62B2D5C800098DED9 /* ProfileCalendarView.swift in Sources */,
+				35206BDA2B2D62980098DED9 /* ProfileInquiryView.swift in Sources */,
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
-				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
-				C10D6C4C2B242250005783BD /* MemberData.swift in Sources */,
+				35206BDE2B2D63D40098DED9 /* ProfileDataManager.swift in Sources */,
+				35206C232B2D7F1E0098DED9 /* ProfileAddFriendController.swift in Sources */,
+				35206BD42B2D5C640098DED9 /* ProfileCalendarController.swift in Sources */,
 				358A570D2B29E6ED007CA413 /* ProfileViewController.swift in Sources */,
 				C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
+				35206C212B2D7EFC0098DED9 /* ProfileAddFriendView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C10D6C4E2B242538005783BD /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C1D40C4D2B0602E0003248C0 /* Debug */ = {
@@ -278,7 +279,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -335,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -356,7 +357,7 @@
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -384,7 +385,7 @@
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

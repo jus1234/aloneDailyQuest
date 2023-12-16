@@ -16,9 +16,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
         let mainViewController = AccountViewController() // 맨 처음 보여줄 ViewController
-
+        
+        let tabBarVc = UITabBarController() //탭바 컨트롤러 생성
+        
+        let QuestListVC = UINavigationController(rootViewController: QuestViewController()) //퀘스트리스트 네비뷰 첫화면
+        
+        
+        
+        //탭바 이름 설정
+        QuestListVC.title = "일일퀘스트"
+        
+        
+        //탭바로 사용하기 위한 뷰 컨트롤러 설정
+        tabBarVc.setViewControllers([QuestListVC], animated: true)  //(여기에 랭킹, 프로필 컨트롤러 이름 추가 해주세요.)
+        tabBarVc.modalPresentationStyle = .fullScreen
+        tabBarVc.tabBar.backgroundColor = .white
+        
+        
+        //탭바 이미지 설정 (임시로 애플 제공하는것으로 사용)
+        guard let items = tabBarVc.tabBar.items else { return }
+        items[0].image = UIImage(systemName: "books.vertical.fill")
+        
+        
         window?.rootViewController = mainViewController
+        window?.rootViewController = QuestListVC  //네비게이션의 기본 루트뷰
+        window?.rootViewController = tabBarVc  //탭바 컨트롤러의 기본 루트뷰
         window?.makeKeyAndVisible()
+        
+        
+        
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

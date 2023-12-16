@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CC2B2876C200999F6E /* QuestViewController.swift */; };
+		997B81CF2B28778300999F6E /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CE2B28778300999F6E /* QuestView.swift */; };
+		997B81D12B2877BB00999F6E /* QuestListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81D02B2877BB00999F6E /* QuestListManager.swift */; };
+		997B81D32B28849000999F6E /* Quest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81D22B28849000999F6E /* Quest.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
 		C10D6C4C2B242250005783BD /* MemberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* MemberData.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		997B81CC2B2876C200999F6E /* QuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewController.swift; sourceTree = "<group>"; };
+		997B81CE2B28778300999F6E /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
+		997B81D02B2877BB00999F6E /* QuestListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestListManager.swift; sourceTree = "<group>"; };
+		997B81D22B28849000999F6E /* Quest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quest.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
 		C10D6C4B2B242250005783BD /* MemberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberData.swift; sourceTree = "<group>"; };
@@ -47,6 +55,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		99233D5D2B2D6DBE000F9752 /* Quest_MVC */ = {
+			isa = PBXGroup;
+			children = (
+				99233D5E2B2D6DD7000F9752 /* Models */,
+				99233D5F2B2D6DDE000F9752 /* Views */,
+				99233D602B2D6DE5000F9752 /* Controllers */,
+			);
+			path = Quest_MVC;
+			sourceTree = "<group>";
+		};
+		99233D5E2B2D6DD7000F9752 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				997B81D02B2877BB00999F6E /* QuestListManager.swift */,
+				997B81D22B28849000999F6E /* Quest.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		99233D5F2B2D6DDE000F9752 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				997B81CE2B28778300999F6E /* QuestView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		99233D602B2D6DE5000F9752 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				997B81CC2B2876C200999F6E /* QuestViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		C10D6C442B2420B9005783BD /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +151,7 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
+				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C10D6C4A2B2421D9005783BD /* Enum */,
 				C10D6C442B2420B9005783BD /* Font */,
 				C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */,
@@ -196,11 +240,15 @@
 				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
 				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
+				997B81CF2B28778300999F6E /* QuestView.swift in Sources */,
+				997B81D32B28849000999F6E /* Quest.swift in Sources */,
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
 				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
+				997B81D12B2877BB00999F6E /* QuestListManager.swift in Sources */,
 				C10D6C4C2B242250005783BD /* MemberData.swift in Sources */,
 				C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
+				997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

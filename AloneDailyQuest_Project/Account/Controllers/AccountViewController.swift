@@ -19,6 +19,7 @@ class AccountViewController: UIViewController {
         super.viewDidLoad()
         setupAddTarget()
         setupAutoLayout()
+        configureUI()
     }
     
     func setupAddTarget() {
@@ -26,7 +27,7 @@ class AccountViewController: UIViewController {
     }
     
     func configureUI() {
-        loginView.backgroundColor = UIColor(patternImage: UIImage(named: "bottom_background")!)
+        loginView.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
     }
     
     

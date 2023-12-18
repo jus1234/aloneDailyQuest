@@ -16,7 +16,6 @@
 		35206BE02B2D6F4A0098DED9 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206BDF2B2D6F4A0098DED9 /* ProfileTableCell.swift */; };
 		35206C212B2D7EFC0098DED9 /* ProfileAddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206C202B2D7EFC0098DED9 /* ProfileAddFriendView.swift */; };
 		35206C232B2D7F1E0098DED9 /* ProfileAddFriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35206C222B2D7F1E0098DED9 /* ProfileAddFriendController.swift */; };
-		35206C252B2FDB260098DED9 /* aloneDailyQuest in Resources */ = {isa = PBXBuildFile; fileRef = 35206C242B2FDB260098DED9 /* aloneDailyQuest */; };
 		358A570D2B29E6ED007CA413 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358A570C2B29E6ED007CA413 /* ProfileViewController.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
@@ -35,7 +34,6 @@
 		35206BDF2B2D6F4A0098DED9 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
 		35206C202B2D7EFC0098DED9 /* ProfileAddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddFriendView.swift; sourceTree = "<group>"; };
 		35206C222B2D7F1E0098DED9 /* ProfileAddFriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAddFriendController.swift; sourceTree = "<group>"; };
-		35206C242B2FDB260098DED9 /* aloneDailyQuest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = aloneDailyQuest; sourceTree = "<group>"; };
 		358A570C2B29E6ED007CA413 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,7 +107,6 @@
 		C1D40C2F2B0602DE003248C0 = {
 			isa = PBXGroup;
 			children = (
-				35206C242B2FDB260098DED9 /* aloneDailyQuest */,
 				C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */,
 				C1D40C392B0602DE003248C0 /* Products */,
 			);
@@ -197,7 +194,6 @@
 			files = (
 				C1D40C482B0602E0003248C0 /* Assets.xcassets in Resources */,
 				C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */,
-				35206C252B2FDB260098DED9 /* aloneDailyQuest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

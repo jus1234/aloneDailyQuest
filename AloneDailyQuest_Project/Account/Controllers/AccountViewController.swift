@@ -28,6 +28,7 @@ class AccountViewController: UIViewController {
     
     func configureUI() {
         loginView.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
+        
     }
     
     

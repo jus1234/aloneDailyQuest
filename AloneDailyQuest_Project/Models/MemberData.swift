@@ -9,5 +9,5 @@ import Foundation
 
 struct MemberData {
     let name: String
-    var stats: [Dictionary<StatsType, Int>]
+    var level: Int
 }

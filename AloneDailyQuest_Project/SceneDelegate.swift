@@ -15,7 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
-        let mainViewController = AccountViewController() // 맨 처음 보여줄 ViewController
+        let mainViewController = QuestViewController() // 맨 처음 보여줄 ViewController  ⭐️푸쉬 할때 바꾸기
+        
         
         let tabBarVc = UITabBarController() //탭바 컨트롤러 생성
         

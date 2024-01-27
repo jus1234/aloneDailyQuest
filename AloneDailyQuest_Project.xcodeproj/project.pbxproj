@@ -11,8 +11,11 @@
 		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
 		C10D6C4C2B242250005783BD /* MemberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* MemberData.swift */; };
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
+		C151F3CA2B5FD6BB00311869 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileView.swift */; };
 		C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* AccountViewController.swift */; };
 		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
+		C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AD2B61F646002EA255 /* UserInfo.swift */; };
+		C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AF2B61F737002EA255 /* UserInfoManager.swift */; };
 		C174B4942B2D4D5600692447 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C174B4932B2D4D5600692447 /* UIView+.swift */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
@@ -26,8 +29,11 @@
 		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
 		C10D6C4B2B242250005783BD /* MemberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberData.swift; sourceTree = "<group>"; };
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C151F3C92B5FD6BB00311869 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C159E3912B1967AC00BB67F8 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C15C48AD2B61F646002EA255 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		C15C48AF2B61F737002EA255 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		C174B4932B2D4D5600692447 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +116,8 @@
 		C174B4962B2D6DCD00692447 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C15C48AD2B61F646002EA255 /* UserInfo.swift */,
+				C15C48AF2B61F737002EA255 /* UserInfoManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -118,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				C159E3952B1968F200BB67F8 /* LoginView.swift */,
+				C151F3C92B5FD6BB00311869 /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -238,12 +247,15 @@
 			files = (
 				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
+				C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */,
+				C151F3CA2B5FD6BB00311869 /* ProfileView.swift in Sources */,
 				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
 				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
 				C10D6C4C2B242250005783BD /* MemberData.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
+				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

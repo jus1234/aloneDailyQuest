@@ -1,9 +1,3 @@
-//
-//  LoginView.swift
-//  AloneDailyQuest_Project
-//
-//  Created by Matthew on 12/1/23.
-//
 
 import UIKit
 
@@ -151,7 +145,6 @@ class LoginView: UIView {
         
     }
     func autoLayoutConstraints() {
-//        self.back
         logoText.translatesAutoresizingMaskIntoConstraints = false
         logoBackgroundText.translatesAutoresizingMaskIntoConstraints = false
         backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -165,12 +158,12 @@ class LoginView: UIView {
         logoText.widthAnchor.constraint(equalToConstant: 200).isActive = true
         logoText.heightAnchor.constraint(equalToConstant: 80).isActive = true
         logoText.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        logoText.topAnchor.constraint(equalTo: topAnchor, constant: 100).isActive = true
+        logoText.topAnchor.constraint(equalTo: topAnchor, constant: 120).isActive = true
         
         logoBackgroundText.widthAnchor.constraint(equalToConstant: 200).isActive = true
         logoBackgroundText.heightAnchor.constraint(equalToConstant: 80).isActive = true
         logoBackgroundText.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -3).isActive = true
-        logoBackgroundText.topAnchor.constraint(equalTo: topAnchor, constant: 103).isActive = true
+        logoBackgroundText.topAnchor.constraint(equalTo: topAnchor, constant: 123).isActive = true
         
         backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
@@ -199,7 +192,7 @@ class LoginView: UIView {
         validationText.topAnchor.constraint(equalTo: nickNameImageView.topAnchor, constant: 156).isActive = true
         validationText.centerXAnchor.constraint(equalTo: nickNameImageView.centerXAnchor).isActive = true
         
-        startButton.topAnchor.constraint(equalTo: nickNameImageView.bottomAnchor, constant: 34).isActive = true
+        startButton.topAnchor.constraint(equalTo: nickNameImageView.bottomAnchor, constant: 36).isActive = true
         startButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }

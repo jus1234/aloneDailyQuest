@@ -7,15 +7,7 @@
 
 import UIKit
 
-class QuestViewController: UIViewController, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
-    }
-    
+class QuestViewController: UIViewController{
     
     // MARK: - UI설정(프로필, 테이블뷰)
 
@@ -213,7 +205,7 @@ class QuestViewController: UIViewController, UITableViewDataSource{
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension QuestViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return questManager.getQuestListFromCoreData().count

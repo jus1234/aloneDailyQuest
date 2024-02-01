@@ -15,11 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
-        let mainViewController = QuestViewController() // 맨 처음 보여줄 ViewController  ⭐️푸쉬 할때 바꾸기
-        
+        let mainViewController = AccountViewController() // 맨 처음 보여줄 ViewController  ⭐️푸쉬 할때 바꾸기
         
         let tabBarVc = UITabBarController() //탭바 컨트롤러 생성
-        
         let QuestListVC = UINavigationController(rootViewController: QuestViewController()) //퀘스트리스트 네비뷰 첫화면
         
         
@@ -40,8 +38,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         window?.rootViewController = mainViewController
-        window?.rootViewController = QuestListVC  //네비게이션의 기본 루트뷰
-        window?.rootViewController = tabBarVc  //탭바 컨트롤러의 기본 루트뷰
+//        window?.rootViewController = QuestListVC  //네비게이션의 기본 루트뷰
+//        window?.rootViewController = tabBarVc  //탭바 컨트롤러의 기본 루트뷰
         window?.makeKeyAndVisible()
         
         

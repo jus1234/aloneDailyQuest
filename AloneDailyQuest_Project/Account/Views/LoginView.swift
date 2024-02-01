@@ -30,8 +30,7 @@ class LoginView: UIView {
         var text = UILabel()
         text.font = UIFont(name: "DungGeunMo", size: 14)
         text.textAlignment = .center
-        text.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
-        text.text = "중복된 닉네임 입니다."
+        text.text = ""
         return text
     }()
     

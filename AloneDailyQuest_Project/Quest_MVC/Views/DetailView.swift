@@ -82,6 +82,13 @@ final class DetailView: UIView {
         return stack
     }()
     
+    lazy var separatorView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 3.5
+        view.layer.borderColor = CGColor(red: 0.90, green: 0.83, blue: 0.74, alpha: 1.00)
+        return view
+    }()
+    
     lazy var experienceTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(red: 0.44, green: 0.22, blue: 0.04, alpha: 1.00)
@@ -191,72 +198,87 @@ final class DetailView: UIView {
     
     let mondayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "월"
+        button.layer.cornerRadius = 15
+        button.setTitle("월", for: .normal)
         button.tag = 1
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let tuesdayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "화"
+        button.layer.cornerRadius = 15
+        button.setTitle("화", for: .normal)
         button.tag = 2
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let wednesdayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "수"
+        button.layer.cornerRadius = 15
+        button.setTitle("수", for: .normal)
         button.tag = 3
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let thursdayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "목"
+        button.layer.cornerRadius = 15
+        button.setTitle("목", for: .normal)
         button.tag = 4
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let fridayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "금"
+        button.layer.cornerRadius = 15
+        button.setTitle("금", for: .normal)
         button.tag = 5
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let saturdayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "토"
+        button.layer.cornerRadius = 15
+        button.setTitle("토", for: .normal)
         button.tag = 6
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     let sundayButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.text = "일"
+        button.layer.cornerRadius = 15
+        button.setTitle("일", for: .normal)
         button.tag = 7
         button.titleLabel?.font = UIFont(name: "DungGeunMo-Regular", size: 14)
-        button.backgroundColor = UIColor(red: 0.996, green: 0.898, blue: 0.784, alpha: 1)
+        button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     lazy var buttons: [UIButton] = [mondayButton, tuesdayButton, wednesdayButton, thursdayButton, fridayButton, saturdayButton, sundayButton]
+        
     
     lazy var buttonStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: buttons)
-        stview.spacing = 10
+        stview.spacing = 8
         stview.axis = .horizontal
         stview.distribution = .fillEqually
         stview.alignment = .fill
@@ -290,9 +312,9 @@ final class DetailView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
         
+        profileAutoLayout()
         addsubviews()
         setupUI()
-        profileAutoLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -306,12 +328,14 @@ final class DetailView: UIView {
     func profileAutoLayout() {
         self.addSubview(backgroundView)
         backgroundView.addSubview(allStackView)
+        backgroundView.addSubview(separatorView)
         allStackView.addSubview(firstStackView)
         allStackView.addSubview(secondStackView)
         firstStackView.addSubview(profileImage)
         firstStackView.addSubview(nickNameTitleLabel)
         firstStackView.addSubview(levelTitleLabel)
         
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         nickNameTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -323,6 +347,11 @@ final class DetailView: UIView {
             backgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             backgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: trailingAnchorConstraint),
             backgroundView.heightAnchor.constraint(equalToConstant: 100),
+            
+            separatorView.heightAnchor.constraint(equalToConstant: 2),
+            separatorView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 6),
+            separatorView.leadingAnchor.constraint(equalTo: firstStackView.leadingAnchor, constant: 0),
+            separatorView.trailingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 0),
             
             profileImage.widthAnchor.constraint(equalToConstant: firstHeightConstraint),
             profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor),
@@ -349,12 +378,17 @@ final class DetailView: UIView {
     func addsubviews() {
         self.addSubview(basicView)
         
-        self.basicView.addSubview(baseStackView)
+        basicView.addSubview(baseStackView)
         
-        self.firstView.addSubview(questLabel)
-        self.secondView.addSubview(questTextView)
-        self.thirdView.addSubview(repeatLabel)
-        self.fourthView.addSubview(buttonStackView)
+        baseStackView.addSubview(firstView)
+        baseStackView.addSubview(secondView)
+        baseStackView.addSubview(thirdView)
+        baseStackView.addSubview(fourthView)
+        
+        firstView.addSubview(questLabel)
+        secondView.addSubview(questTextView)
+        thirdView.addSubview(repeatLabel)
+        fourthView.addSubview(buttonStackView)
         
         self.addSubview(saveButton)
     }
@@ -363,44 +397,55 @@ final class DetailView: UIView {
     var stackViewleadingConstraint: CGFloat = 20
     
     
+    
     func setupUI() {
-        
-        
-        
         // 베이스 뷰 오토레이아웃
         NSLayoutConstraint.activate([
             // topanchor은 추후에 프로필바 추가 되면 수정 해야함
-            basicView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            basicView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: 34),
-            basicView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
-            basicView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25)
+            basicView.topAnchor.constraint(equalTo: self.backgroundView.bottomAnchor, constant: 20),
+            basicView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+            basicView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4),
+            
+            baseStackView.topAnchor.constraint(equalTo: basicView.topAnchor, constant: 0),
+            baseStackView.bottomAnchor.constraint(equalTo: basicView.bottomAnchor, constant: 0),
+            baseStackView.leadingAnchor.constraint(equalTo: basicView.leadingAnchor, constant: 0),
+            baseStackView.trailingAnchor.constraint(equalTo: basicView.trailingAnchor, constant: 0)
         ])
         
         // 각 스택뷰마다 오토레이아웃 설정
         NSLayoutConstraint.activate([
+            
+            firstView.heightAnchor.constraint(equalToConstant: 40),
+            secondView.heightAnchor.constraint(equalToConstant: 84),
+            thirdView.heightAnchor.constraint(equalToConstant: 40),
+            fourthView.heightAnchor.constraint(equalToConstant: 70),
+            
+            questLabel.heightAnchor.constraint(equalToConstant: 20),
+            questLabel.widthAnchor.constraint(equalToConstant: 90),
+            questLabel.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
             questLabel.leadingAnchor.constraint(equalTo: firstView.leadingAnchor, constant: stackViewleadingConstraint),
-            questLabel.heightAnchor.constraint(equalToConstant: 90),
-            questLabel.widthAnchor.constraint(equalToConstant: 20),
-            questLabel.centerYAnchor.constraint(equalTo: firstView.centerYAnchor),
             
             questTextView.topAnchor.constraint(equalTo: secondView.topAnchor, constant: 10),
             questTextView.bottomAnchor.constraint(equalTo: secondView.bottomAnchor, constant: 10),
             questTextView.leadingAnchor.constraint(equalTo: secondView.leadingAnchor, constant: stackViewleadingConstraint),
-            questTextView.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -20),
+            questTextView.trailingAnchor.constraint(equalTo: secondView.trailingAnchor, constant: -stackViewleadingConstraint),
             
             repeatLabel.leadingAnchor.constraint(equalTo: thirdView.leadingAnchor, constant: stackViewleadingConstraint),
             repeatLabel.heightAnchor.constraint(equalToConstant: 16),
             repeatLabel.widthAnchor.constraint(equalToConstant: 64),
+            repeatLabel.centerYAnchor.constraint(equalTo: thirdView.centerYAnchor),
             
-            buttonStackView.leadingAnchor.constraint(equalTo: fourthView.leadingAnchor, constant: 24),
-            buttonStackView.trailingAnchor.constraint(equalTo: fourthView.trailingAnchor, constant: -24)
+            buttonStackView.topAnchor.constraint(equalTo: fourthView.topAnchor, constant: 17),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 40),
+            buttonStackView.leadingAnchor.constraint(equalTo: fourthView.leadingAnchor, constant: stackViewleadingConstraint),
+            buttonStackView.trailingAnchor.constraint(equalTo: fourthView.trailingAnchor, constant: -stackViewleadingConstraint)
         ])
        
         // 세이브 버튼 오토레이아웃 설정
         NSLayoutConstraint.activate([
-            saveButton.topAnchor.constraint(equalTo: basicView.bottomAnchor, constant: 40),
-            saveButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 38),
-            saveButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -38),
+            saveButton.topAnchor.constraint(equalTo: basicView.bottomAnchor, constant: 30),
+            saveButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            saveButton.widthAnchor.constraint(equalToConstant: 300),
             saveButton.heightAnchor.constraint(equalToConstant: 64)
         ])
         

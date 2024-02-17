@@ -92,6 +92,13 @@ class QuestViewController: UIViewController{
         return stack
     }()
     
+    lazy var separatorView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 3.5
+        view.layer.borderColor = CGColor(red: 0.90, green: 0.83, blue: 0.74, alpha: 1.00)
+        return view
+    }()
+    
     lazy var experienceTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(red: 0.44, green: 0.22, blue: 0.04, alpha: 1.00)
@@ -197,12 +204,14 @@ class QuestViewController: UIViewController{
     func profileAutoLayout() {
         view.addSubview(backgroundView)
         backgroundView.addSubview(allStackView)
+        backgroundView.addSubview(separatorView)
         allStackView.addSubview(firstStackView)
         allStackView.addSubview(secondStackView)
         firstStackView.addSubview(profileImage)
         firstStackView.addSubview(nickNameTitleLabel)
         firstStackView.addSubview(levelTitleLabel)
         
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         nickNameTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -214,6 +223,11 @@ class QuestViewController: UIViewController{
             backgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
             backgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailingAnchorConstraint),
             backgroundView.heightAnchor.constraint(equalToConstant: 100),
+            
+            separatorView.heightAnchor.constraint(equalToConstant: 2),
+            separatorView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 6),
+            separatorView.leadingAnchor.constraint(equalTo: firstStackView.leadingAnchor, constant: 0),
+            separatorView.trailingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 0),
             
             profileImage.widthAnchor.constraint(equalToConstant: firstHeightConstraint),
             profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor),

@@ -17,33 +17,57 @@ final class DetailViewController: UIViewController {
     
     let questManager = CoreDataManager.shared
     
-    var questData: QuestData?
+    var questData: QuestData? {
+        didSet {
+            temporarySun = questData?.sunday
+            temporaryMon = questData?.monday
+            temporaryTue = questData?.tuesday
+            temporaryWed = questData?.wednesday
+            temporaryThu = questData?.thursday
+            temporaryFri = questData?.friday
+            temporarySat = questData?.saturday
+        }
+    }
+    
+    var temporarySun: Bool?
+    var temporaryMon: Bool?
+    var temporaryTue: Bool?
+    var temporaryWed: Bool?
+    var temporaryThu: Bool?
+    var temporaryFri: Bool?
+    var temporarySat: Bool?
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setup()
+        configureUI()
     }
     
     func setup() {
         detailView.questTextView.delegate = self
-        //        detailView.buttons.forEach{ button in button.addTarget(self, action: #selector(repeatButtonTapped), for: .touchUpInside)
-        //        }
+                detailView.buttons.forEach{ button in button.addTarget(self, action: #selector(repeatButtonTapped), for: .touchUpInside)
+                }
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         
-        //        detailView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        detailView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
             }
     
     func configureUI() {
+        // 기존 데이터가 있을떄
         if let questData = self.questData {
             self.title = "퀘스트 수정하기"
+            
             guard let text = questData.quest else { return }
             detailView.questTextView.text = text
             
             detailView.questTextView.textColor = .black
-            detailView.saveButton.setTitle("UPDATE", for: .normal)
+            detailView.saveButton.setTitle("퀘스트 생성하기", for: .normal)
             detailView.questTextView.becomeFirstResponder()
             
-            
+        // 기존데이터가 없을때
         } else {
             self.title = "새로운 퀘스트 생성하기"
             
@@ -72,7 +96,7 @@ final class DetailViewController: UIViewController {
             // 기존데이터가 없을때 ===> 새로운 데이터 생성
         } else {
             let questText = detailView.questTextView.text
-            questManager.saveQuestData(questText: questText, sunday: false, monday: false, tuesday: false, wednesday: false, thursday: false, friday: false, saturday: false) {
+            questManager.saveQuestData(questText: questText, dayInt: 1) {
                 print("저장완료")
                 // 다시 전화면으로 돌아가기
                 self.navigationController?.popViewController(animated: true)

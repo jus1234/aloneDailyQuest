@@ -10,128 +10,139 @@ import UIKit
 class QuestViewController: UIViewController{
     
     // MARK: - UI설정(프로필, 테이블뷰)
-
-    // 모델(저장 데이터를 관리하는 코어데이터)
-    let questManager = CoreDataManager.shared
     
     // 테이블 뷰 생성
     private let tableView = UITableView()
     
-//    // 프로필 베이스 뷰(제일 뒤에 있을 뷰)
-//    let backView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
+    // 모델(저장 데이터를 관리하는 코어데이터)
+    let questManager = CoreDataManager.shared
+    
+    // MARK: - 프로필 부분
+
+    lazy var backgroundView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "img_profile_background")
+        return view
+    }()
+    
+    lazy var profileImage: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "img_profile_Lv1-10")
+        return view
+    }()
+    
+    lazy var nickNameTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.44, green: 0.22, blue: 0.04, alpha: 1.00)
+        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
+        let underlineAttributedString = NSAttributedString(string: "닉네임", attributes: underlineAttribute)
+        label.attributedText = underlineAttributedString
+        return label
+    }()
+    
+    lazy var nickNameText: UILabel = {
+        let label = UILabel()
+        label.text = "매튜"
+        label.textAlignment = .center
+        return label
+    }()
+    
+//    lazy var nickNameStackView: UIStackView = {
+//        let stack = UIStackView(arrangedSubviews: [nickNameTitleLabel, nickNameText])
+//        stack.spacing = 10
+//        stack.axis = .horizontal
+//        stack.distribution = .fill
+//        stack.alignment = .fill
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+//        return stack
 //    }()
+    
+    lazy var levelTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.44, green: 0.22, blue: 0.04, alpha: 1.00)
+        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
+        let underlineAttributedString = NSAttributedString(string: "레벨", attributes: underlineAttribute)
+        label.attributedText = underlineAttributedString
+        return label
+    }()
+    
+    lazy var levelLabel: UILabel = {
+        let label = UILabel()
+        label.text = "LV.1"
+        return label
+    }()
 //    
-//    // 프로필 베이스 스택뷰⭐️
-//    private lazy var baseStackView: UIStackView = {
-//        let stview = UIStackView(arrangedSubviews: [profileView, expView])
-//        stview.spacing = 20
-//        stview.axis = .vertical
-//        stview.distribution = .fill
-//        stview.alignment = .fill
-//        stview.translatesAutoresizingMaskIntoConstraints = false
-//        return stview
+//    lazy var levelStackView: UIStackView = {
+//        let stack = UIStackView(arrangedSubviews: [levelTitleLabel, levelLabel])
+//        stack.spacing = 20
+//        stack.axis = .horizontal
+//        stack.distribution = .fillEqually
+//        stack.alignment = .fill
+//        stack.translatesAutoresizingMaskIntoConstraints = false
+//        return stack
 //    }()
-//    
-    // MARK: - 프로필 윗부분 UI설정1️⃣
-//
-//    // 프로필뷰 생성
-//    let profileView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-//    
-//    // 프로필 이미지 표시
-//    let profileImage: UIImageView = {
-//        let image = UIImageView()
-//        image.translatesAutoresizingMaskIntoConstraints = false
-//        return image
-//    }()
-//    
-//    let nameLabel: UILabel = {
-//        let name = UILabel()
-//        name.textColor = UIColor(red: 0.627, green: 0.282, blue: 0.008, alpha:1)
-//        name.font = UIFont(name: "DungGeunMo-Regular", size: 16)
-//        name.translatesAutoresizingMaskIntoConstraints = false
-//        name.text = "닉네임"
-//        return name
-//    }()
-//    
-//    // 사용자 이름 표시
-//    let profileName: UILabel = {
-//        let name = UILabel()
-//        name.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-//        name.font = UIFont(name: "DungGeunMo-Regular", size: 16)
-//        name.translatesAutoresizingMaskIntoConstraints = false
-//        return name
-//    }()
-//    
-//    let levelLabel: UILabel = {
-//        let level = UILabel()
-//        level.textColor = UIColor(red: 0.627, green: 0.282, blue: 0.008, alpha: 1)
-//        level.font = UIFont(name: "DungGeunMo-Regular", size: 16)
-//        level.translatesAutoresizingMaskIntoConstraints = false
-//        level.text = "레벨"
-//        return level
-//    }()
-//    
-//    // 프로필 레벨 표시
-//    let profileLevel: UILabel = {
-//        let level = UILabel()
-//        level.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-//        level.font = UIFont(name: "DungGeunMo-Regular", size: 16)
-//        return level
-//    }()
-//    
-//    // 프로필 윗부분 스택뷰
-//    private lazy var profileStackView: UIStackView = {
-//        let stview = UIStackView(arrangedSubviews: [profileImage, nameLabel, profileName, levelLabel, profileLevel])
-//        stview.spacing = 20
-//        stview.axis = .horizontal
-//        stview.distribution = .fill
-//        stview.alignment = .fill
-//        stview.translatesAutoresizingMaskIntoConstraints = false
-//        return stview
-//    }()
-//    
-//    // MARK: - 프로필 아랫부분 UI설정2️⃣
-//    
-//    // 경험치 부분 뷰 생성
-//    let expView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-//    
-//    let expLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "경험치 : "
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//    
-//    // 경험치 표시 ( 아직 미정 ) 임시로 이미지로 설정
-//    let expImage: UIImageView = {
-//        let image = UIImageView()
-//        image.translatesAutoresizingMaskIntoConstraints = false
-//        // 임시 이미지 삽입 해야함 ⭐️
-//        
-//        return image
-//    }()
-//    
-//    // 경험치 부분 스택뷰 생성
-//    private lazy var expStackView: UIStackView = {
-//        let stview = UIStackView(arrangedSubviews: [expImage, expLabel])
-//        stview.spacing = 12
-//        stview.axis = .horizontal
-//        stview.distribution = .fill
-//        stview.alignment = .fill
-//        stview.translatesAutoresizingMaskIntoConstraints = false
-//        return stview
-//    }()
+    
+    lazy var firstStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [profileImage, nickNameTitleLabel, nickNameText, levelTitleLabel, levelLabel])
+        stack.spacing = 15
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    lazy var separatorView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 3.5
+        view.layer.borderColor = CGColor(red: 0.90, green: 0.83, blue: 0.74, alpha: 1.00)
+        return view
+    }()
+    
+    lazy var experienceTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.44, green: 0.22, blue: 0.04, alpha: 1.00)
+        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.thick.rawValue]
+        let underlineAttributedString = NSAttributedString(string: "경험치", attributes: underlineAttribute)
+        label.attributedText = underlineAttributedString
+        return label
+    }()
+    
+    lazy var experienceBar: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "img_level_bar")
+        let attrString = NSAttributedString(
+            string: "0/10",
+            attributes: [
+                NSAttributedString.Key.strokeColor: UIColor.black,
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 16)
+            ]
+        )
+        view.layer.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
+        view.accessibilityAttributedLabel = attrString
+        return view
+    }()
+    
+    lazy var secondStackView: UIStackView = {
+       let stack = UIStackView(arrangedSubviews: [experienceTitleLabel, experienceBar])
+        stack.spacing = 12
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    lazy var allStackView: UIStackView = {
+       let stack = UIStackView(arrangedSubviews: [firstStackView, secondStackView])
+        stack.spacing = 16
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
     
     // MARK: - UI설정
 
@@ -141,6 +152,7 @@ class QuestViewController: UIViewController{
         
         setupNaviBar()
         setupTableView()
+        profileAutoLayout()
         setupQuestViewConstraints()
     }
     
@@ -185,14 +197,68 @@ class QuestViewController: UIViewController{
         tableView.register(QuestCell.self, forCellReuseIdentifier: "QuestCell")
     }
     
+    var firstHeightConstraint: CGFloat = 26
+    var secondHeightConstraint: CGFloat = 18
+    var trailingAnchorConstraint: CGFloat = -4
+    
+    func profileAutoLayout() {
+        view.addSubview(backgroundView)
+        backgroundView.addSubview(allStackView)
+        backgroundView.addSubview(separatorView)
+        allStackView.addSubview(firstStackView)
+        allStackView.addSubview(secondStackView)
+        firstStackView.addSubview(profileImage)
+        firstStackView.addSubview(nickNameTitleLabel)
+        firstStackView.addSubview(levelTitleLabel)
+        
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        nickNameTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        levelTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            backgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            backgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: trailingAnchorConstraint),
+            backgroundView.heightAnchor.constraint(equalToConstant: 100),
+            
+            separatorView.heightAnchor.constraint(equalToConstant: 2),
+            separatorView.topAnchor.constraint(equalTo: firstStackView.bottomAnchor, constant: 6),
+            separatorView.leadingAnchor.constraint(equalTo: firstStackView.leadingAnchor, constant: 0),
+            separatorView.trailingAnchor.constraint(equalTo: firstStackView.trailingAnchor, constant: 0),
+            
+            profileImage.widthAnchor.constraint(equalToConstant: firstHeightConstraint),
+            profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor),
+            
+            nickNameTitleLabel.widthAnchor.constraint(equalToConstant: 50),
+            
+            levelLabel.widthAnchor.constraint(equalToConstant: 35),
+            levelTitleLabel.widthAnchor.constraint(equalTo: levelLabel.widthAnchor),
+            
+            
+            
+            firstStackView.heightAnchor.constraint(equalToConstant: firstHeightConstraint),
+            secondStackView.heightAnchor.constraint(equalToConstant: secondHeightConstraint),
+            
+           
+            allStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 20),
+            allStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 30),
+            allStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -30)
+        ])
+        
+        
+    }
+    
     // 테이블뷰 자체의 오토레이아웃
     func setupQuestViewConstraints() {
         view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),// 프로필 만들면 프로필부터 거리 조절 해야함
+            tableView.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: trailingAnchorConstraint),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
     }

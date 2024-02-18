@@ -19,7 +19,9 @@
 		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
 		C10D6C4C2B242250005783BD /* MemberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* MemberData.swift */; };
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
-		C151F3CA2B5FD6BB00311869 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileView.swift */; };
+		C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F22B723BA80084FE36 /* ProfileView.swift */; };
+		C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F42B7250FD0084FE36 /* ProfileViewController.swift */; };
+		C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */; };
 		C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* AccountViewController.swift */; };
 		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
 		C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AD2B61F646002EA255 /* UserInfo.swift */; };
@@ -29,7 +31,9 @@
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
 		C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3F2B0602DE003248C0 /* ViewController.swift */; };
 		C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C442B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld */; };
-		C1D40C482B0602E0003248C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1D40C472B0602E0003248C0 /* Assets.xcassets */; };
+		C1EB51592B6B6AB700744F64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1EB51582B6B6AB700744F64 /* Assets.xcassets */; };
+		C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EB515A2B6B75DE00744F64 /* UIColor+.swift */; };
+		C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +49,9 @@
 		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
 		C10D6C4B2B242250005783BD /* MemberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberData.swift; sourceTree = "<group>"; };
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C151F3C92B5FD6BB00311869 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		C12358F42B7250FD0084FE36 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
 		C159E3912B1967AC00BB67F8 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C15C48AD2B61F646002EA255 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
@@ -56,8 +62,10 @@
 		C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C1D40C3F2B0602DE003248C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C1D40C452B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AloneDailyQuest_Project.xcdatamodel; sourceTree = "<group>"; };
-		C1D40C472B0602E0003248C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1D40C4C2B0602E0003248C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1EB51582B6B6AB700744F64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = AloneDailyQuest_Project/Assets.xcassets; sourceTree = "<group>"; };
+		C1EB515A2B6B75DE00744F64 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				C174B4932B2D4D5600692447 /* UIView+.swift */,
+				C1EB515A2B6B75DE00744F64 /* UIColor+.swift */,
+				C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -189,7 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				C159E3952B1968F200BB67F8 /* LoginView.swift */,
-				C151F3C92B5FD6BB00311869 /* ProfileView.swift */,
+				C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */,
+				C12358F22B723BA80084FE36 /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				C159E3912B1967AC00BB67F8 /* AccountViewController.swift */,
+				C12358F42B7250FD0084FE36 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -224,6 +236,7 @@
 				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */,
 				C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */,
+				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C174B4952B2D6DC300692447 /* Account */,
 				C174B4922B2D4D3B00692447 /* Extension */,
 				C10D6C4A2B2421D9005783BD /* Enum */,
@@ -231,7 +244,7 @@
 				C159E38C2B19671B00BB67F8 /* Models */,
 				C159E38D2B19672400BB67F8 /* Views */,
 				C159E38E2B19672A00BB67F8 /* Controllers */,
-				C1D40C472B0602E0003248C0 /* Assets.xcassets */,
+				C1EB51582B6B6AB700744F64 /* Assets.xcassets */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
 				C1D40C442B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld */,
 			);
@@ -296,8 +309,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1D40C482B0602E0003248C0 /* Assets.xcassets in Resources */,
 				C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */,
+				C1EB51592B6B6AB700744F64 /* Assets.xcassets in Resources */,
 				C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,22 +326,26 @@
 				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
 				C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */,
-				C151F3CA2B5FD6BB00311869 /* ProfileView.swift in Sources */,
+				C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */,
 				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
 				990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */,
 				994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */,
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
+				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
 				990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
 				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
 				C10D6C4C2B242250005783BD /* MemberData.swift in Sources */,
+				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
+				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
 				995122F52B6BB4A700F78AE7 /* RepeatDay.swift in Sources */,
 				997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */,
 				994C590B2B50C1B900D5808B /* DetailViewController.swift in Sources */,
+				C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,7 @@ class LoginView: UIView {
             attributes: [
                 NSAttributedString.Key.strokeColor: UIColor.black,
                 NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 22),
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 22) ?? UIFont.systemFont(ofSize: 22),
                 NSAttributedString.Key.strokeWidth: -2.0
             ]
         )
@@ -92,7 +92,7 @@ class LoginView: UIView {
             attributes: [
                 NSAttributedString.Key.strokeColor: UIColor.black,
                 NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 40),
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 40) ?? UIFont.systemFont(ofSize: 40),
                 NSAttributedString.Key.strokeWidth: -2.5
             ]
         )
@@ -113,7 +113,7 @@ class LoginView: UIView {
             attributes: [
                 NSAttributedString.Key.strokeColor: UIColor.black,
                 NSAttributedString.Key.foregroundColor: UIColor(red: 0.128, green: 0.345, blue: 0.345, alpha: 1),
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 40),
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 40) ?? UIFont.systemFont(ofSize: 40),
                 NSAttributedString.Key.strokeWidth: -2.5
             ]
         )
@@ -195,7 +195,6 @@ class LoginView: UIView {
         startButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
-
 
 extension UILabel {
     func setLineSpacing(spacing: CGFloat) {

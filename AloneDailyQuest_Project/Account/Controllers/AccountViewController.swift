@@ -11,6 +11,7 @@ class AccountViewController: UIViewController {
 
     private let loginView = LoginView()
     private var nickName: String? = nil
+    weak var delegate: delegateViewController? = nil
     
     override func loadView() {
         view = loginView
@@ -18,6 +19,7 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupAddTarget()
         setupAutoLayout()
         configureUI()
@@ -46,25 +48,17 @@ class AccountViewController: UIViewController {
     }
     
     @objc func moveView() {
-        let view = QuestViewController()
-        let navigationController: UINavigationController = UINavigationController(rootViewController: view)
         if nickName != nil {
-            self.present(navigationController, animated: true)
+            delegate?.moveView()
         } else {
             completedAlert(message: "닉네임을 다시 확인해주세요.")
         }
-        
     }
     
     
     func configureUI() {
         loginView.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
     }
-    
-    func checkNickName() {
-        
-    }
-    
     
     func setupAutoLayout() {
         loginView.translatesAutoresizingMaskIntoConstraints = false

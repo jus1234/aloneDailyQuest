@@ -9,7 +9,8 @@ import Foundation
 
 class UserInfoManager {
     
-    private var user: UserInfo?
+    static let shared: UserInfoManager = UserInfoManager()
+    var user: UserInfo? = UserInfo(nickName: "매튜", experience: 0)
     
     func createUserInfo(inputNickName: String) {
         self.user = UserInfo(nickName: inputNickName, experience: 0)

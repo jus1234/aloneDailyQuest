@@ -10,44 +10,41 @@ import UIKit
 final class QuestCell: UITableViewCell {
 
     // MARK: - UI 설정 (퀘스트🍎윗부분 🍏아랫부분)
-
     let backView: UIImageView = {
         let view = UIImageView()
         view.isUserInteractionEnabled = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "img_quest_background")
         return view
     }()
     
-    // 🍎(이미지, 퀘스트 내용, 업데이트 버튼, 삭제 버튼)
-    let firstView: UIView = {
-        let view = UIView()
-        view.isUserInteractionEnabled = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     // 퀘스트 이미지
-    var questImage: UIImageView = {
+    lazy var questImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "img_quest_ing")
-        image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
     // 퀘스트 타이틀
-    var questTitle: UILabel = {
+    lazy var questTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "DungGeunMo", size: 14)
+        label.numberOfLines = 3
         return label
+    }()
+    
+    lazy var questStckView: UIStackView =  {
+        let stack = UIStackView(arrangedSubviews: [questImage, questTitle])
+        stack.spacing = 10
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.alignment = .fill
+        return stack
     }()
     
     // 업데이트 버튼
     lazy var updateButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "btn_edit_normal"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -55,38 +52,38 @@ final class QuestCell: UITableViewCell {
     lazy var deleteButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "btn_delete_normal"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
-    private lazy var buttonStackView: UIStackView = {
-        let stview = UIStackView(arrangedSubviews: [updateButton, deleteButton])
-        stview.spacing = 10
-        stview.axis = .horizontal
-        stview.distribution = .fillEqually
-        stview.alignment = .fill
-        stview.isUserInteractionEnabled = true
-        stview.translatesAutoresizingMaskIntoConstraints = false
-        return stview
+    lazy var buttonStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [updateButton, deleteButton])
+        stack.spacing = 10
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.alignment = .fill
+        return stack
+    }()
+    
+    // 🍎(이미지, 퀘스트 내용, 업데이트 버튼, 삭제 버튼)
+    lazy var firstView: UIView = {
+        let view = UIView()
+        view.addSubview(questStckView)
+        view.addSubview(buttonStackView)
+        return view
     }()
     
     
-    
-    
     // 요일반복 레이블
-    let repeatday: UILabel = {
+    lazy var repeatday: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "매일 반복"
         label.font = UIFont(name: "DungGeunMo", size: 14)
         return label
     }()
     
     // 경험치량 표시
-    let expAmount: UILabel = {
+    lazy var expAmount: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "DungGeunMo", size: 14)
         label.text = "보상 : 20xp"
         return label
@@ -98,52 +95,41 @@ final class QuestCell: UITableViewCell {
         button.setTitleFont(font: UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14))
         button.setTitle("완료하기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.addTarget(self, action: #selector(test), for: .touchUpInside)
         return button
     }()
     
+    @objc func test() {
+        print("눌림")
+    }
+    
     private lazy var secondStackView: UIStackView = {
-        let stview = UIStackView(arrangedSubviews: [repeatday ,expAmount, completeButton])
-        stview.axis = .horizontal
-        stview.alignment = .fill
-        stview.isUserInteractionEnabled = true
-        stview.translatesAutoresizingMaskIntoConstraints = false
-        return stview
+        let stack = UIStackView(arrangedSubviews: [repeatday ,expAmount, completeButton])
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        return stack
     }()
     
     // 메인뷰랑, 서브뷰 합침
     private lazy var mainStackView: UIStackView = {
-        let stview = UIStackView(arrangedSubviews: [firstView, secondStackView])
-        stview.spacing = 10
-        stview.axis = .vertical
-        stview.isUserInteractionEnabled = true
-        stview.translatesAutoresizingMaskIntoConstraints = false
-        return stview
+        let stack = UIStackView(arrangedSubviews: [firstView, secondStackView])
+        stack.spacing = 10
+        stack.axis = .vertical
+        return stack
     }()
     
     // QuestData를 전달받을 변수 (전달 받으면 ==> 표시하는 메서드 실행) ⭐️
-    var questData: QuestData? {
+    var questData: QuestDataModel? {
         didSet {
             configureUIwithData()
         }
     }
     
-//    // (델리게이트 대신에) 실행하고 싶은 클로저 저장
-//    // 뷰컨트롤러에 있는 클로저 저장할 예정 (셀(자신)을 전달)
-//    var updateButtonPressed: (QuestCell) -> Void = { (sender) in }
-//    
-//    var deleteButtonPressed: (QuestCell) -> Void = { (sender) in }
-//    
-//    var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
-        
-        addsubview()
+        addSubviews()
         setConstraints()
-        configureUI()
         backgroundColor = .clear
     }
     
@@ -151,95 +137,56 @@ final class QuestCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        questTitle.text = nil
+        repeatday.text = nil
+        completeButton.titleLabel?.text = nil
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-    }
-    
-   
-    
-    func addsubview() {
-        self.contentView.addSubview(backView)
-        backView.addSubview(mainStackView)
-        mainStackView.addSubview(firstView)
-        mainStackView.addSubview(secondStackView)
-        firstView.addSubview(questImage)
-        firstView.addSubview(questTitle)
-        firstView.addSubview(buttonStackView)
-        secondStackView.addSubview(repeatday)
-        secondStackView.addSubview(expAmount)
-        secondStackView.addSubview(completeButton)
+    func addSubviews() {
+        self.addSubview(backView)
+        contentView.addSubview(mainStackView)
+        contentView.addSubview(buttonStackView)
     }
     
     func setConstraints() {
         
-        NSLayoutConstraint.activate([
-            backView.heightAnchor.constraint(equalToConstant: 134),
-            backView.widthAnchor.constraint(equalToConstant: 374),
-            backView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            backView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            backView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            backView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0)
-        ])
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        questStckView.translatesAutoresizingMaskIntoConstraints = false
+        questImage.translatesAutoresizingMaskIntoConstraints = false
+        questTitle.translatesAutoresizingMaskIntoConstraints = false
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.widthAnchor.constraint(equalToConstant: 374).isActive = true
+        contentView.heightAnchor.constraint(equalToConstant: 144).isActive = true
+        
+        backView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        backView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+
+        mainStackView.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 24).isActive = true
+        mainStackView.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -20).isActive = true
+        mainStackView.topAnchor.constraint(equalTo: backView.topAnchor, constant: 6).isActive = true
+        mainStackView.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: -22).isActive = true
         
         
-        NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 24),
-            mainStackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -20),
-            mainStackView.topAnchor.constraint(equalTo: backView.topAnchor, constant: 0),
-            mainStackView.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: -22)
-        ])
+        buttonStackView.topAnchor.constraint(equalTo: backView.topAnchor, constant: 15).isActive = true
+        buttonStackView.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -20).isActive = true
         
-        NSLayoutConstraint.activate([
-            firstView.heightAnchor.constraint(equalToConstant: 88),
-            secondStackView.heightAnchor.constraint(equalToConstant: 14),
-            
-            questImage.leadingAnchor.constraint(equalTo: firstView.leadingAnchor, constant: 0),
-            questImage.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
-            questImage.widthAnchor.constraint(equalToConstant: 50),
-            questImage.heightAnchor.constraint(equalToConstant: 50),
-            
-            questTitle.leadingAnchor.constraint(equalTo: questImage.trailingAnchor, constant: 14),
-            questTitle.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
-            questTitle.heightAnchor.constraint(equalToConstant: 42),
-            questTitle.widthAnchor.constraint(equalToConstant: 200),
-            
-            buttonStackView.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
-            buttonStackView.trailingAnchor.constraint(equalTo: firstView.trailingAnchor, constant: 0),
-            buttonStackView.heightAnchor.constraint(equalToConstant: 26),
-            buttonStackView.widthAnchor.constraint(equalToConstant: 62)
-        ])
-        
-        
-        NSLayoutConstraint.activate([
-            
-            secondStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 0),
-            
-            repeatday.widthAnchor.constraint(equalToConstant: 100),
-            repeatday.leadingAnchor.constraint(equalTo: secondStackView.leadingAnchor, constant: 0),
-            
-            expAmount.widthAnchor.constraint(equalToConstant: 77),
-            expAmount.trailingAnchor.constraint(equalTo: completeButton.leadingAnchor, constant: -56),
-            
-            completeButton.widthAnchor.constraint(equalToConstant: 70),
-            completeButton.trailingAnchor.constraint(equalTo: secondStackView.trailingAnchor, constant: 0)
-            
-        ])
-    }
-    
-    // 기본 UI 설정
-    func configureUI() {
-        backView.clipsToBounds = true
-        
-        updateButton.clipsToBounds = true
-        deleteButton.clipsToBounds = true
-        completeButton.clipsToBounds = true
+        questStckView.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15).isActive = true
+        questStckView.leadingAnchor.constraint(equalTo: firstView.leadingAnchor).isActive = true
+
+        questImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        questImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        questTitle.widthAnchor.constraint(equalToConstant: 200).isActive = true
+//        questTitle.heightAnchor.constraint(equalToConstant: 42).isActive = true
     }
     
     var repeatLabel = ""
@@ -247,6 +194,12 @@ final class QuestCell: UITableViewCell {
     // (퀘스트) 데이터를 가지고 적절한 UI 표시하기
     func configureUIwithData() {
         questTitle.text = questData?.quest
+        mainStackView.isUserInteractionEnabled = true
+        firstView.isUserInteractionEnabled = true
+        secondStackView.isUserInteractionEnabled = true
+        completeButton.isUserInteractionEnabled = true
+        updateButton.isUserInteractionEnabled = true
+        deleteButton.isUserInteractionEnabled = true
     }
     
     

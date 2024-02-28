@@ -12,11 +12,13 @@ struct QuestDataModel {
     var quest: String
     var date: Date
     var selectedDate: [Bool]
+    var repeatDay: String
     
-    init(quest: String, selectedDate: [Bool]) {
-        self.id = UUID()
+    init(id: UUID,quest: String, selectedDate: [Bool], repeatDay: String) {
+        self.id = id
         self.quest = quest
         self.date = Date()
         self.selectedDate = selectedDate
+        self.repeatDay = repeatDay
     }
 }

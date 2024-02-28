@@ -10,7 +10,8 @@ import Foundation
 class UserInfoManager {
     
     static let shared: UserInfoManager = UserInfoManager()
-    var user: UserInfo? = UserInfo(nickName: "매튜", experience: 0)
+    var user: UserInfo?
+    private let apiservice = APIService()
     
     func createUserInfo(inputNickName: String) {
         self.user = UserInfo(nickName: inputNickName, experience: 0)

@@ -13,6 +13,7 @@ final class QuestView: UIView {
     // MARK: - 프로필 부분
     
     let profileBoxView: UIView = ProfileBoxView()
+    let tabView: UIStackView = TabView()
     
     let titleText: UILabel = {
         var label = UILabel()
@@ -32,6 +33,13 @@ final class QuestView: UIView {
         )
         label.attributedText = attrString
         return label
+    }()
+    
+    private lazy var backgroundBottomImageView: UIImageView = {
+        var view = UIImageView()
+        view.frame = CGRect(x: 0, y: 0, width: 430, height: 188)
+        view.image = UIImage(named: "image_background_bottom")
+        return view
     }()
     
     let titleBackgroundText: UILabel = {
@@ -115,18 +123,28 @@ final class QuestView: UIView {
         addSubview(titleBackgroundText)
         addSubview(titleText)
         addSubview(plusButton)
-        
         addSubview(tableView)
-//        tableBackView.addSubview(tableView)
+        addSubview(backgroundBottomImageView)
+        addSubview(tabView)
+
     }
     
     
     func setupProfileConstraints() {
-        
-        
+        backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
+        tabView.translatesAutoresizingMaskIntoConstraints = false
         profileBoxView.translatesAutoresizingMaskIntoConstraints = false
         titleText.translatesAutoresizingMaskIntoConstraints = false
         titleBackgroundText.translatesAutoresizingMaskIntoConstraints = false
+        
+        backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
+        backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
+        backgroundBottomImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        
+        tabView.heightAnchor.constraint(equalToConstant: 146).isActive = true
+        tabView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true
+        tabView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        tabView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         
         titleText.widthAnchor.constraint(equalToConstant: 153).isActive = true
         titleText.heightAnchor.constraint(equalToConstant: 33).isActive = true
@@ -161,17 +179,10 @@ final class QuestView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            
             tableView.topAnchor.constraint(equalTo: profileBoxView.bottomAnchor, constant: 20),
             tableView.centerXAnchor.constraint(equalTo: centerXAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             tableView.widthAnchor.constraint(equalToConstant: 374)
-            
-//            tableView.centerXAnchor.constraint(equalTo: centerXAnchor),
-//            tableView.topAnchor.constraint(equalTo: tableBackView.topAnchor, constant: 0),
-//            tableView.widthAnchor.constraint(equalToConstant: 400),
-////            tableView.heightAnchor.constraint(equalToConstant: 104),
-//            tableView.bottomAnchor.constraint(equalTo: tableBackView.bottomAnchor, constant: 0)
         ])
     }
     

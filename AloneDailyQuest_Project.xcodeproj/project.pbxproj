@@ -24,12 +24,14 @@
 		C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F42B7250FD0084FE36 /* ProfileViewController.swift */; };
 		C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1FC22C52B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodeld */; };
 		C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE02B8F21160007C896 /* Bundle+Extension.swift */; };
+		C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE42B8F4B4C0007C896 /* TabView.swift */; };
 		C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */; };
 		C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* AccountViewController.swift */; };
 		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
 		C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AD2B61F646002EA255 /* UserInfo.swift */; };
 		C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AF2B61F737002EA255 /* UserInfoManager.swift */; };
 		C174B4942B2D4D5600692447 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C174B4932B2D4D5600692447 /* UIView+.swift */; };
+		C1CD988A2B8F80F400ABD463 /* QuestDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CD98892B8F80F400ABD463 /* QuestDataModel.swift */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
 		C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3F2B0602DE003248C0 /* ViewController.swift */; };
@@ -55,12 +57,14 @@
 		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C12358F42B7250FD0084FE36 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C1479DE02B8F21160007C896 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		C1479DE42B8F4B4C0007C896 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
 		C159E3912B1967AC00BB67F8 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C15C48AD2B61F646002EA255 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		C15C48AF2B61F737002EA255 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		C174B4932B2D4D5600692447 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		C1CD98892B8F80F400ABD463 /* QuestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDataModel.swift; sourceTree = "<group>"; };
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 				990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */,
 				990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */,
 				990F92EF2B4BFB1900F175C7 /* CoreDataManager.swift */,
+				C1CD98892B8F80F400ABD463 /* QuestDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 				C159E3952B1968F200BB67F8 /* LoginView.swift */,
 				C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */,
 				C12358F22B723BA80084FE36 /* ProfileView.swift */,
+				C1479DE42B8F4B4C0007C896 /* TabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
+				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
 				C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
@@ -360,6 +367,7 @@
 				997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */,
 				994C590B2B50C1B900D5808B /* DetailViewController.swift in Sources */,
 				990BFD632B81D304001D8664 /* QuestView.swift in Sources */,
+				C1CD988A2B8F80F400ABD463 /* QuestDataModel.swift in Sources */,
 				C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

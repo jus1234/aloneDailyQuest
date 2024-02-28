@@ -11,6 +11,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
     
     let coreManager = CoreDataManager.shared
     
+    func updateQuest(indexPath: IndexPath) {
+        let detailVC = DetailViewController()
+        let selectedQuest = coreManager.getQuestListFromCoreData()[indexPath.row]
+        detailVC.questData = selectedQuest
+        detailVC.delegate = self
+        window?.rootViewController = detailVC
+        
+    }
+    
     func addQuest() {
         let detailVC = DetailViewController()
         detailVC.delegate = self
@@ -20,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
     
     func moveView() {
         let questListVC = QuestViewController()
-        questListVC.questManager = coreManager
+        questListVC.coreManager = coreManager
         questListVC.delegate = self
         window?.rootViewController = questListVC
         window?.makeKeyAndVisible()
@@ -76,4 +85,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
 protocol delegateViewController: AnyObject {
     func moveView()
     func addQuest()
+    func updateQuest(indexPath: IndexPath)
 }

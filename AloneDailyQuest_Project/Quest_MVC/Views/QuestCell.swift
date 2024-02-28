@@ -36,7 +36,7 @@ final class QuestCell: UITableViewCell {
     }()
     
     // 퀘스트 타이틀
-    let questTitle: UILabel = {
+    var questTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "DungGeunMo", size: 14)
         return label
@@ -47,7 +47,7 @@ final class QuestCell: UITableViewCell {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "btn_edit_normal"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -56,7 +56,7 @@ final class QuestCell: UITableViewCell {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "btn_delete_normal"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -99,7 +99,7 @@ final class QuestCell: UITableViewCell {
         button.setTitle("완료하기", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -129,13 +129,13 @@ final class QuestCell: UITableViewCell {
         }
     }
     
-    // (델리게이트 대신에) 실행하고 싶은 클로저 저장
-    // 뷰컨트롤러에 있는 클로저 저장할 예정 (셀(자신)을 전달)
-    var updateButtonPressed: (QuestCell) -> Void = { (sender) in }
-    
-    var deleteButtonPressed: (QuestCell) -> Void = { (sender) in }
-    
-    var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
+//    // (델리게이트 대신에) 실행하고 싶은 클로저 저장
+//    // 뷰컨트롤러에 있는 클로저 저장할 예정 (셀(자신)을 전달)
+//    var updateButtonPressed: (QuestCell) -> Void = { (sender) in }
+//    
+//    var deleteButtonPressed: (QuestCell) -> Void = { (sender) in }
+//    
+//    var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -207,7 +207,7 @@ final class QuestCell: UITableViewCell {
             
             questTitle.leadingAnchor.constraint(equalTo: questImage.trailingAnchor, constant: 14),
             questTitle.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
-//            questTitle.heightAnchor.constraint(equalToConstant: 42),
+            questTitle.heightAnchor.constraint(equalToConstant: 42),
             questTitle.widthAnchor.constraint(equalToConstant: 200),
             
             buttonStackView.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
@@ -247,50 +247,8 @@ final class QuestCell: UITableViewCell {
     // (퀘스트) 데이터를 가지고 적절한 UI 표시하기
     func configureUIwithData() {
         questTitle.text = questData?.quest
-        
-        if questData?.isMonday == true {
-            repeatLabel = repeatLabel + "월"
-        }
-        if questData?.isTuesday == true {
-            repeatLabel = repeatLabel + "화"
-        }
-        if questData?.isWednesday == true {
-            repeatLabel = repeatLabel + "수"
-        }
-        if questData?.isThursday == true {
-            repeatLabel = repeatLabel + "목"
-        }
-        if questData?.isFriday == true {
-            repeatLabel = repeatLabel + "금"
-        }
-        if questData?.isSaturday == true {
-            repeatLabel = repeatLabel + "토"
-        }
-        if questData?.isSunday == true {
-            repeatLabel = repeatLabel + "일"
-        }
-        
-
-        // ⭐️요일 버튼 눌렀을때 반응 넣기
-        
     }
     
-    // 버튼이 눌리면 updateButtonPressed변수에 들어있는 클로저 실행
-    @objc func updateButtonTapped(_ sender: UIButton)
-        {
-        updateButtonPressed(self)
-    }
     
-    // 버튼이 눌리면 deleteButtonPressed변수에 들어있는 클로저 실행
-    @objc func deleteButtonTapped(_ sender: UIButton)
-        {
-        deleteButtonPressed(self)
-    }
-    
-    // 버튼이 눌리면 completeButtonPressed변수에 들어있는 클로저 실행
-    @objc func completeButtonTapped(_ sender: UIButton)
-        {
-        completeButtonPressed(self)
-    }
     
 }

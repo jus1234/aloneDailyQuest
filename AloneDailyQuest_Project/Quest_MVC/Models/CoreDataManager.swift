@@ -59,6 +59,7 @@ final class CoreDataManager {
                 // 임시 저장소에 올라가게 할 객체 만들기 (NSManagedObject ===> QuestData)
                 if let questData = NSManagedObject(entity: entity, insertInto: context) as? QuestData {
                     // MARK: - QuestData에 실제 데이터 할당 ⭐️
+                    questData.id = UUID()
                     questData.quest = questText
                     questData.date = Date() // 날짜는 저장하는 순간의 날짜로 생성
                     questData.isMonday = isMonday
@@ -89,17 +90,14 @@ final class CoreDataManager {
     
     func deletQuest(data: QuestData, completion: @escaping () -> Void) {
         // 날짜 옵셔널 바인딩
-        guard let date = data.date else {
-            completion()
-            return
-        }
+        let id = data.id
         
         // 임시저장소가 있는지 확인
         if let context = context {
             // 요청서
             let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
             // 단서 / 찾기 위한 조건 설정
-            request.predicate = NSPredicate(format: "date = %@", date as CVarArg)
+            request.predicate = NSPredicate(format: "id = %@", id as CVarArg)
             
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
@@ -131,17 +129,14 @@ final class CoreDataManager {
     // MARK: - [UPDATE] 코어데이터에서 데이터 수정하기 (일치하는 데이터 찾아서 ===> 수정)
     func updateQuest(newQuestData: QuestData, completion: @escaping () -> Void) {
         // 날짜 옵셔널 바인딩
-        guard let date = newQuestData.date else {
-            completion()
-            return
-        }
+        let id = newQuestData.id
         
         // 임시저장소 있는지 확인
         if let context = context {
             // 요청서
             let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
             // 단서 / 찾기 위한 조건 설정
-            request.predicate = NSPredicate(format: "date = %@", date as CVarArg)
+            request.predicate = NSPredicate(format: "id = %@", id as CVarArg)
             
             do {
                 // 요청서를 통해서 데이터 가져오기

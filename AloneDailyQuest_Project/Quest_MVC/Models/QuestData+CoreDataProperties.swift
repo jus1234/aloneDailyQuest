@@ -26,6 +26,7 @@ extension QuestData {
     @NSManaged public var isSaturday: Bool
     @NSManaged public var isSunday: Bool
     @NSManaged public var repeatDay: String?
+    @NSManaged public var id: UUID
     
 }
 

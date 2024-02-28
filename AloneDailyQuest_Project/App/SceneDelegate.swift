@@ -9,30 +9,20 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController {
     
+    let coreManager = CoreDataManager.shared
+    
     func addQuest() {
         let detailVC = DetailViewController()
+        detailVC.delegate = self
         window?.rootViewController = detailVC
         
     }
     
     func moveView() {
-        let tabBarVc = UITabBarController()
-        let QuestListVC = UINavigationController(rootViewController: QuestViewController())
-        //퀘스트리스트 네비뷰 첫화면
-        
-        //탭바 이름 설정
-        QuestListVC.title = "일일퀘스트"
-        
-        //탭바로 사용하기 위한 뷰 컨트롤러 설정
-        tabBarVc.setViewControllers([QuestListVC], animated: true)
-        tabBarVc.modalPresentationStyle = .fullScreen
-        tabBarVc.tabBar.backgroundColor = .white
-        
-        //탭바 이미지 설정 (임시로 애플 제공하는것으로 사용)
-        guard let items = tabBarVc.tabBar.items else { return }
-        items[0].image = UIImage(systemName: "books.vertical.fill")
-        
-        window?.rootViewController = tabBarVc
+        let questListVC = QuestViewController()
+        questListVC.questManager = coreManager
+        questListVC.delegate = self
+        window?.rootViewController = questListVC
         window?.makeKeyAndVisible()
     }
     
@@ -42,16 +32,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
         
-        // 어카운트 뷰
-//        let mainViewController = AccountViewController() // 맨 처음 보여줄 ViewController  ⭐️푸쉬 할때 바꾸기
-//        
-//        mainViewController.delegate = self
-//        
-//        window?.rootViewController = mainViewController
-//        window?.makeKeyAndVisible()
-        
         // 프로필 뷰
-        let mainViewController = QuestViewController()
+        let mainViewController = AccountViewController()
+        
+        mainViewController.delegate = self
         
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
@@ -87,8 +71,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
 }
 
 protocol delegateViewController: AnyObject {

@@ -10,10 +10,12 @@ import UIKit
 final class QuestViewController: UIViewController{
     
     // 모델(저장 데이터를 관리하는 코어데이터)
-    let questManager = CoreDataManager.shared
+    var questManager: CoreDataManager? = nil
     private let questView = QuestView()
     weak var delegate: delegateViewController? = nil
     var isCompleted = [false]
+    
+    var text: String = ""
     
     // MARK: - UI설정
     
@@ -52,7 +54,7 @@ final class QuestViewController: UIViewController{
 extension QuestViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return questManager.getQuestListFromCoreData().count
+        return questManager?.getQuestListFromCoreData().count ?? 0
     }
     
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -65,15 +67,14 @@ extension QuestViewController: UITableViewDataSource {
         
         
         // (테이블뷰 그리기 위한) 셀에 모델(QuestData) 전달
-        let questData = questManager.getQuestListFromCoreData()
+        let questData = questManager?.getQuestListFromCoreData() ?? []
         cell.questData = questData[indexPath.row]
         
         
         // 셀 위에 있는 버튼이 눌렸을때 (뷰컨트롤러에서) 어떤 행동을 하기 위해서 클로저 전달
-        // 세그웨이 대신 직접 push
         cell.updateButtonPressed = { [weak self] (senderCell) in
             let detailVC = DetailViewController()
-            let selectedQuest = self?.questManager.getQuestListFromCoreData()[indexPath.row]
+            let selectedQuest = self?.questManager?.getQuestListFromCoreData()[indexPath.row]
             detailVC.questData = selectedQuest
             
             self?.navigationController?.pushViewController(detailVC, animated: true)
@@ -86,7 +87,7 @@ extension QuestViewController: UITableViewDataSource {
             alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
                 guard let indexPath = tableView.indexPath(for: senderCell) else { return }
                 
-                self?.questManager.deletQuest(data: questData[indexPath.row], completion: {
+                self?.questManager?.deletQuest(data: questData[indexPath.row], completion: {
                     print("삭제 완료")
                     tableView.reloadData()
                 })

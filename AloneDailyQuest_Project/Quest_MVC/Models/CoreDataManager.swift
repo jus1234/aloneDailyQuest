@@ -50,7 +50,7 @@ final class CoreDataManager {
     }
     
     // MARK: - [CREATE] 코어데이터에 데이터 생성하기
-    func saveQuestData(questText: String?, isMonday: Bool, isTuesday: Bool, isWednesday: Bool, isThursday: Bool, isFriday: Bool, isSaturday: Bool, isSunday: Bool, completion: @escaping () -> Void) {
+    func saveQuestData(questText: String?, isMonday: Bool, isTuesday: Bool, isWednesday: Bool, isThursday: Bool, isFriday: Bool, isSaturday: Bool, isSunday: Bool, repeatDay: String?, completion: @escaping () -> Void) {
         // 임시저장소에 있는지 확인
         if let context = context {
             // 임시 저장소에 있는 데이터를 그려줄 형태 파악하기
@@ -68,6 +68,7 @@ final class CoreDataManager {
                     questData.isFriday = isFriday
                     questData.isSaturday = isSaturday
                     questData.isSunday = isSunday
+                    questData.repeatDay = repeatDay
                     
                     if context.hasChanges {
                         do {

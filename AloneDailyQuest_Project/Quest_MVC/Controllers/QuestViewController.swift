@@ -13,6 +13,7 @@ final class QuestViewController: UIViewController{
     let questManager = CoreDataManager.shared
     private let questView = QuestView()
     weak var delegate: delegateViewController? = nil
+    var isCompleted = [false]
     
     // MARK: - UI설정
     
@@ -34,6 +35,8 @@ final class QuestViewController: UIViewController{
         
     }
     
+    
+    
     func setUp() {
         questView.plusButton.addTarget(self, action: #selector(addQuest), for: .touchUpInside)
     }
@@ -52,9 +55,9 @@ extension QuestViewController: UITableViewDataSource {
         return questManager.getQuestListFromCoreData().count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 134
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 134
+//    }
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,8 +105,8 @@ extension QuestViewController: UITableViewDataSource {
             cell.expAmount.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
             print("완료버튼 눌림")
             cell.completeButton.setTitle("Clear!!", for: .normal)
-            cell.completeButton.isEnabled = false
-            cell.updateButton.isEnabled = false
+//            cell.completeButton.isEnabled = false
+//            cell.updateButton.isEnabled = false
             
             tableView.reloadData()
         }

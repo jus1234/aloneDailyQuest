@@ -23,7 +23,6 @@ final class DetailViewController: UIViewController {
     }
     
     
-    var isDaySelected = [false, false, false, false, false, false, false]
     
     
     override func viewDidLoad() {
@@ -63,6 +62,13 @@ final class DetailViewController: UIViewController {
             detailView.questTextView.textColor = .lightGray
             
         }
+    }
+    
+    var isDaySelected = [false, false, false, false, false, false, false]
+    var day = ["월", "화", "수", "목", "금", "토", "일"]
+    
+    func repeatLabelSet() {
+        isDaySelected.filter{ $0 }
     }
     
     // 요일 반복 버튼 기능구현
@@ -108,15 +114,16 @@ final class DetailViewController: UIViewController {
     
     func currentDayOfWeek() -> Int {
         let today = Calendar.current.component(.weekday, from: Date())
-        return today - 1
+        return (today - 2 + 7) % 7
     }
     
     func registerQuestForSelectedDays(questText: String) {
         let currentDay = currentDayOfWeek()
+        let repeatLabel = repeatLabelSet()
         for (index, isSelected) in isDaySelected.enumerated() {
             if isSelected {
-                
-                questManager.saveQuestData(questText: questText, isMonday: index == 0, isTuesday: index == 1, isWednesday: index == 2, isThursday: index == 3, isFriday: index == 4, isSaturday: index == 5, isSunday: index == 6) {
+                let questText = detailView.questTextView.text
+                questManager.saveQuestData(questText: questText, isMonday: index == 0, isTuesday: index == 1, isWednesday: index == 2, isThursday: index == 3, isFriday: index == 4, isSaturday: index == 5, isSunday: index == 6, repeatDay: repeatLabel) {
                     print("퀘스트가 등록되었습니다.")
                     
                 }

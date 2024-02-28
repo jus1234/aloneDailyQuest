@@ -105,7 +105,6 @@ final class QuestCell: UITableViewCell {
     
     private lazy var secondStackView: UIStackView = {
         let stview = UIStackView(arrangedSubviews: [repeatday ,expAmount, completeButton])
-        stview.spacing = 60
         stview.axis = .horizontal
         stview.alignment = .fill
         stview.isUserInteractionEnabled = true
@@ -222,12 +221,13 @@ final class QuestCell: UITableViewCell {
             
             secondStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 0),
             
-            repeatday.widthAnchor.constraint(equalToConstant: 77),
+            repeatday.widthAnchor.constraint(equalToConstant: 100),
             repeatday.leadingAnchor.constraint(equalTo: secondStackView.leadingAnchor, constant: 0),
             
             expAmount.widthAnchor.constraint(equalToConstant: 77),
+            expAmount.trailingAnchor.constraint(equalTo: completeButton.leadingAnchor, constant: -56),
             
-            completeButton.widthAnchor.constraint(equalToConstant: 56),
+            completeButton.widthAnchor.constraint(equalToConstant: 70),
             completeButton.trailingAnchor.constraint(equalTo: secondStackView.trailingAnchor, constant: 0)
             
         ])
@@ -242,10 +242,35 @@ final class QuestCell: UITableViewCell {
         completeButton.clipsToBounds = true
     }
     
+    var repeatLabel = ""
+    
     // (퀘스트) 데이터를 가지고 적절한 UI 표시하기
     func configureUIwithData() {
         questTitle.text = questData?.quest
         
+        if questData?.isMonday == true {
+            repeatLabel = repeatLabel + "월"
+        }
+        if questData?.isTuesday == true {
+            repeatLabel = repeatLabel + "화"
+        }
+        if questData?.isWednesday == true {
+            repeatLabel = repeatLabel + "수"
+        }
+        if questData?.isThursday == true {
+            repeatLabel = repeatLabel + "목"
+        }
+        if questData?.isFriday == true {
+            repeatLabel = repeatLabel + "금"
+        }
+        if questData?.isSaturday == true {
+            repeatLabel = repeatLabel + "토"
+        }
+        if questData?.isSunday == true {
+            repeatLabel = repeatLabel + "일"
+        }
+        
+
         // ⭐️요일 버튼 눌렀을때 반응 넣기
         
     }

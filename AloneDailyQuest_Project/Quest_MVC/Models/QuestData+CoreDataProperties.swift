@@ -25,6 +25,7 @@ extension QuestData {
     @NSManaged public var isFriday: Bool
     @NSManaged public var isSaturday: Bool
     @NSManaged public var isSunday: Bool
+    @NSManaged public var repeatDay: String?
     
 }
 

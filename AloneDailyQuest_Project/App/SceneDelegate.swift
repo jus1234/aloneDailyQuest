@@ -9,6 +9,8 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController {
     
+    let coreManager = CoreDataManager.shared
+    
     func addQuest() {
         let detailVC = DetailViewController()
         detailVC.delegate = self
@@ -17,9 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
     }
     
     func moveView() {
-        let QuestListVC = QuestViewController()
-        QuestListVC.delegate = self
-        window?.rootViewController = QuestListVC
+        let questListVC = QuestViewController()
+        questListVC.questManager = coreManager
+        questListVC.delegate = self
+        window?.rootViewController = questListVC
         window?.makeKeyAndVisible()
     }
     

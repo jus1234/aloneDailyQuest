@@ -5,7 +5,6 @@ class LoginView: UIView {
     
     lazy var startButton: UIButton = {
         var button = UIButton()
-        var label = UILabel()
         button.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
         let attrString = NSAttributedString(

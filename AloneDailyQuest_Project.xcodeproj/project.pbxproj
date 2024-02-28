@@ -24,6 +24,7 @@
 		C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F42B7250FD0084FE36 /* ProfileViewController.swift */; };
 		C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1FC22C52B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodeld */; };
 		C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE02B8F21160007C896 /* Bundle+Extension.swift */; };
+		C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE42B8F4B4C0007C896 /* TabView.swift */; };
 		C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */; };
 		C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* AccountViewController.swift */; };
 		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
@@ -55,6 +56,7 @@
 		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C12358F42B7250FD0084FE36 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C1479DE02B8F21160007C896 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		C1479DE42B8F4B4C0007C896 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
 		C159E3912B1967AC00BB67F8 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				C159E3952B1968F200BB67F8 /* LoginView.swift */,
 				C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */,
 				C12358F22B723BA80084FE36 /* ProfileView.swift */,
+				C1479DE42B8F4B4C0007C896 /* TabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
+				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
 				C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,

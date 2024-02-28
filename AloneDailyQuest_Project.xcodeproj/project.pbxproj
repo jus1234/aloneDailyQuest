@@ -17,7 +17,7 @@
 		997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CC2B2876C200999F6E /* QuestViewController.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
-		C10D6C4C2B242250005783BD /* MemberData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* MemberData.swift */; };
+		C10D6C4C2B242250005783BD /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* APIService.swift */; };
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
 		C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F22B723BA80084FE36 /* ProfileView.swift */; };
 		C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F42B7250FD0084FE36 /* ProfileViewController.swift */; };
@@ -47,7 +47,7 @@
 		997B81CC2B2876C200999F6E /* QuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewController.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
-		C10D6C4B2B242250005783BD /* MemberData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberData.swift; sourceTree = "<group>"; };
+		C10D6C4B2B242250005783BD /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C12358F42B7250FD0084FE36 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 		C159E38C2B19671B00BB67F8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C10D6C4B2B242250005783BD /* MemberData.swift */,
+				C10D6C4B2B242250005783BD /* APIService.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,7 +233,6 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
-				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */,
 				C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */,
 				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
@@ -335,7 +334,7 @@
 				990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
 				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
-				C10D6C4C2B242250005783BD /* MemberData.swift in Sources */,
+				C10D6C4C2B242250005783BD /* APIService.swift in Sources */,
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				C1D40C462B0602DE003248C0 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,

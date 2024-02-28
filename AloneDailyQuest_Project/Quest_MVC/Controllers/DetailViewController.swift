@@ -10,6 +10,7 @@ import UIKit
 final class DetailViewController: UIViewController {
     
     private let detailView = DetailView()
+    weak var delegate: delegateViewController? = nil
     
     override func loadView() {
         self.view = detailView

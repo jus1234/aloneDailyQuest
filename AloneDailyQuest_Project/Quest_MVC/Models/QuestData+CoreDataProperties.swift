@@ -18,15 +18,13 @@ extension QuestData {
 
     @NSManaged public var quest: String?
     @NSManaged public var date: Date?
-    @NSManaged public var complete: Bool
-    
-    @NSManaged public var sunday: Bool
-    @NSManaged public var monday: Bool
-    @NSManaged public var tuesday: Bool
-    @NSManaged public var wednesday: Bool
-    @NSManaged public var thursday: Bool
-    @NSManaged public var friday: Bool
-    @NSManaged public var saturday: Bool
+    @NSManaged public var isMonday: Bool
+    @NSManaged public var isTuesday: Bool
+    @NSManaged public var isWednesday: Bool
+    @NSManaged public var isThursday: Bool
+    @NSManaged public var isFriday: Bool
+    @NSManaged public var isSaturday: Bool
+    @NSManaged public var isSunday: Bool
     
 }
 

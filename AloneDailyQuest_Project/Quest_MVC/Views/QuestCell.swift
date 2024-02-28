@@ -11,22 +11,26 @@ final class QuestCell: UITableViewCell {
 
     // MARK: - UI 설정 (퀘스트🍎윗부분 🍏아랫부분)
 
-    let backView: UIView = {
-        let view = UIView()
+    let backView: UIImageView = {
+        let view = UIImageView()
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named: "img_quest_background")
         return view
     }()
     
     // 🍎(이미지, 퀘스트 내용, 업데이트 버튼, 삭제 버튼)
-    let mainView: UIView = {
+    let firstView: UIView = {
         let view = UIView()
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     // 퀘스트 이미지
-    let questImage: UIImageView = {
+    var questImage: UIImageView = {
         let image = UIImageView()
+        image.image = UIImage(named: "img_quest_ing")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -34,16 +38,14 @@ final class QuestCell: UITableViewCell {
     // 퀘스트 타이틀
     let questTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "DungGeunMo", size: 18)
+        label.font = UIFont(name: "DungGeunMo", size: 14)
         return label
     }()
     
     // 업데이트 버튼
     lazy var updateButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "pencil.line"), for: .normal)
-        button.tintColor = .white
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "btn_edit_normal"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
         return button
@@ -52,9 +54,7 @@ final class QuestCell: UITableViewCell {
     // 삭제 버튼
     lazy var deleteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "trash"), for: .normal)
-        button.tintColor = .white
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "btn_delete_normal"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         return button
@@ -66,23 +66,20 @@ final class QuestCell: UITableViewCell {
         stview.axis = .horizontal
         stview.distribution = .fillEqually
         stview.alignment = .fill
+        stview.isUserInteractionEnabled = true
         stview.translatesAutoresizingMaskIntoConstraints = false
         return stview
     }()
     
     
     
-    // 🍏(반복, 경험치량, 완료 버튼)
-    let subView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     // 요일반복 레이블
     let repeatday: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "매일 반복"
+        label.font = UIFont(name: "DungGeunMo", size: 14)
         return label
     }()
     
@@ -98,32 +95,30 @@ final class QuestCell: UITableViewCell {
     // 완료하기 버튼
     lazy var completeButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.titleLabel?.font = UIFont(name: "DungGeunMo", size: 14)
+        button.setTitleFont(font: UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14))
         button.setTitle("완료하기", for: .normal)
-        button.tintColor = .white
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    private lazy var subStackView: UIStackView = {
-        let stview = UIStackView(arrangedSubviews: [repeatday ,expAmount])
+    private lazy var secondStackView: UIStackView = {
+        let stview = UIStackView(arrangedSubviews: [repeatday ,expAmount, completeButton])
         stview.spacing = 60
         stview.axis = .horizontal
-        stview.distribution = .fillEqually
         stview.alignment = .fill
+        stview.isUserInteractionEnabled = true
         stview.translatesAutoresizingMaskIntoConstraints = false
         return stview
     }()
     
     // 메인뷰랑, 서브뷰 합침
     private lazy var mainStackView: UIStackView = {
-        let stview = UIStackView(arrangedSubviews: [mainView, subView])
+        let stview = UIStackView(arrangedSubviews: [firstView, secondStackView])
         stview.spacing = 10
         stview.axis = .vertical
-        stview.distribution = .fillEqually
-        stview.alignment = .fill
+        stview.isUserInteractionEnabled = true
         stview.translatesAutoresizingMaskIntoConstraints = false
         return stview
     }()
@@ -143,88 +138,104 @@ final class QuestCell: UITableViewCell {
     
     var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        
+        
+        addsubview()
+        setConstraints()
+        configureUI()
+        backgroundColor = .clear
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
     }
-
-    func setConstraints() {
+    
+   
+    
+    func addsubview() {
         self.contentView.addSubview(backView)
-        // backView <== mainStackView
-        NSLayoutConstraint.activate([
-            backView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 25),
-            backView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -25),
-            backView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 7),
-            backView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -7)])
+        backView.addSubview(mainStackView)
+        mainStackView.addSubview(firstView)
+        mainStackView.addSubview(secondStackView)
+        firstView.addSubview(questImage)
+        firstView.addSubview(questTitle)
+        firstView.addSubview(buttonStackView)
+        secondStackView.addSubview(repeatday)
+        secondStackView.addSubview(expAmount)
+        secondStackView.addSubview(completeButton)
+    }
+    
+    func setConstraints() {
         
-        self.contentView.addSubview(mainStackView)
-        
-        // mainStackView <== mainView + subView
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 10),
-            mainStackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -10),
-            mainStackView.topAnchor.constraint(equalTo: self.backView.topAnchor, constant: 10),
-            mainStackView.bottomAnchor.constraint(equalTo: self.backView.bottomAnchor, constant: -10)
+            backView.heightAnchor.constraint(equalToConstant: 134),
+            backView.widthAnchor.constraint(equalToConstant: 374),
+            backView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            backView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            backView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            backView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0)
         ])
         
-        self.contentView.addSubview(questImage)
-        self.contentView.addSubview(questTitle)
-        self.contentView.addSubview(buttonStackView)
         
-        // mainView <== questImage + questTitle + buttonStackView
         NSLayoutConstraint.activate([
-            mainView.heightAnchor.constraint(greaterThanOrEqualToConstant: 90),
+            mainStackView.leadingAnchor.constraint(equalTo: self.backView.leadingAnchor, constant: 24),
+            mainStackView.trailingAnchor.constraint(equalTo: self.backView.trailingAnchor, constant: -20),
+            mainStackView.topAnchor.constraint(equalTo: backView.topAnchor, constant: 0),
+            mainStackView.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: -22)
+        ])
+        
+        NSLayoutConstraint.activate([
+            firstView.heightAnchor.constraint(equalToConstant: 88),
+            secondStackView.heightAnchor.constraint(equalToConstant: 14),
             
-            questImage.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 10),
-            questImage.widthAnchor.constraint(equalToConstant: 45),
-            questImage.heightAnchor.constraint(equalToConstant: 45),
+            questImage.leadingAnchor.constraint(equalTo: firstView.leadingAnchor, constant: 0),
+            questImage.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
+            questImage.widthAnchor.constraint(equalToConstant: 50),
+            questImage.heightAnchor.constraint(equalToConstant: 50),
             
             questTitle.leadingAnchor.constraint(equalTo: questImage.trailingAnchor, constant: 14),
-            questTitle.trailingAnchor.constraint(equalTo: buttonStackView.leadingAnchor, constant: 14),
-            questTitle.heightAnchor.constraint(greaterThanOrEqualToConstant: 45),
+            questTitle.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
+//            questTitle.heightAnchor.constraint(equalToConstant: 42),
+            questTitle.widthAnchor.constraint(equalToConstant: 200),
             
-            buttonStackView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 10),
-            buttonStackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 10),
-            buttonStackView.heightAnchor.constraint(equalToConstant: 20),
-            buttonStackView.widthAnchor.constraint(equalToConstant: 50)
+            buttonStackView.topAnchor.constraint(equalTo: firstView.topAnchor, constant: 15),
+            buttonStackView.trailingAnchor.constraint(equalTo: firstView.trailingAnchor, constant: 0),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 26),
+            buttonStackView.widthAnchor.constraint(equalToConstant: 62)
         ])
+        
         
         NSLayoutConstraint.activate([
             
-        ])
-        
-        self.contentView.addSubview(subStackView)
-        self.contentView.addSubview(completeButton)
-        
-        // subView <== subStackView + compleButton
-        NSLayoutConstraint.activate([
-            subView.heightAnchor.constraint(equalToConstant: 45),
+            secondStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 0),
             
-            subStackView.leadingAnchor.constraint(equalTo: subView.leadingAnchor, constant: 10),
-            subStackView.trailingAnchor.constraint(equalTo: completeButton.leadingAnchor, constant: 70),
-            subStackView.topAnchor.constraint(equalTo: subView.topAnchor, constant: 10),
-            subStackView.bottomAnchor.constraint(equalTo: subView.bottomAnchor ,constant: -10),
-            subStackView.heightAnchor.constraint(equalToConstant: 15),
+            repeatday.widthAnchor.constraint(equalToConstant: 77),
+            repeatday.leadingAnchor.constraint(equalTo: secondStackView.leadingAnchor, constant: 0),
             
-            completeButton.topAnchor.constraint(equalTo: subView.topAnchor, constant: 10),
-            completeButton.bottomAnchor.constraint(equalTo: subView.bottomAnchor, constant: -10),
-            completeButton.trailingAnchor.constraint(equalTo: subView.trailingAnchor, constant: -10),
-            completeButton.heightAnchor.constraint(equalToConstant: 15)
+            expAmount.widthAnchor.constraint(equalToConstant: 77),
+            
+            completeButton.widthAnchor.constraint(equalToConstant: 56),
+            completeButton.trailingAnchor.constraint(equalTo: secondStackView.trailingAnchor, constant: 0)
             
         ])
-        mainView.setContentCompressionResistancePriority(.init(rawValue: 752), for: .horizontal)
     }
     
     // 기본 UI 설정
     func configureUI() {
         backView.clipsToBounds = true
-        backView.layer.cornerRadius = 25
         
         updateButton.clipsToBounds = true
         deleteButton.clipsToBounds = true

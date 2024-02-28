@@ -9,6 +9,12 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController {
     
+    func addQuest() {
+        let detailVC = DetailViewController()
+        window?.rootViewController = detailVC
+        
+    }
+    
     func moveView() {
         let tabBarVc = UITabBarController()
         let QuestListVC = UINavigationController(rootViewController: QuestViewController())
@@ -45,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
 //        window?.makeKeyAndVisible()
         
         // 프로필 뷰
-        let mainViewController = ProfileViewController()
+        let mainViewController = QuestViewController()
         
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
@@ -87,4 +93,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
 
 protocol delegateViewController: AnyObject {
     func moveView()
+    func addQuest()
 }

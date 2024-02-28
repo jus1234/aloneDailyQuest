@@ -19,38 +19,25 @@ final class DetailViewController: UIViewController {
     
     var questData: QuestData? {
         didSet {
-            temporarySun = questData?.sunday
-            temporaryMon = questData?.monday
-            temporaryTue = questData?.tuesday
-            temporaryWed = questData?.wednesday
-            temporaryThu = questData?.thursday
-            temporaryFri = questData?.friday
-            temporarySat = questData?.saturday
         }
     }
     
-    var temporarySun: Bool?
-    var temporaryMon: Bool?
-    var temporaryTue: Bool?
-    var temporaryWed: Bool?
-    var temporaryThu: Bool?
-    var temporaryFri: Bool?
-    var temporarySat: Bool?
-
+    
+    var isDaySelected = [false, false, false, false, false, false, false]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         configureUI()
+        
     }
     
     func setup() {
         detailView.questTextView.delegate = self
-                detailView.buttons.forEach{ button in button.addTarget(self, action: #selector(repeatButtonTapped), for: .touchUpInside)
-                }
-        
-        navigationController?.navigationBar.prefersLargeTitles = false
+        detailView.buttons.forEach{ button in
+            button.addTarget(self, action: #selector(dayButtonTapped), for: .touchUpInside)
+        }
         
         detailView.saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
             }
@@ -58,18 +45,19 @@ final class DetailViewController: UIViewController {
     func configureUI() {
         // 기존 데이터가 있을떄
         if let questData = self.questData {
-            self.title = "퀘스트 수정하기"
-            
+            detailView.titleText.text = "퀘스트수정"
+            detailView.titleBackgroundText.text = "퀘스트수정"
             guard let text = questData.quest else { return }
             detailView.questTextView.text = text
             
             detailView.questTextView.textColor = .black
-            detailView.saveButton.setTitle("퀘스트 생성하기", for: .normal)
+            detailView.saveButton.setTitle("퀘스트 수정하기", for: .normal)
             detailView.questTextView.becomeFirstResponder()
             
         // 기존데이터가 없을때
         } else {
-            self.title = "새로운 퀘스트 생성하기"
+            detailView.titleText.text = "퀘스트생성"
+            detailView.titleBackgroundText.text = "퀘스트생성"
             
             detailView.questTextView.text = "퀘스트를 입력하세요."
             detailView.questTextView.textColor = .lightGray
@@ -78,11 +66,29 @@ final class DetailViewController: UIViewController {
     }
     
     // 요일 반복 버튼 기능구현
-    @objc func repeatButtonTapped(_ sender: UIButton){
+    @objc func dayButtonTapped(_ sender: UIButton){
+        guard let index = detailView.buttons.firstIndex(of: sender) else { return }
         
+        print("버튼 눌림")
+        // 해당 버튼의 선택 여뷰를 토글
+        isDaySelected[index].toggle()
+        
+        // 버튼 외관 업데이트
+        toggleButtonAppearance(button: sender, isSelected: isDaySelected[index])
+    }
+    
+    func toggleButtonAppearance(button: UIButton, isSelected: Bool) {
+        if isSelected {
+            button.backgroundColor = UIColor(red: 0.63, green: 0.28, blue: 0.01, alpha: 1.00)
+            button.setTitleColor(.white, for: .normal)
+        } else {
+            button.backgroundColor = UIColor(red: 1.00, green: 0.90, blue: 0.78, alpha: 1.00)
+            button.setTitleColor(.black, for: .normal)
+        }
     }
     
     @objc func saveButtonTapped(_ sender: UIButton) {
+       
         // 기존 데이터가 있을때 ===> 기존 데이터 업데이트
         if let questData = self.questData {
             // 텍스트뷰에 저장되어 있는 메시지
@@ -95,14 +101,30 @@ final class DetailViewController: UIViewController {
             
             // 기존데이터가 없을때 ===> 새로운 데이터 생성
         } else {
-            let questText = detailView.questTextView.text
-            questManager.saveQuestData(questText: questText, dayInt: 1) {
-                print("저장완료")
-                // 다시 전화면으로 돌아가기
-                self.navigationController?.popViewController(animated: true)
+            guard let questText = detailView.questTextView.text else { return }
+            registerQuestForSelectedDays(questText: questText)
+        }
+    }
+    
+    func currentDayOfWeek() -> Int {
+        let today = Calendar.current.component(.weekday, from: Date())
+        return today - 1
+    }
+    
+    func registerQuestForSelectedDays(questText: String) {
+        let currentDay = currentDayOfWeek()
+        for (index, isSelected) in isDaySelected.enumerated() {
+            if isSelected {
+                
+                questManager.saveQuestData(questText: questText, isMonday: index == 0, isTuesday: index == 1, isWednesday: index == 2, isThursday: index == 3, isFriday: index == 4, isSaturday: index == 5, isSunday: index == 6) {
+                    print("퀘스트가 등록되었습니다.")
+                    
+                }
             }
         }
     }
+    
+    
     
     // 다른곳을 터치하면 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

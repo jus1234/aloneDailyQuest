@@ -18,13 +18,10 @@ final class DetailViewController: UIViewController {
     
     let questManager = CoreDataManager.shared
     
-    var questData: QuestData? {
+    var questData: QuestDataModel? {
         didSet {
         }
     }
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,12 +44,15 @@ final class DetailViewController: UIViewController {
         if let questData = self.questData {
             detailView.titleText.text = "퀘스트수정"
             detailView.titleBackgroundText.text = "퀘스트수정"
-            guard let text = questData.quest else { return }
-            detailView.questTextView.text = text
+            detailView.questTextView.text = questData.quest
             
             detailView.questTextView.textColor = .black
             detailView.saveButton.setTitle("퀘스트 수정하기", for: .normal)
             detailView.questTextView.becomeFirstResponder()
+            isDaySelected = questData.selectedDate
+            zip(detailView.buttons, questData.selectedDate).forEach { toggleButtonAppearance(button: $0.0, isSelected: $0.1) }
+            
+            
             
         // 기존데이터가 없을때
         } else {
@@ -110,16 +110,17 @@ final class DetailViewController: UIViewController {
     @objc func saveButtonTapped(_ sender: UIButton) {
        
         // 기존 데이터가 있을때 ===> 기존 데이터 업데이트
-        if let questData = self.questData {
+        if var questData = self.questData {
+            let repeatLabel = repeatLabelSet()
             // 텍스트뷰에 저장되어 있는 메시지
             questData.quest = detailView.questTextView.text
-            questData.isMonday = isDaySelected[0]
-            questData.isTuesday = isDaySelected[1]
-            questData.isWednesday = isDaySelected[2]
-            questData.isThursday = isDaySelected[3]
-            questData.isFriday = isDaySelected[4]
-            questData.isSaturday = isDaySelected[5]
-            questData.isSunday = isDaySelected[6]
+            questData.selectedDate[0] = isDaySelected[0]
+            questData.selectedDate[1] = isDaySelected[1]
+            questData.selectedDate[2] = isDaySelected[2]
+            questData.selectedDate[3] = isDaySelected[3]
+            questData.selectedDate[4] = isDaySelected[4]
+            questData.selectedDate[5] = isDaySelected[5]
+            questData.selectedDate[6] = isDaySelected[6]
             questData.repeatDay = repeatLabel
             
             questManager.updateQuest(newQuestData: questData) {
@@ -139,10 +140,12 @@ final class DetailViewController: UIViewController {
     
     
     func registerQuestForSelectedDays(questText: String, repeatLabel: String) {
-        questManager.saveQuestData(questText: questText, isMonday: isDaySelected[0], isTuesday: isDaySelected[1], isWednesday: isDaySelected[2], isThursday: isDaySelected[3], isFriday: isDaySelected[4], isSaturday: isDaySelected[5], isSunday: isDaySelected[6], repeatDay: repeatLabel) {
-                print("퀘스트가 등록되었습니다.")
-                self.delegate?.moveView()
-        }
+        let data = QuestDataModel(id: UUID(), quest: questText, selectedDate: isDaySelected, repeatDay: repeatLabel)
+        questManager.saveQuestData(data: data, completion: {
+            print("퀘스트가 등록되었습니다.")
+            self.delegate?.moveView()
+            print(self.questManager.getQuestListFromCoreData())
+        })
     }
     
     

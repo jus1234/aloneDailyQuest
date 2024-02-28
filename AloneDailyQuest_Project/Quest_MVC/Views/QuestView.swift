@@ -181,10 +181,10 @@ final class QuestView: UIView {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: profileBoxView.bottomAnchor, constant: 20),
             tableView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: tabView.topAnchor),
             tableView.widthAnchor.constraint(equalToConstant: 374)
         ])
     }
     
-    
+
 }

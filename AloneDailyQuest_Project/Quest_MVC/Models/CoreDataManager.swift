@@ -26,20 +26,19 @@ final class CoreDataManager {
     let modelName: String = "QuestData"
     
     // MARK: - [READ] 코어데이터에 저장된 데이터 모두 읽어오기
-    func getQuestListFromCoreData() -> [QuestData] {
-        var questList: [QuestData] = []
+    func getQuestListFromCoreData() -> [QuestDataModel] {
+        var questList: [QuestDataModel] = []
         // 임시 저장소 있는지 확인
         if let context = context {
             // 요청서
             let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-            // 정렬 순서를 정해서 요청서에 넘겨주기
-            let dateOrder = NSSortDescriptor(key: "date", ascending: false)
-            request.sortDescriptors = [dateOrder]
             
             do {
                 // 임시저장소에서 (요청서를 통해서) 데이터를 가져오기 (fetch메서드)
                 if let fetchedQuestList = try context.fetch(request) as? [QuestData] {
-                    questList = fetchedQuestList
+                   questList = fetchedQuestList.map { data in
+                       return QuestDataModel(id: data.id ,quest: data.quest ?? "", selectedDate: [data.isMonday, data.isTuesday, data.isWednesday, data.isThursday, data.isFriday, data.isSaturday, data.isSunday], repeatDay: data.repeatDay ?? "")
+                   }
                 }
             } catch {
                 print("가져오는 것 실패")
@@ -50,7 +49,7 @@ final class CoreDataManager {
     }
     
     // MARK: - [CREATE] 코어데이터에 데이터 생성하기
-    func saveQuestData(questText: String?, isMonday: Bool, isTuesday: Bool, isWednesday: Bool, isThursday: Bool, isFriday: Bool, isSaturday: Bool, isSunday: Bool, repeatDay: String?, completion: @escaping () -> Void) {
+    func saveQuestData(data: QuestDataModel, completion: @escaping () -> Void) {
         // 임시저장소에 있는지 확인
         if let context = context {
             // 임시 저장소에 있는 데이터를 그려줄 형태 파악하기
@@ -60,16 +59,16 @@ final class CoreDataManager {
                 if let questData = NSManagedObject(entity: entity, insertInto: context) as? QuestData {
                     // MARK: - QuestData에 실제 데이터 할당 ⭐️
                     questData.id = UUID()
-                    questData.quest = questText
+                    questData.quest = data.quest
                     questData.date = Date() // 날짜는 저장하는 순간의 날짜로 생성
-                    questData.isMonday = isMonday
-                    questData.isTuesday = isTuesday
-                    questData.isWednesday = isWednesday
-                    questData.isThursday = isThursday
-                    questData.isFriday = isFriday
-                    questData.isSaturday = isSaturday
-                    questData.isSunday = isSunday
-                    questData.repeatDay = repeatDay
+                    questData.isMonday = data.selectedDate[0]
+                    questData.isTuesday = data.selectedDate[1]
+                    questData.isWednesday = data.selectedDate[2]
+                    questData.isThursday = data.selectedDate[3]
+                    questData.isFriday = data.selectedDate[4]
+                    questData.isSaturday = data.selectedDate[5]
+                    questData.isSunday = data.selectedDate[6]
+                    questData.repeatDay = data.repeatDay
                     
                     if context.hasChanges {
                         do {
@@ -83,28 +82,24 @@ final class CoreDataManager {
                 }
             }
         }
-        completion()
     }
 
     // MARK: - [DELETE] 코어데이터에서 데이터 삭제하기 (일차하는 데이터 찾아서 ===> 삭제)
     
-    func deletQuest(data: QuestData, completion: @escaping () -> Void) {
-        // 날짜 옵셔널 바인딩
-        let id = data.id
-        
+    func deletQuest(data: QuestDataModel, completion: @escaping () -> Void) {
         // 임시저장소가 있는지 확인
         if let context = context {
             // 요청서
             let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-            // 단서 / 찾기 위한 조건 설정
-            request.predicate = NSPredicate(format: "id = %@", id as CVarArg)
-            
+            request.predicate = NSPredicate(format: "id = %@", data.id as CVarArg)
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
                 if let fetchedQuestList = try context.fetch(request) as? [QuestData] {
                     
+                    print(fetchedQuestList)
                     // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
                     if let targetQuest = fetchedQuestList.first {
+                        print(targetQuest)
                         context.delete(targetQuest)
                         
                         if context.hasChanges {
@@ -127,7 +122,7 @@ final class CoreDataManager {
     }
 
     // MARK: - [UPDATE] 코어데이터에서 데이터 수정하기 (일치하는 데이터 찾아서 ===> 수정)
-    func updateQuest(newQuestData: QuestData, completion: @escaping () -> Void) {
+    func updateQuest(newQuestData: QuestDataModel, completion: @escaping () -> Void) {
         // 날짜 옵셔널 바인딩
         let id = newQuestData.id
         
@@ -142,10 +137,17 @@ final class CoreDataManager {
                 // 요청서를 통해서 데이터 가져오기
                 if let fetchedQuestList = try context.fetch(request) as? [QuestData] {
                     // 배열의 첫번째
-                    if var targetQuest = fetchedQuestList.first {
-                        
+                    if let targetQuest = fetchedQuestList.first {
                         // MARK: - QuestData에 실제 데이터 재할당(바꾸기) ⭐️
-                        targetQuest = newQuestData
+                        targetQuest.quest = newQuestData.quest
+                        targetQuest.isMonday = newQuestData.selectedDate[0]
+                        targetQuest.isTuesday = newQuestData.selectedDate[1]
+                        targetQuest.isWednesday = newQuestData.selectedDate[2]
+                        targetQuest.isThursday = newQuestData.selectedDate[3]
+                        targetQuest.isFriday = newQuestData.selectedDate[4]
+                        targetQuest.isSaturday = newQuestData.selectedDate[5]
+                        targetQuest.isSunday = newQuestData.selectedDate[6]
+                        targetQuest.repeatDay = newQuestData.repeatDay
                         
                         //appDelegate?.saveContext() // 앱델리게이트의 메서드로 해도됨
                         if context.hasChanges {

@@ -13,7 +13,8 @@ final class QuestView: UIView {
     // MARK: - 프로필 부분
     
     let profileBoxView: UIView = ProfileBoxView()
-    let tabView: UIStackView = TabView()
+    let tabView: TabView = TabView()
+    weak var delegate: delegateViewController?
     
     let titleText: UILabel = {
         var label = UILabel()
@@ -62,21 +63,12 @@ final class QuestView: UIView {
         return label
     }()
     
-    weak var delegate: delegateViewController? = nil
-    
     // 플러스 버튼 생성
     lazy var plusButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(named: "btn_plus_normal"), for: .normal)
-        
-        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-        
         return button
     }()
-   
-    @objc func buttonTapped(_ sender: UIButton) {
-        print("버튼 눌리는중")
-    }
     
     // 테이블 뷰 생성
     let tableBackView: UIView = {
@@ -96,7 +88,6 @@ final class QuestView: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
         
-        
         tableView.reloadData()
         
         addsubViews()
@@ -112,11 +103,9 @@ final class QuestView: UIView {
     
     func setupTableView() {
         tableView.separatorStyle = .none
-        
         // 셀의 등록과정 ⭐️ (코드로 구현)
         tableView.register(QuestCell.self, forCellReuseIdentifier: "QuestCell")
     }
-    
     
     func addsubViews() {
         addSubview(profileBoxView)
@@ -126,9 +115,7 @@ final class QuestView: UIView {
         addSubview(tableView)
         addSubview(backgroundBottomImageView)
         addSubview(tabView)
-
     }
-    
     
     func setupProfileConstraints() {
         backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -174,7 +161,6 @@ final class QuestView: UIView {
     
 //    테이블뷰 자체의 오토레이아웃
     func setupQuestViewConstraints() {
-        
         tableBackView.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -185,6 +171,4 @@ final class QuestView: UIView {
             tableView.widthAnchor.constraint(equalToConstant: 374)
         ])
     }
-    
-
 }

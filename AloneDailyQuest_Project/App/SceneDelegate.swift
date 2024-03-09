@@ -18,17 +18,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
         detailVC.questData = selectedQuest
         detailVC.delegate = self
         window?.rootViewController = detailVC
-        
+        window?.makeKeyAndVisible()
     }
     
     func addQuest() {
         let detailVC = DetailViewController()
         detailVC.delegate = self
         window?.rootViewController = detailVC
-        
+        window?.makeKeyAndVisible()
     }
     
-    func moveView() {
+    func moveProfileView() {
+        let profileVC = ProfileViewController(coreManager: coreManager)
+        profileVC.delegate = self
+        window?.rootViewController = profileVC
+        window?.makeKeyAndVisible()
+    }
+    
+    func moveQuestView() {
         let questListVC = QuestViewController()
         questListVC.coreManager = coreManager
         questListVC.delegate = self
@@ -84,7 +91,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
 }
 
 protocol delegateViewController: AnyObject {
-    func moveView()
+    func moveQuestView()
     func addQuest()
     func updateQuest(indexPath: Int)
+    func moveProfileView()
 }

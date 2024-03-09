@@ -10,9 +10,8 @@ import UIKit
 class ProfileView: UIView {
     
     var xpList: [Int] = [10, 20, 30, 40, 50, 60, 70]
-    
     let profileBoxView: UIView = ProfileBoxView()
-    
+    let tabView: TabView = TabView()
     private lazy var backgroundBottomImageView: UIImageView = {
         var view = UIImageView()
         
@@ -705,6 +704,7 @@ class ProfileView: UIView {
         addSubview(topStackView)
         addSubview(centerStackView)
         addSubview(customButton)
+        addSubview(tabView)
     }
     
     func autoLayoutConstraints() {
@@ -715,6 +715,12 @@ class ProfileView: UIView {
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         topStackView.translatesAutoresizingMaskIntoConstraints = false
         centerStackView.translatesAutoresizingMaskIntoConstraints = false
+        tabView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tabView.heightAnchor.constraint(equalToConstant: 146).isActive = true
+        tabView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true
+        tabView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        tabView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         
         customButton.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 30).isActive = true
         customButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20).isActive = true

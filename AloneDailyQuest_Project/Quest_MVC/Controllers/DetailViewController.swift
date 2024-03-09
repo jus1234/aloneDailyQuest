@@ -108,7 +108,6 @@ final class DetailViewController: UIViewController {
     }
     
     @objc func saveButtonTapped(_ sender: UIButton) {
-       
         // 기존 데이터가 있을때 ===> 기존 데이터 업데이트
         if var questData = self.questData {
             let repeatLabel = repeatLabelSet()
@@ -126,7 +125,7 @@ final class DetailViewController: UIViewController {
             questManager.updateQuest(newQuestData: questData) {
                 print("업데이트 완료")
                 // 다시 전화면으로 돌아가기
-                self.delegate?.moveView()
+                self.delegate?.moveQuestView()
             }
             
             // 기존데이터가 없을때 ===> 새로운 데이터 생성
@@ -137,18 +136,14 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    
-    
     func registerQuestForSelectedDays(questText: String, repeatLabel: String) {
         let data = QuestDataModel(id: UUID(), quest: questText, selectedDate: isDaySelected, repeatDay: repeatLabel)
         questManager.saveQuestData(data: data, completion: {
             print("퀘스트가 등록되었습니다.")
-            self.delegate?.moveView()
+            self.delegate?.moveQuestView()
             print(self.questManager.getQuestListFromCoreData())
         })
     }
-    
-    
     
     // 다른곳을 터치하면 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

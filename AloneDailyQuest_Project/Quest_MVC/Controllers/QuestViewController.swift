@@ -42,8 +42,23 @@ final class QuestViewController: UIViewController{
     
     func setUp() {
         questView.plusButton.addTarget(self, action: #selector(addQuest), for: .touchUpInside)
+        questView.tabView.questButton.addTarget(self, action: #selector(moveQuestView), for: .touchUpInside)
+        questView.tabView.rankListButton.addTarget(self, action: #selector(moveRankView), for: .touchUpInside)
+        questView.tabView.profileButton.addTarget(self, action: #selector(moveProfileView), for: .touchUpInside)
     }
     
+    
+    @objc func moveQuestView() {
+        delegate?.moveQuestView()
+    }
+    
+    @objc func moveRankView() {
+        print("랭킹으로 이동")
+    }
+    
+    @objc func moveProfileView() {
+        delegate?.moveProfileView()
+    }
     
     // 플러스 버튼 눌렀을때
     @objc func addQuest() {

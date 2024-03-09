@@ -49,7 +49,7 @@ class AccountViewController: UIViewController {
     
     @objc func moveView() {
         if nickName != nil {
-            delegate?.moveView()
+            delegate?.moveQuestView()
         } else {
             completedAlert(message: "닉네임을 다시 확인해주세요.")
         }

@@ -9,7 +9,7 @@ import UIKit
 
 class TabView: UIStackView {
     
-    weak var delegate: delegateViewController? = nil
+    weak var delegate: delegateViewController?
     
     lazy var questLabel: UILabel = {
         let label = UILabel()
@@ -46,13 +46,8 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(preButton), for: .touchUpInside)
         return button
     }()
-    
-    @objc func preButton() {
-        print("눌림")
-    }
     
     lazy var questStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [questButton, questLabel])
@@ -98,7 +93,6 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(preButton), for: .touchUpInside)
         return button
     }()
     
@@ -146,7 +140,6 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(preButton), for: .touchUpInside)
         return button
     }()
     

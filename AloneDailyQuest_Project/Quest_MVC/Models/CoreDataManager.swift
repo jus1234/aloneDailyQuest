@@ -37,7 +37,7 @@ final class CoreDataManager {
                 // 임시저장소에서 (요청서를 통해서) 데이터를 가져오기 (fetch메서드)
                 if let fetchedQuestList = try context.fetch(request) as? [QuestData] {
                    questList = fetchedQuestList.map { data in
-                       return QuestDataModel(id: data.id ,quest: data.quest ?? "", selectedDate: [data.isMonday, data.isTuesday, data.isWednesday, data.isThursday, data.isFriday, data.isSaturday, data.isSunday], repeatDay: data.repeatDay ?? "")
+                       return QuestDataModel(id: data.id ,quest: data.quest ?? "", selectedDate: [data.isMonday, data.isTuesday, data.isWednesday, data.isThursday, data.isFriday, data.isSaturday, data.isSunday], repeatDay: data.repeatDay ?? "", completed: data.completed)
                    }
                 }
             } catch {
@@ -69,6 +69,7 @@ final class CoreDataManager {
                     questData.isSaturday = data.selectedDate[5]
                     questData.isSunday = data.selectedDate[6]
                     questData.repeatDay = data.repeatDay
+                    questData.completed = data.completed
                     
                     if context.hasChanges {
                         do {
@@ -148,6 +149,7 @@ final class CoreDataManager {
                         targetQuest.isSaturday = newQuestData.selectedDate[5]
                         targetQuest.isSunday = newQuestData.selectedDate[6]
                         targetQuest.repeatDay = newQuestData.repeatDay
+                        targetQuest.completed = newQuestData.completed
                         
                         //appDelegate?.saveContext() // 앱델리게이트의 메서드로 해도됨
                         if context.hasChanges {

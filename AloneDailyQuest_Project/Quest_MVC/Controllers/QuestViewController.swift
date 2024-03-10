@@ -14,18 +14,32 @@ final class QuestViewController: UIViewController{
     private let questView = QuestView()
     weak var delegate: delegateViewController? = nil
     weak var delegate2: UITableViewDelegate? = nil
-    var isCompleted = [false]
+    
+    let questManager = CoreDataManager.shared
+    
     
     var text: String = ""
     
     var index: IndexPath?
     
-    // MARK: - UI설정
+    
+    // 초기화 경험치
+    var todayExp = 0
+    
+    // 하루 경험치 량
+    func checkcExpOverLimit () -> String {
+        if todayExp < 100{
+            return "보상 : 20xp"
+        } else {
+            return "보상 : - "
+        }
+        
+    }
     
     override func loadView() {
         self.view = questView
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,22 +71,26 @@ final class QuestViewController: UIViewController{
     
     @objc func deleteQuest(sender: UIButton) {
         let alert = UIAlertController(title: "퀘스트 삭제", message: "정말로 퀘스트를 삭제하시겠습니까", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
-                    guard let indexPath = self.index else { return }
-                    let questData = self.coreManager?.getQuestListFromCoreData() ?? []
-                    self.coreManager?.deletQuest(data: questData[sender.tag], completion: {
-                            print("삭제 완료")
-                            self.reload()
-                        })
-                    
-                    }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+            guard let indexPath = self.index else { return }
+            let questData = self.coreManager?.getQuestListFromCoreData() ?? []
+            self.coreManager?.deletQuest(data: questData[sender.tag], completion: {
+                print("삭제 완료")
+                self.reload()
+            })
+            
+        }))
         self.present(alert, animated: true, completion: nil)
         
     }
+    
+    
 }
 
 extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    
     
     func currentDayOfWeek() -> Int {
         let today = Calendar.current.component(.weekday, from: Date())
@@ -80,6 +98,9 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        
+        
         print("numberOfRowsInSection")
         let count = coreManager?.getQuestListFromCoreData().count
         print(count)
@@ -90,24 +111,86 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         questView.tableView.reloadData()
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var completedCheck = false
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
         let questData = coreManager?.getQuestListFromCoreData() ?? []
         cell.questData = questData[indexPath.row]
         
+        // 테이블뷰 시작시 UI 기본 설정
         cell.repeatday.text = cell.questData?.repeatDay
         cell.questTitle.text = cell.questData?.quest
+        cell.expAmount.text = checkcExpOverLimit()
         
         index = indexPath
+        
+        // completed 데이터에 따라 UI설정하기
+        if cell.questData!.completed {
+            // 퀘스트 이미지 변경
+            cell.questImage.image = UIImage(named: "img_quest_completed")
+            // 퀘스트 타이틀 색 변경
+            cell.questTitle.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
+            // 경험치 레이블 색 변경
+            cell.expAmount.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
+            // 요일 레이블 색 변경
+            cell.repeatday.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
+            // 완료 버튼 UI변경
+            cell.completeButton.setTitle("미완료하기", for: .normal)
+            cell.completeButton.setTitleColor(UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00), for: .normal)
+            
+        } else {
+            // 퀘스트 이미지 변경
+            cell.questImage.image = UIImage(named: "img_quest_ing")
+            // 퀘스트 타이틀 색 변경
+            cell.questTitle.textColor = .black
+            // 경험치 레이블 색 변경
+            cell.expAmount.textColor = .black
+            // 요일 레이블 색 변경
+            cell.repeatday.textColor = .black
+            // 완료 버튼 UI변경
+            cell.completeButton.setTitle("완료하기", for: .normal)
+            cell.completeButton.setTitleColor(.black, for: .normal)
+            
+        }
         
         // 셀 업데이트 버튼 눌렀을때
         cell.updateButton.addTarget(self , action: #selector(updateQuest), for: .touchUpInside)
         cell.updateButton.tag = indexPath.row
-            
+        // 셀 삭제 버튼 눌렀을때
         cell.deleteButton.addTarget(self, action: #selector(deleteQuest), for: .touchUpInside)
         cell.deleteButton.tag = indexPath.row
+        // 셀 완료 버튼 눌렀을때
+        cell.completeButtonPressed = { [weak self] (senderCell) in
+            
+            completedCheck.toggle()
+            completedToggle()
+            toggleExpAdd()
+            tableView.reloadData()
+        }
+        
+        func completedToggle() {
+            if var questData = cell.self.questData {
+                questData.completed = completedCheck
+                
+                self.coreManager?.updateQuest(newQuestData: questData){
+                    print("완료")
+                }
+            }
+        }
+        
+        func toggleExpAdd() {
+            if cell.questData!.completed {
+                todayExp += 20
+            } else {
+                todayExp -= 20
+            }
+        }
         
         cell.selectionStyle = .none
         return cell
     }
 }
+

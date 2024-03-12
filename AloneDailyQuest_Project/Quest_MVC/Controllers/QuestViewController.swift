@@ -114,11 +114,14 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var completedCheck = false
+        
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
         let questData = coreManager?.getQuestListFromCoreData() ?? []
         cell.questData = questData[indexPath.row]
+        
+        
+        var completedCheck = cell.questData!.completed
         
         // 테이블뷰 시작시 UI 기본 설정
         cell.repeatday.text = cell.questData?.repeatDay
@@ -169,6 +172,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             completedToggle()
             toggleExpAdd()
             tableView.reloadData()
+            print(self!.todayExp)
         }
         
         func completedToggle() {
@@ -177,15 +181,17 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 self.coreManager?.updateQuest(newQuestData: questData){
                     print("완료")
+                    
                 }
+                tableView.reloadData()
             }
         }
         
         func toggleExpAdd() {
             if cell.questData!.completed {
-                todayExp += 20
-            } else {
                 todayExp -= 20
+            } else {
+                todayExp += 20
             }
         }
         

@@ -71,6 +71,7 @@ final class DetailViewController: UIViewController {
     var day = ["월", "화", "수", "목", "금", "토", "일"]
     var repeatLabel = ""
     var isCompleted = false
+    var todayExp: Int64 = 0
     var questImage = "img_quest_ing"
     var expString = "보상 : 20xp"
     

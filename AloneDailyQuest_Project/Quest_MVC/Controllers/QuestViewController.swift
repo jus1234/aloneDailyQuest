@@ -26,15 +26,6 @@ final class QuestViewController: UIViewController{
     // 초기화 경험치
     var todayExp = 0
     
-    // 하루 경험치 량
-    func checkcExpOverLimit () -> String {
-        if todayExp < 100{
-            return "보상 : 20xp"
-        } else {
-            return "보상 : - "
-        }
-        
-    }
     
     override func loadView() {
         self.view = questView
@@ -74,7 +65,12 @@ final class QuestViewController: UIViewController{
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
             guard let indexPath = self.index else { return }
+            
             let questData = self.coreManager?.getQuestListFromCoreData() ?? []
+            if questData[sender.tag].completed {
+                self.todayExp -= 20
+                print(self.todayExp)
+            }
             self.coreManager?.deletQuest(data: questData[sender.tag], completion: {
                 print("삭제 완료")
                 self.reload()
@@ -126,9 +122,15 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         // 테이블뷰 시작시 UI 기본 설정
         cell.repeatday.text = cell.questData?.repeatDay
         cell.questTitle.text = cell.questData?.quest
-        cell.expAmount.text = checkcExpOverLimit()
         
         index = indexPath
+        
+        if todayExp < 100 {
+            cell.expAmount.text = "보상 : 20xp"
+        } else {
+            cell.expAmount.text = "보상 : - "
+        }
+
         
         // completed 데이터에 따라 UI설정하기
         if cell.questData!.completed {

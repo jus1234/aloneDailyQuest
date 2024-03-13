@@ -26,6 +26,10 @@ final class QuestViewController: UIViewController{
     // 초기화 경험치
     var todayExp = 0
     
+    func setExpState() {
+        let userInfo = UserDefaults.standard
+        userInfo.set(todayExp, forKey: "todayExp")
+    }
     
     override func loadView() {
         self.view = questView
@@ -87,11 +91,12 @@ final class QuestViewController: UIViewController{
 extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     
     
-    
     func currentDayOfWeek() -> Int {
         let today = Calendar.current.component(.weekday, from: Date())
-        return (today - 2 + 7) % 7
+        return (today + 5) % 7
     }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -113,6 +118,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
+        
         let questData = coreManager?.getQuestListFromCoreData() ?? []
         cell.questData = questData[indexPath.row]
         

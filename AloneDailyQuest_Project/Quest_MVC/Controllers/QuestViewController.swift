@@ -90,19 +90,15 @@ final class QuestViewController: UIViewController{
 
 extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     
-    
+    //월요일부터0
     func currentDayOfWeek() -> Int {
         let today = Calendar.current.component(.weekday, from: Date())
         return (today + 5) % 7
     }
     
-    func todayWeek() -> Int {
-        return Calendar.current.component(.weekday, from: Date())
-    }
-    
     func filterQuest() -> [QuestDataModel] {
         var quest = coreManager?.getQuestListFromCoreData()
-        return quest?.filter{ $0.selectedDate[currentDayOfWeek()] || Calendar.current.component(.weekday, from:  $0.date) == todayWeek() } ?? []
+        return quest?.filter{ $0.selectedDate[currentDayOfWeek()] || Calendar.current.component(.weekday, from:  $0.date) == Calendar.current.component(.weekday, from: Date()) } ?? []
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

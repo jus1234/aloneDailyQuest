@@ -70,7 +70,7 @@ final class QuestViewController: UIViewController{
         alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
             guard let indexPath = self.index else { return }
             
-            let questData = self.coreManager?.getQuestListFromCoreData() ?? []
+            let questData = self.filterQuest() ?? []
             if questData[sender.tag].completed {
                 self.todayExp -= 20
                 print(self.todayExp)
@@ -96,14 +96,21 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         return (today + 5) % 7
     }
     
+    func todayWeek() -> Int {
+        return Calendar.current.component(.weekday, from: Date())
+    }
     
+    func filterQuest() -> [QuestDataModel] {
+        var quest = coreManager?.getQuestListFromCoreData()
+        return quest?.filter{ $0.selectedDate[currentDayOfWeek()] || Calendar.current.component(.weekday, from:  $0.date) == todayWeek() } ?? []
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         
         
         print("numberOfRowsInSection")
-        let count = coreManager?.getQuestListFromCoreData().count
+        let count = filterQuest().count
         print(count)
         return count ?? 0
     }
@@ -119,7 +126,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
         
-        let questData = coreManager?.getQuestListFromCoreData() ?? []
+        let questData = filterQuest() ?? []
         cell.questData = questData[indexPath.row]
         
         

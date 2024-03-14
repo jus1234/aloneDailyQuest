@@ -11,13 +11,38 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var lastVisitDate: Date?
+    var coreManager: CoreDataManager? = nil
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        lastVisitDate = Date()
         return true
     }
-
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        checkAndDeleteOldData()
+        lastVisitDate = Date()
+    }
+    
+    func checkAndDeleteOldData() {
+        guard let lastVisitDate = lastVisitDate else { return }
+        
+        let currentDate = Date()
+        let calendar = Calendar.current
+        if !calendar.isDate(currentDate, inSameDayAs: lastVisitDate){
+            deleteOldData()
+        }
+    }
+    
+    func deleteOldData() {
+        //데이터 삭제하는 로직
+        coreManager?.deleteNonRepeatingQuestsForNewDay(completion: {
+            print("전날 데이터 삭제")
+        })
+    }
+    
     // MARK: UISceneSession Lifecycle
-
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.

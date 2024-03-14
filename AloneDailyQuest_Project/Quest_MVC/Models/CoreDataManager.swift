@@ -25,6 +25,40 @@ final class CoreDataManager {
     // 엔티티 이름 (코어데이터에 저장된 객체)
     let modelName: String = "QuestData"
     
+    // MARK: - [DELETE] 매일 자정 퀘스트데이터 삭제
+    func deleteNonRepeatingQuestsForNewDay(completion: @escaping () -> Void) {
+        // 임시저장소가 있는지 확인
+        if let context = context {
+            // 요청서
+            let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
+            request.predicate = NSPredicate(format: "isMonday == false && isTuesday == false && isWednesday == false && isThursday == false && isFriday == false && isSaturday == false && isSunday == false")
+            do {
+                // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
+                if let fetchedQuestList = try context.fetch(request) as? [QuestData] {
+                    
+                    print(fetchedQuestList)
+                    // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
+                    if let targetQuest = fetchedQuestList.first {
+                        print(targetQuest)
+                        context.delete(targetQuest)
+                        
+                        if context.hasChanges {
+                            do {
+                                try context.save()
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    }
+                }
+                completion()
+            } catch {
+                print("지우는 것 실패")
+                completion()
+            }
+        }
+    }
+    
     // MARK: - [READ] 코어데이터에 저장된 데이터 모두 읽어오기
     func getQuestListFromCoreData() -> [QuestDataModel] {
         var questList: [QuestDataModel] = []

@@ -14,27 +14,15 @@ final class QuestViewController: UIViewController{
     private let questView = QuestView()
     weak var delegate: delegateViewController? = nil
     weak var delegate2: UITableViewDelegate? = nil
-    
     let questManager = CoreDataManager.shared
-    
-    
-    var text: String = ""
-    
     var index: IndexPath?
-    
     
     // 초기화 경험치
     var todayExp = 0
     
-    func setExpState() {
-        let userInfo = UserDefaults.standard
-        userInfo.set(todayExp, forKey: "todayExp")
-    }
-    
     override func loadView() {
         self.view = questView
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,11 +36,10 @@ final class QuestViewController: UIViewController{
         super.viewWillAppear(animated)
         
     }
-    
+
     func setUp() {
         questView.plusButton.addTarget(self, action: #selector(addQuest), for: .touchUpInside)
     }
-    
     
     // 플러스 버튼 눌렀을때
     @objc func addQuest() {
@@ -70,7 +57,7 @@ final class QuestViewController: UIViewController{
         alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
             guard let indexPath = self.index else { return }
             
-            let questData = self.filterQuest() ?? []
+            let questData = self.filterQuest()
             if questData[sender.tag].completed {
                 self.todayExp -= 20
                 print(self.todayExp)
@@ -82,10 +69,7 @@ final class QuestViewController: UIViewController{
             
         }))
         self.present(alert, animated: true, completion: nil)
-        
     }
-    
-    
 }
 
 extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
@@ -96,19 +80,17 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         return (today + 5) % 7
     }
     
+    // 오늘 생성된 퀘스트 또는 선택된 요일에 해당하는 퀘스트 필터
     func filterQuest() -> [QuestDataModel] {
-        var quest = coreManager?.getQuestListFromCoreData()
+        let quest = coreManager?.getQuestListFromCoreData()
         return quest?.filter{ $0.selectedDate[currentDayOfWeek()] || Calendar.current.component(.weekday, from:  $0.date) == Calendar.current.component(.weekday, from: Date()) } ?? []
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
-        
         print("numberOfRowsInSection")
         let count = filterQuest().count
         print(count)
-        return count ?? 0
+        return count
     }
     
     func reload() {
@@ -118,14 +100,10 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
-        
         let questData = filterQuest() ?? []
         cell.questData = questData[indexPath.row]
-        
-        
+        print(cell.questData)
         var completedCheck = cell.questData!.completed
         
         // 테이블뷰 시작시 UI 기본 설정
@@ -140,7 +118,6 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             cell.expAmount.text = "보상 : - "
         }
 
-        
         // completed 데이터에 따라 UI설정하기
         if cell.questData!.completed {
             // 퀘스트 이미지 변경
@@ -154,7 +131,6 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             // 완료 버튼 UI변경
             cell.completeButton.setTitle("미완료하기", for: .normal)
             cell.completeButton.setTitleColor(UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00), for: .normal)
-            
         } else {
             // 퀘스트 이미지 변경
             cell.questImage.image = UIImage(named: "img_quest_ing")
@@ -167,9 +143,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             // 완료 버튼 UI변경
             cell.completeButton.setTitle("완료하기", for: .normal)
             cell.completeButton.setTitleColor(.black, for: .normal)
-            
         }
-        
         // 셀 업데이트 버튼 눌렀을때
         cell.updateButton.addTarget(self , action: #selector(updateQuest), for: .touchUpInside)
         cell.updateButton.tag = indexPath.row

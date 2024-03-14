@@ -30,15 +30,40 @@ final class QuestViewController: UIViewController{
         
         setUp()
         
+        if UserDefaults.standard.object(forKey: "lastVisitDate") == nil {
+            UserDefaults.standard.set(Date(), forKey: "lastVisitDate")
+        }
+        
+        checkAndDeleteOldData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
-
+    
     func setUp() {
         questView.plusButton.addTarget(self, action: #selector(addQuest), for: .touchUpInside)
+    }
+    
+    // 날짜 체크후 전날 데이터 삭제
+    func checkAndDeleteOldData() {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let lastVisitDate = UserDefaults.standard.object(forKey: "lastVisitDate") as? Date ?? currentDate
+        
+        if calendar.isDate(lastVisitDate, inSameDayAs: currentDate) == false {
+            deleteOldData()
+            
+            UserDefaults.standard.set(currentDate, forKey: "lastVisitDate")
+        }
+    }
+    
+    func deleteOldData() {
+        coreManager?.deleteNonRepeatingQuestsForNewDay(completion: {
+            print("전날 데이터 삭제")
+        })
     }
     
     // 플러스 버튼 눌렀을때

@@ -16,30 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        lastVisitDate = Date()
-        return true
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        checkAndDeleteOldData()
-        lastVisitDate = Date()
-    }
-    
-    func checkAndDeleteOldData() {
-        guard let lastVisitDate = lastVisitDate else { return }
         
-        let currentDate = Date()
-        let calendar = Calendar.current
-        if !calendar.isDate(currentDate, inSameDayAs: lastVisitDate){
-            deleteOldData()
-        }
-    }
-    
-    func deleteOldData() {
-        //데이터 삭제하는 로직
-        coreManager?.deleteNonRepeatingQuestsForNewDay(completion: {
-            print("전날 데이터 삭제")
-        })
+        return true
     }
     
     // MARK: UISceneSession Lifecycle

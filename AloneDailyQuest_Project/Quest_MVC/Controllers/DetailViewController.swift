@@ -23,6 +23,8 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -68,6 +70,10 @@ final class DetailViewController: UIViewController {
     var isDaySelected = [false, false, false, false, false, false, false]
     var day = ["월", "화", "수", "목", "금", "토", "일"]
     var repeatLabel = ""
+    var isCompleted = false
+    var todayExp: Int64 = 0
+    var questImage = "img_quest_ing"
+    var expString = "보상 : 20xp"
     
     func repeatLabelSet() -> String {
         for (index, bool) in isDaySelected.enumerated() {
@@ -123,6 +129,7 @@ final class DetailViewController: UIViewController {
             questData.selectedDate[6] = isDaySelected[6]
             questData.repeatDay = repeatLabel
             
+            
             questManager.updateQuest(newQuestData: questData) {
                 print("업데이트 완료")
                 // 다시 전화면으로 돌아가기
@@ -140,7 +147,7 @@ final class DetailViewController: UIViewController {
     
     
     func registerQuestForSelectedDays(questText: String, repeatLabel: String) {
-        let data = QuestDataModel(id: UUID(), quest: questText, selectedDate: isDaySelected, repeatDay: repeatLabel)
+        let data = QuestDataModel(id: UUID(), quest: questText, selectedDate: isDaySelected, repeatDay: repeatLabel, completed: isCompleted)
         questManager.saveQuestData(data: data, completion: {
             print("퀘스트가 등록되었습니다.")
             self.delegate?.moveView()

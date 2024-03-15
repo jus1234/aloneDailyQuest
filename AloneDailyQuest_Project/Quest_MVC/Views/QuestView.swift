@@ -69,14 +69,10 @@ final class QuestView: UIView {
         var button = UIButton()
         button.setImage(UIImage(named: "btn_plus_normal"), for: .normal)
         
-        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-        
+
         return button
     }()
    
-    @objc func buttonTapped(_ sender: UIButton) {
-        print("버튼 눌리는중")
-    }
     
     // 테이블 뷰 생성
     let tableBackView: UIView = {

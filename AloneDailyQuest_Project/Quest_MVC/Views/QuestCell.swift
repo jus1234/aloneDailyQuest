@@ -8,7 +8,8 @@
 import UIKit
 
 final class QuestCell: UITableViewCell {
-
+    
+    
     // MARK: - UI 설정 (퀘스트🍎윗부분 🍏아랫부분)
     let backView: UIImageView = {
         let view = UIImageView()
@@ -96,6 +97,7 @@ final class QuestCell: UITableViewCell {
         button.setTitle("완료하기", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(test), for: .touchUpInside)
+        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -202,6 +204,10 @@ final class QuestCell: UITableViewCell {
         deleteButton.isUserInteractionEnabled = true
     }
     
-    
+    var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
+        
+    @objc func completeButtonTapped(_ sender: UIButton) {
+            completeButtonPressed(self)
+    }
     
 }

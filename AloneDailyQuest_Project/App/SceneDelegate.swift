@@ -11,9 +11,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
     
     let coreManager = CoreDataManager.shared
     
+    // 월요일부터0
+    func currentDayOfWeek() -> Int {
+        let today = Calendar.current.component(.weekday, from: Date())
+        return (today + 5) % 7
+    }
+    
+    func filterQuest() -> [QuestDataModel] {
+        var quest = coreManager.getQuestListFromCoreData()
+        return quest.filter{ $0.selectedDate[currentDayOfWeek()] || Calendar.current.component(.weekday, from:  $0.date) == Calendar.current.component(.weekday, from: Date()) }
+    }
+    
     func updateQuest(indexPath: Int) {
         let detailVC = DetailViewController()
-        let selectedQuest = coreManager.getQuestListFromCoreData()[indexPath]
+        let selectedQuest = filterQuest()[indexPath]
         print(selectedQuest)
         detailVC.questData = selectedQuest
         detailVC.delegate = self

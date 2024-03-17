@@ -71,7 +71,7 @@ final class CoreDataManager {
                 // 임시저장소에서 (요청서를 통해서) 데이터를 가져오기 (fetch메서드)
                 if let fetchedQuestList = try context.fetch(request) as? [QuestData] {
                    questList = fetchedQuestList.map { data in
-                       return QuestDataModel(id: data.id ,quest: data.quest ?? "", selectedDate: [data.isMonday, data.isTuesday, data.isWednesday, data.isThursday, data.isFriday, data.isSaturday, data.isSunday], repeatDay: data.repeatDay ?? "", completed: data.completed)
+                       return QuestDataModel(id: data.id ,quest: data.quest ?? "", date: data.date ?? Date(), selectedDate: [data.isMonday, data.isTuesday, data.isWednesday, data.isThursday, data.isFriday, data.isSaturday, data.isSunday], repeatDay: data.repeatDay ?? "", completed: data.completed)
                    }
                 }
             } catch {

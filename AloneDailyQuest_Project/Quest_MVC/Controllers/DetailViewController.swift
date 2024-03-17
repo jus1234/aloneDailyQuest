@@ -144,10 +144,8 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    
-    
     func registerQuestForSelectedDays(questText: String, repeatLabel: String) {
-        let data = QuestDataModel(id: UUID(), quest: questText, selectedDate: isDaySelected, repeatDay: repeatLabel, completed: isCompleted)
+        let data = QuestDataModel(id: UUID(), quest: questText, date: Date(), selectedDate: isDaySelected, repeatDay: repeatLabel, completed: isCompleted)
         questManager.saveQuestData(data: data, completion: {
             print("퀘스트가 등록되었습니다.")
             self.delegate?.moveView()

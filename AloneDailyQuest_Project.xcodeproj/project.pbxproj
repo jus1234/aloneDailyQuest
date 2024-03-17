@@ -88,7 +88,6 @@
 		99233D5D2B2D6DBE000F9752 /* Quest_MVC */ = {
 			isa = PBXGroup;
 			children = (
-				995122F32B6BB48900F78AE7 /* Helpers */,
 				99233D5E2B2D6DD7000F9752 /* Models */,
 				99233D5F2B2D6DDE000F9752 /* Views */,
 				99233D602B2D6DE5000F9752 /* Controllers */,
@@ -124,13 +123,6 @@
 				994C590A2B50C1B900D5808B /* DetailViewController.swift */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		995122F32B6BB48900F78AE7 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		C10D6C442B2420B9005783BD /* Font */ = {

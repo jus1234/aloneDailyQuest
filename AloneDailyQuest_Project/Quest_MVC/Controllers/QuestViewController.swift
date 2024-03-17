@@ -126,9 +126,9 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
-        let questData = filterQuest() ?? []
+        let questData = filterQuest()
         cell.questData = questData[indexPath.row]
-        print(cell.questData)
+        print(cell.questData ?? [])
         var completedCheck = cell.questData!.completed
         
         // 테이블뷰 시작시 UI 기본 설정
@@ -136,7 +136,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         cell.questTitle.text = cell.questData?.quest
         
         index = indexPath
-        
+    
         if todayExp < 100 {
             cell.expAmount.text = "보상 : 20xp"
         } else {
@@ -199,8 +199,12 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         
         func toggleExpAdd() {
             if cell.questData!.completed {
+                APIService().requestAddExperience(userNickName: "sidi", userExperience: "-20") { result in
+                }
                 todayExp -= 20
             } else {
+                APIService().requestAddExperience(userNickName: "sidi", userExperience: "20") { result in
+                }
                 todayExp += 20
             }
         }

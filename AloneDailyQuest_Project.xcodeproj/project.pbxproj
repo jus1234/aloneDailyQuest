@@ -15,6 +15,9 @@
 		994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590C2B50C22E00D5808B /* QuestCell.swift */; };
 		994C590F2B50C25B00D5808B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590E2B50C25B00D5808B /* DetailView.swift */; };
 		997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CC2B2876C200999F6E /* QuestViewController.swift */; };
+		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
+		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
+		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
 		C10D6C4C2B242250005783BD /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* APIService.swift */; };
@@ -48,6 +51,9 @@
 		994C590C2B50C22E00D5808B /* QuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestCell.swift; sourceTree = "<group>"; };
 		994C590E2B50C25B00D5808B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		997B81CC2B2876C200999F6E /* QuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewController.swift; sourceTree = "<group>"; };
+		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
+		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
+		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
 		C10D6C4B2B242250005783BD /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -123,6 +129,40 @@
 				994C590A2B50C1B900D5808B /* DetailViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		BDC88B422BB0140900FA0A2F /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				BDC88B452BB0159700FA0A2F /* Models */,
+				BDC88B442BB0159200FA0A2F /* Views */,
+				BDC88B432BB0158900FA0A2F /* Controllers */,
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
+		BDC88B432BB0158900FA0A2F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		BDC88B442BB0159200FA0A2F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */,
+				BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BDC88B452BB0159700FA0A2F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		C10D6C442B2420B9005783BD /* Font */ = {
@@ -235,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
+				BDC88B422BB0140900FA0A2F /* Ranking */,
 				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C174B4952B2D6DC300692447 /* Account */,
 				C174B4922B2D4D3B00692447 /* Extension */,
@@ -330,11 +371,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */,
 				990F92EE2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift in Sources */,
 				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
+				BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */,
 				C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */,
 				C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */,
+				BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */,
 				C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */,
 				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
 				990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */,

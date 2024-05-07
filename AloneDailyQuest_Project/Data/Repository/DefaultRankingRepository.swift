@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DefaultRankingRepository: RankingRepository {
+final class DefaultRankingRepository: RankingRepository {
     private let networkService: NetworkService
     private let decorder: JSONDecoder = JSONDecoder()
     

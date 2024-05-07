@@ -15,6 +15,12 @@
 		994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590C2B50C22E00D5808B /* QuestCell.swift */; };
 		994C590F2B50C25B00D5808B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590E2B50C25B00D5808B /* DetailView.swift */; };
 		997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CC2B2876C200999F6E /* QuestViewController.swift */; };
+		BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */; };
+		BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */; };
+		BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0312BE9FF3F0076E564 /* NetworkService.swift */; };
+		BDB4A0342BE9FF700076E564 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0332BE9FF700076E564 /* API.swift */; };
+		BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0362BEA102D0076E564 /* UserInfoDTO.swift */; };
+		BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0382BEA19BA0076E564 /* UserIdRequestDTO.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
 		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
@@ -51,6 +57,12 @@
 		994C590C2B50C22E00D5808B /* QuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestCell.swift; sourceTree = "<group>"; };
 		994C590E2B50C25B00D5808B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		997B81CC2B2876C200999F6E /* QuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewController.swift; sourceTree = "<group>"; };
+		BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
+		BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		BDB4A0312BE9FF3F0076E564 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		BDB4A0332BE9FF700076E564 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		BDB4A0362BEA102D0076E564 /* UserInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoDTO.swift; sourceTree = "<group>"; };
+		BDB4A0382BEA19BA0076E564 /* UserIdRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdRequestDTO.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -129,6 +141,35 @@
 				994C590A2B50C1B900D5808B /* DetailViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		BDB4A02B2BE9FE230076E564 /* Infra */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A02C2BE9FE2B0076E564 /* Network */,
+			);
+			path = Infra;
+			sourceTree = "<group>";
+		};
+		BDB4A02C2BE9FE2B0076E564 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A0352BEA10150076E564 /* DTO */,
+				BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */,
+				BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */,
+				BDB4A0312BE9FF3F0076E564 /* NetworkService.swift */,
+				BDB4A0332BE9FF700076E564 /* API.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		BDB4A0352BEA10150076E564 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A0362BEA102D0076E564 /* UserInfoDTO.swift */,
+				BDB4A0382BEA19BA0076E564 /* UserIdRequestDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		BDC88B422BB0140900FA0A2F /* Ranking */ = {
@@ -274,6 +315,7 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
+				BDB4A02B2BE9FE230076E564 /* Infra */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
 				BDC88B422BB0140900FA0A2F /* Ranking */,
 				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
@@ -383,6 +425,7 @@
 				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
 				990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */,
 				994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */,
+				BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */,
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
 				990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */,
@@ -391,15 +434,20 @@
 				C10D6C4C2B242250005783BD /* APIService.swift in Sources */,
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
+				BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
+				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
+				BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
+				BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */,
 				C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
 				997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */,
 				994C590B2B50C1B900D5808B /* DetailViewController.swift in Sources */,
 				990BFD632B81D304001D8664 /* QuestView.swift in Sources */,
 				C1CD988A2B8F80F400ABD463 /* QuestDataModel.swift in Sources */,
+				BDB4A0342BE9FF700076E564 /* API.swift in Sources */,
 				C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

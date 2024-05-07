@@ -23,38 +23,46 @@ extension API {
         switch self {
         case .signup(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.post)
                 .setPath("signup")
                 .setBodyParameters(userId)
                 .build()
         case .checkId(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.post)
                 .setPath("check_id")
                 .setBodyParameters(userId)
                 .build()
         case .login(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.post)
                 .setPath("login")
                 .setBodyParameters(userId)
                 .build()
         case .member(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.get)
                 .setPath("member/ + \(userId.userId)")
                 .build()
         case .experience(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.get)
                 .setPath("experience/ + \(userId.userId)")
                 .build()
         case .addExperience(let user):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.post)
                 .setPath("add_experience")
                 .setBodyParameters(user)
                 .build()
         case .ranking:
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.get)
                 .setPath("ranking")
                 .build()
         case .myRanking(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
+                .setMethod(.get)
                 .setPath("ranking/ + \(userId.userId)")
                 .build()
         }

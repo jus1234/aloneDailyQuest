@@ -21,6 +21,9 @@
 		BDB4A0342BE9FF700076E564 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0332BE9FF700076E564 /* API.swift */; };
 		BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0362BEA102D0076E564 /* UserInfoDTO.swift */; };
 		BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0382BEA19BA0076E564 /* UserIdRequestDTO.swift */; };
+		BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A03D2BEA20F20076E564 /* DefaultRankingRepository.swift */; };
+		BDB4A0402BEA3C4B0076E564 /* MyRankingResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A03F2BEA3C4B0076E564 /* MyRankingResponseDTO.swift */; };
+		BDB4A0442BEA3E6B0076E564 /* RankingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0432BEA3E6B0076E564 /* RankingRepository.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
 		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
@@ -63,6 +66,9 @@
 		BDB4A0332BE9FF700076E564 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BDB4A0362BEA102D0076E564 /* UserInfoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoDTO.swift; sourceTree = "<group>"; };
 		BDB4A0382BEA19BA0076E564 /* UserIdRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdRequestDTO.swift; sourceTree = "<group>"; };
+		BDB4A03D2BEA20F20076E564 /* DefaultRankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRankingRepository.swift; sourceTree = "<group>"; };
+		BDB4A03F2BEA3C4B0076E564 /* MyRankingResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRankingResponseDTO.swift; sourceTree = "<group>"; };
+		BDB4A0432BEA3E6B0076E564 /* RankingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingRepository.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -168,8 +174,41 @@
 			children = (
 				BDB4A0362BEA102D0076E564 /* UserInfoDTO.swift */,
 				BDB4A0382BEA19BA0076E564 /* UserIdRequestDTO.swift */,
+				BDB4A03F2BEA3C4B0076E564 /* MyRankingResponseDTO.swift */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		BDB4A03A2BEA20D20076E564 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A03B2BEA20DA0076E564 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		BDB4A03B2BEA20DA0076E564 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A03D2BEA20F20076E564 /* DefaultRankingRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		BDB4A0412BEA3E1F0076E564 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A0422BEA3E380076E564 /* Interface */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		BDB4A0422BEA3E380076E564 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A0432BEA3E6B0076E564 /* RankingRepository.swift */,
+			);
+			path = Interface;
 			sourceTree = "<group>";
 		};
 		BDC88B422BB0140900FA0A2F /* Ranking */ = {
@@ -315,6 +354,8 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
+				BDB4A0412BEA3E1F0076E564 /* Domain */,
+				BDB4A03A2BEA20D20076E564 /* Data */,
 				BDB4A02B2BE9FE230076E564 /* Infra */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
 				BDC88B422BB0140900FA0A2F /* Ranking */,
@@ -414,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */,
+				BDB4A0402BEA3C4B0076E564 /* MyRankingResponseDTO.swift in Sources */,
 				990F92EE2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift in Sources */,
 				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
@@ -429,6 +471,7 @@
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
 				990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */,
+				BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
 				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
 				C10D6C4C2B242250005783BD /* APIService.swift in Sources */,
@@ -448,6 +491,7 @@
 				990BFD632B81D304001D8664 /* QuestView.swift in Sources */,
 				C1CD988A2B8F80F400ABD463 /* QuestDataModel.swift in Sources */,
 				BDB4A0342BE9FF700076E564 /* API.swift in Sources */,
+				BDB4A0442BEA3E6B0076E564 /* RankingRepository.swift in Sources */,
 				C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

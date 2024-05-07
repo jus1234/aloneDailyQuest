@@ -27,7 +27,10 @@ enum LoginError: Error {
     init?(errorMessage: String) {
         if errorMessage == "Invalid credentials" {
             self = .invalidCredentials
+        } else {
+            return nil
         }
+        
     }
 }
 
@@ -37,6 +40,8 @@ enum AccountError: Error {
     init?(errorMessage: String) {
         if errorMessage == "User not found" {
             self = .userNotFound
+        } else {
+            return nil
         }
     }
 }

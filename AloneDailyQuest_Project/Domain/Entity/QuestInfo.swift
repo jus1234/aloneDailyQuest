@@ -1,13 +1,13 @@
 //
-//  QuestData.swift
+//  QuestInfo.swift
 //  AloneDailyQuest_Project
 //
-//  Created by Matthew on 2/28/24.
+//  Created by Matthew on 5/8/24.
 //
 
 import Foundation
 
-struct QuestDataModel {
+struct QuestInfo {
     let id: UUID
     var quest: String
     var date: Date

@@ -32,6 +32,7 @@
 		BDB4A0502BEA4D0E0076E564 /* ErrorResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A04F2BEA4D0E0076E564 /* ErrorResponseDTO.swift */; };
 		BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0522BEA56710076E564 /* AccountError.swift */; };
 		BDB4A0572BEB316F0076E564 /* RankingUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */; };
+		BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
 		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
@@ -85,6 +86,7 @@
 		BDB4A04F2BEA4D0E0076E564 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
 		BDB4A0522BEA56710076E564 /* AccountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountError.swift; sourceTree = "<group>"; };
 		BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUsecase.swift; sourceTree = "<group>"; };
+		BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUsecase.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */,
+				BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
 				BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
+				BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */,
 				990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */,
 				BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,

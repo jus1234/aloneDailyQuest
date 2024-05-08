@@ -1,19 +1,19 @@
 import UIKit
 
 class ProfileBoxView: UIView {
-    lazy var backgroundView: UIImageView = {
+    private lazy var backgroundView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "img_profile_background")
         return view
     }()
     
-    lazy var profileImage: UIImageView = {
+    private lazy var profileImage: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "img_profile_Lv1-10")
         return view
     }()
     
-    lazy var nickNameTitleLabel: UILabel = {
+    private lazy var nickNameTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
@@ -21,7 +21,7 @@ class ProfileBoxView: UIView {
         return label
     }()
     
-    lazy var nickNameText: UILabel = {
+    private lazy var nickNameText: UILabel = {
         let label = UILabel()
         label.text = "매튜"
         label.font = UIFont(name: "DungGeunMo", size: 16)
@@ -30,7 +30,7 @@ class ProfileBoxView: UIView {
         return label
     }()
     
-    lazy var nickNameStackView: UIStackView = {
+    private lazy var nickNameStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [nickNameTitleLabel, nickNameText])
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
@@ -39,7 +39,7 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    lazy var levelTitleLabel: UILabel = {
+    private lazy var levelTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
@@ -47,7 +47,7 @@ class ProfileBoxView: UIView {
         return label
     }()
     
-    lazy var levelLabel: UILabel = {
+    private lazy var levelLabel: UILabel = {
         let label = UILabel()
         label.text = "LV.1"
         label.font = UIFont(name: "DungGeunMo", size: 16)
@@ -56,7 +56,7 @@ class ProfileBoxView: UIView {
         return label
     }()
     
-    lazy var levelStackView: UIStackView = {
+    private lazy var levelStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [levelTitleLabel, levelLabel])
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
@@ -65,7 +65,7 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    lazy var firstStackView: UIStackView = {
+    private lazy var firstStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [profileImage,nickNameStackView, levelStackView])
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
@@ -74,7 +74,7 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    lazy var experienceTitleLabel: UILabel = {
+    private lazy var experienceTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
@@ -82,7 +82,7 @@ class ProfileBoxView: UIView {
         return label
     }()
     
-    lazy var experienceBar: UIView = {
+    private lazy var experienceBar: UIView = {
         let view = UIView()
 
         let imageView = UIImageView()
@@ -120,13 +120,13 @@ class ProfileBoxView: UIView {
         return view
     }()
     
-    func setLevelBar(_ input: Int) -> CGFloat {
+    private func setLevelBar(_ input: Int) -> CGFloat {
         let result: CGFloat = CGFloat(input)
         
         return result
     }
     
-    lazy var secondStackView: UIStackView = {
+    private lazy var secondStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [experienceTitleLabel, experienceBar])
         stack.axis = .horizontal
         stack.distribution = .fill
@@ -135,7 +135,7 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    lazy var allStackView: UIStackView = {
+    private lazy var allStackView: UIStackView = {
        let stack = UIStackView(arrangedSubviews: [firstStackView, secondStackView])
         stack.axis = .vertical
         stack.distribution = .fillProportionally
@@ -154,12 +154,17 @@ class ProfileBoxView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addViews() {
+    func setupProfile(user: UserInfo) {
+        nickNameText.text = user.fetchNickName()
+        levelLabel.text = "LV.\(user.fetchLevel())"
+    }
+    
+    private func addViews() {
         self.addSubview(backgroundView)
         self.addSubview(allStackView)
     }
     
-    func autoLayoutConstraints() {
+    private func autoLayoutConstraints() {
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         backgroundView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

@@ -35,6 +35,7 @@
 		BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */; };
 		BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */; };
 		BDB4A0622BEB40370076E564 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0612BEB40370076E564 /* Observable.swift */; };
+		BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0632BEB40BD0076E564 /* ViewModel.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
 		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
@@ -91,6 +92,7 @@
 		BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUsecase.swift; sourceTree = "<group>"; };
 		BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		BDB4A0612BEB40370076E564 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		BDB4A0632BEB40BD0076E564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 			children = (
 				C174B4922B2D4D3B00692447 /* Extension */,
 				BDB4A0612BEB40370076E564 /* Observable.swift */,
+				BDB4A0632BEB40BD0076E564 /* ViewModel.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
 				BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */,
+				BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */,
 				C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,
 				997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */,
 				994C590B2B50C1B900D5808B /* DetailViewController.swift in Sources */,

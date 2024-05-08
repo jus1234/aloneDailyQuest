@@ -343,6 +343,14 @@ extension RankingViewController {
     }
     
     private func setupProfile(user: UserInfo) {
+        guard
+            let nickName = myRank.arrangedSubviews[1] as? UILabel,
+            let level = myRank.arrangedSubviews[2] as? UILabel
+        else {
+            return
+        }
+        nickName.text = user.fetchNickName()
+        level.text = "\(user.fetchLevel())"
         profileBoxView.setupProfile(user: user)
     }
     
@@ -360,7 +368,12 @@ extension RankingViewController {
     }
     
     private func setupMyRanking(myRanking: Int) {
-        print(myRanking)
+        guard 
+            let ranking = myRank.arrangedSubviews[0] as? UILabel
+        else {
+            return
+        }
+        ranking.text = "\(myRanking)"
     }
 }
 

@@ -9,5 +9,5 @@ import Foundation
 
 protocol RankingRepository {
     func fetchRanking() async throws -> [UserInfo]
-    func fetchUserRanking(userId: String) async throws -> Int
+    func fetchUserRanking(nickName: String) async throws -> Int
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol RankingUsecase {
     func fetch() async throws -> [UserInfo]
-    func fetchUserRanking(userId: String) async throws -> Int
+    func fetchUserRanking(nickName: String) async throws -> Int
 }
 
 final class DefaultRankingUsecase: RankingUsecase {
@@ -23,9 +23,7 @@ final class DefaultRankingUsecase: RankingUsecase {
         return try await repository.fetchRanking()
     }
     
-    func fetchUserRanking(userId: String) async throws -> Int {
-        return try await repository.fetchUserRanking(userId: userId)
+    func fetchUserRanking(nickName: String) async throws -> Int {
+        return try await repository.fetchUserRanking(nickName: nickName)
     }
-    
-    
 }

@@ -20,8 +20,8 @@ final class DefaultRankingRepository: RankingRepository {
         return try decorder.decode([UserInfoDTO].self, from: data).map { $0.toEntity() }
     }
     
-    func fetchUserRanking(userId: String) async throws -> Int {
-        let data = try await networkService.request(.myRanking(userId: UserIdRequestDTO(userId: userId)))
+    func fetchUserRanking(nickName: String) async throws -> Int {
+        let data = try await networkService.request(.myRanking(userId: UserIdRequestDTO(userId: nickName)))
         return try decorder.decode(MyRankingResponseDTO.self, from: data).ranking
     }
 }

@@ -33,6 +33,8 @@
 		BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0522BEA56710076E564 /* AccountError.swift */; };
 		BDB4A0572BEB316F0076E564 /* RankingUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */; };
 		BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */; };
+		BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */; };
+		BDB4A0622BEB40370076E564 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0612BEB40370076E564 /* Observable.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
 		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
@@ -87,6 +89,8 @@
 		BDB4A0522BEA56710076E564 /* AccountError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountError.swift; sourceTree = "<group>"; };
 		BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUsecase.swift; sourceTree = "<group>"; };
 		BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUsecase.swift; sourceTree = "<group>"; };
+		BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
+		BDB4A0612BEB40370076E564 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		BDB4A02B2BE9FE230076E564 /* Infra */ = {
 			isa = PBXGroup;
 			children = (
+				BDB4A0602BEB40060076E564 /* Util */,
 				BDB4A02C2BE9FE2B0076E564 /* Network */,
 			);
 			path = Infra;
@@ -263,6 +268,48 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		BDB4A05A2BEB3F300076E564 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A05B2BEB3F3C0076E564 /* Ranking */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		BDB4A05B2BEB3F3C0076E564 /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A05D2BEB3F4A0076E564 /* ViewModel */,
+				BDB4A05C2BEB3F450076E564 /* View */,
+			);
+			path = Ranking;
+			sourceTree = "<group>";
+		};
+		BDB4A05C2BEB3F450076E564 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BDB4A05D2BEB3F4A0076E564 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BDB4A0602BEB40060076E564 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				C174B4922B2D4D3B00692447 /* Extension */,
+				BDB4A0612BEB40370076E564 /* Observable.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		BDC88B422BB0140900FA0A2F /* Ranking */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,7 +323,6 @@
 		BDC88B432BB0158900FA0A2F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -405,6 +451,7 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
+				BDB4A05A2BEB3F300076E564 /* Presentation */,
 				BDB4A0412BEA3E1F0076E564 /* Domain */,
 				BDB4A03A2BEA20D20076E564 /* Data */,
 				BDB4A02B2BE9FE230076E564 /* Infra */,
@@ -412,7 +459,6 @@
 				BDC88B422BB0140900FA0A2F /* Ranking */,
 				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C174B4952B2D6DC300692447 /* Account */,
-				C174B4922B2D4D3B00692447 /* Extension */,
 				C10D6C4A2B2421D9005783BD /* Enum */,
 				C10D6C442B2420B9005783BD /* Font */,
 				C159E38C2B19671B00BB67F8 /* Models */,
@@ -535,11 +581,13 @@
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				BDB4A0462BEA498E0076E564 /* AccountRepository.swift in Sources */,
+				BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */,
 				BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
 				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
+				BDB4A0622BEB40370076E564 /* Observable.swift in Sources */,
 				BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
 				BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */,

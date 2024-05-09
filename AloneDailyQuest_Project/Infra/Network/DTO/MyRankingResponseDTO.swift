@@ -9,10 +9,10 @@ import Foundation
 
 struct MyRankingResponseDTO: Decodable {
     let userId: String
-    let ranking: Int
+    let rank: Int
     let experience: Int
     
     enum CodingKeys: String, CodingKey {
-        case userId, ranking, experience
+        case userId, rank, experience
     }
 }

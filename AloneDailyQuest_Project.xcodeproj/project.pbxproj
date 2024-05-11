@@ -15,6 +15,7 @@
 		994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590C2B50C22E00D5808B /* QuestCell.swift */; };
 		994C590F2B50C25B00D5808B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590E2B50C25B00D5808B /* DetailView.swift */; };
 		997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CC2B2876C200999F6E /* QuestViewController.swift */; };
+		BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */; };
 		BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */; };
 		BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */; };
 		BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0312BE9FF3F0076E564 /* NetworkService.swift */; };
@@ -50,7 +51,7 @@
 		C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE02B8F21160007C896 /* Bundle+Extension.swift */; };
 		C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE42B8F4B4C0007C896 /* TabView.swift */; };
 		C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */; };
-		C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* AccountViewController.swift */; };
+		C159E3932B1967AC00BB67F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* LoginViewController.swift */; };
 		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
 		C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AD2B61F646002EA255 /* UserInfo.swift */; };
 		C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AF2B61F737002EA255 /* UserInfoManager.swift */; };
@@ -76,6 +77,7 @@
 		994C590C2B50C22E00D5808B /* QuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestCell.swift; sourceTree = "<group>"; };
 		994C590E2B50C25B00D5808B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		997B81CC2B2876C200999F6E /* QuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewController.swift; sourceTree = "<group>"; };
+		BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		BDB4A0312BE9FF3F0076E564 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -110,7 +112,7 @@
 		C1479DE02B8F21160007C896 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		C1479DE42B8F4B4C0007C896 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
-		C159E3912B1967AC00BB67F8 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		C159E3912B1967AC00BB67F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C15C48AD2B61F646002EA255 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		C15C48AF2B61F737002EA255 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
@@ -339,7 +341,7 @@
 		BDB4A06D2BEE05DE0076E564 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C159E3912B1967AC00BB67F8 /* AccountViewController.swift */,
+				C159E3912B1967AC00BB67F8 /* LoginViewController.swift */,
 				C159E3952B1968F200BB67F8 /* LoginView.swift */,
 			);
 			path = View;
@@ -476,6 +478,7 @@
 				C1EB515A2B6B75DE00744F64 /* UIColor+.swift */,
 				C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */,
 				C1479DE02B8F21160007C896 /* Bundle+Extension.swift */,
+				BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -647,7 +650,8 @@
 				BDB4A0502BEA4D0E0076E564 /* ErrorResponseDTO.swift in Sources */,
 				BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */,
 				C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */,
-				C159E3932B1967AC00BB67F8 /* AccountViewController.swift in Sources */,
+				C159E3932B1967AC00BB67F8 /* LoginViewController.swift in Sources */,
+				BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */,
 				990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */,
 				994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */,
 				BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */,

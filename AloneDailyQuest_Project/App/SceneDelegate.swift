@@ -54,7 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, delegateViewController 
         window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
         
         // 프로필 뷰
-        let mainViewController = AccountViewController()
+        let mainViewController = LoginViewController()
         
         mainViewController.delegate = self
         

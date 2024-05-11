@@ -17,11 +17,13 @@ class LoginViewModel: ViewModel {
     struct Output {
         var isValidNickName: Observable<Bool?>
         var isSignupSucess: Observable<Bool?>
+        var errorMessage: Observable<String>
     }
     
     private let usecase: AccountUsecase
     private var isValidNickName: Observable<Bool?> = Observable(false)
     private var isSignupSucess: Observable<Bool?> = Observable(false)
+    private var errorMessage: Observable<String> = Observable("")
     
     init(usecase: AccountUsecase) {
         self.usecase = usecase
@@ -30,16 +32,19 @@ class LoginViewModel: ViewModel {
     func transform(input: Input) -> Output {
         input.signupEvent.bind { [weak self] nickName in
             Task {
-                self?.isSignupSucess.value = try await self?.signup(nickName: nickName)
+                do {
+                    self?.isSignupSucess.value = try await self?.signup(nickName: nickName)
+                } catch {
+                    self?.errorMessage.value = error.localizedDescription
+                }
             }
         }
-        
         input.nickNameValidationEvent.bind { [weak self] nickName in
             self?.isValidNickName.value = self?.vaildateNickname(nickName)
         }
-        
         return .init(isValidNickName: isValidNickName,
-                      isSignupSucess: isSignupSucess)
+                     isSignupSucess: isSignupSucess,
+                     errorMessage: errorMessage)
     }
     
     private func signup(nickName: String) async throws -> Bool {

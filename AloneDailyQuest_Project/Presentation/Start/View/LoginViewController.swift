@@ -173,6 +173,9 @@ extension LoginViewController {
             }
             self?.delegate?.moveView()
         }
+        output.errorMessage.bind { [weak self] error in
+            self?.completedAlert(message: error)
+        }
     }
 }
 

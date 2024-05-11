@@ -9,7 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    lazy var startButton: UIButton = {
+    private lazy var startButton: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    lazy var validationText: UILabel = {
+    private lazy var validationText: UILabel = {
         var text = UILabel()
         text.font = UIFont(name: "DungGeunMo", size: 14)
         text.textAlignment = .center
@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
         return text
     }()
     
-    lazy var nickNameTextField: UITextField = {
+    private lazy var nickNameTextField: UITextField = {
         var tf = UITextField()
         tf.frame = CGRect(x: 0, y: 0, width: 350, height: 50)
         tf.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
         return tf
     }()
     
-    lazy var info2Text: UILabel = {
+    private lazy var info2Text: UILabel = {
         var text = UILabel()
         text.frame = CGRect(x: 0, y: 0, width: 222, height: 12)
         text.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
@@ -61,7 +61,7 @@ class LoginViewController: UIViewController {
         return text
     }()
     
-    lazy var infoText: UILabel = {
+    private lazy var infoText: UILabel = {
         var text = UILabel()
         text.frame = CGRect(x: 0, y: 0, width: 279, height: 18)
         text.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -78,14 +78,14 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    lazy var nickNameImageView: UIImageView = {
+    private lazy var nickNameImageView: UIImageView = {
         var view = UIImageView()
         view.frame = CGRect(x: 0, y: 0, width: 394, height: 204)
         view.image = UIImage(named: "img_account_background")
         return view
     }()
     
-    var logoText: UILabel = {
+    private var logoText: UILabel = {
         var label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -106,7 +106,7 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    var logoBackgroundText: UILabel = {
+    private var logoBackgroundText: UILabel = {
         var label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -177,19 +177,19 @@ extension LoginViewController {
 }
 
 extension LoginViewController {
-    func setupAddTarget() {
+    private func setupAddTarget() {
         startButton.addTarget(self, action: #selector(signup), for: .touchUpInside)
         nickNameTextField.addTarget(self, action: #selector(checkText(_:)), for: .editingChanged)
     }
     
-    @objc func checkText(_ textField: UITextField) {
+    @objc private func checkText(_ textField: UITextField) {
         guard let nickName = textField.text else {
             return
         }
         input.signupEvent.value = nickName
     }
     
-    @objc func signup() {
+    @objc private func signup() {
         guard let nickName = nickNameTextField.text else {
             return
         }

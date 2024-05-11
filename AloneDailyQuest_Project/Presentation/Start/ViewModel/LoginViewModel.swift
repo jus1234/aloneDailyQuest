@@ -27,7 +27,7 @@ class LoginViewModel: ViewModel {
         self.usecase = usecase
     }
     
-    func transform(input: Input) async -> Output {
+    func transform(input: Input) -> Output {
         input.signupEvent.bind { [weak self] nickName in
             Task {
                 self?.isSignupSucess.value = try await self?.signup(nickName: nickName)

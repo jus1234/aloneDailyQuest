@@ -36,6 +36,7 @@
 		BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */; };
 		BDB4A0622BEB40370076E564 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0612BEB40370076E564 /* Observable.swift */; };
 		BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0632BEB40BD0076E564 /* ViewModel.swift */; };
+		BDB4A0752BEE0AF70076E564 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0742BEE0AF70076E564 /* LoginViewModel.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
 		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
@@ -96,6 +97,7 @@
 		BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		BDB4A0612BEB40370076E564 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		BDB4A0632BEB40BD0076E564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		BDB4A0742BEE0AF70076E564 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
 		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
@@ -282,6 +284,9 @@
 		BDB4A05A2BEB3F300076E564 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BDB4A06F2BEE07630076E564 /* Common */,
+				BDB4A0712BEE08340076E564 /* Profile */,
+				BDB4A06C2BEE05D10076E564 /* Start */,
 				BDB4A05B2BEB3F3C0076E564 /* Ranking */,
 			);
 			path = Presentation;
@@ -320,6 +325,75 @@
 				BDB4A0632BEB40BD0076E564 /* ViewModel.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		BDB4A06C2BEE05D10076E564 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A06E2BEE05E20076E564 /* ViewModel */,
+				BDB4A06D2BEE05DE0076E564 /* View */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		BDB4A06D2BEE05DE0076E564 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C159E3912B1967AC00BB67F8 /* AccountViewController.swift */,
+				C159E3952B1968F200BB67F8 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BDB4A06E2BEE05E20076E564 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C15C48AF2B61F737002EA255 /* UserInfoManager.swift */,
+				BDB4A0742BEE0AF70076E564 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BDB4A06F2BEE07630076E564 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A0702BEE076A0076E564 /* View */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		BDB4A0702BEE076A0076E564 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C1479DE42B8F4B4C0007C896 /* TabView.swift */,
+				C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BDB4A0712BEE08340076E564 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				BDB4A0732BEE08500076E564 /* ViewModel */,
+				BDB4A0722BEE084B0076E564 /* View */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		BDB4A0722BEE084B0076E564 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C12358F22B723BA80084FE36 /* ProfileView.swift */,
+				C12358F42B7250FD0084FE36 /* ProfileViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BDB4A0732BEE08500076E564 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		BDC88B422BB0140900FA0A2F /* Ranking */ = {
@@ -419,7 +493,6 @@
 		C174B4962B2D6DCD00692447 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C15C48AF2B61F737002EA255 /* UserInfoManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -427,10 +500,6 @@
 		C174B4972B2D6DD800692447 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C159E3952B1968F200BB67F8 /* LoginView.swift */,
-				C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */,
-				C12358F22B723BA80084FE36 /* ProfileView.swift */,
-				C1479DE42B8F4B4C0007C896 /* TabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,8 +507,6 @@
 		C174B4982B2D6DDE00692447 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C159E3912B1967AC00BB67F8 /* AccountViewController.swift */,
-				C12358F42B7250FD0084FE36 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -576,6 +643,7 @@
 				BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */,
 				C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */,
 				C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */,
+				BDB4A0752BEE0AF70076E564 /* LoginViewModel.swift in Sources */,
 				BDB4A0502BEA4D0E0076E564 /* ErrorResponseDTO.swift in Sources */,
 				BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */,
 				C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */,

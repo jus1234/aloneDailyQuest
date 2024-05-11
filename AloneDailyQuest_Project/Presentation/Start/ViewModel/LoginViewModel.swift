@@ -20,8 +20,8 @@ class LoginViewModel: ViewModel {
     }
     
     private let usecase: AccountUsecase
-    var isValidNickName: Observable<Bool?> = Observable(false)
-    var isSignupSucess: Observable<Bool?> = Observable(false)
+    private var isValidNickName: Observable<Bool?> = Observable(false)
+    private var isSignupSucess: Observable<Bool?> = Observable(false)
     
     init(usecase: AccountUsecase) {
         self.usecase = usecase
@@ -43,7 +43,11 @@ class LoginViewModel: ViewModel {
     }
     
     private func signup(nickName: String) async throws -> Bool {
-        return try await usecase.checkId(userId: nickName)
+        let result = try await usecase.checkId(userId: nickName)
+        if result {
+            try await usecase.signup(userId: nickName)
+        }
+        return result
     }
     
     private func vaildateNickname(_ text: String) -> Bool {

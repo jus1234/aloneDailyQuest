@@ -11,7 +11,7 @@ import Foundation
 class LoginViewModel: ViewModel {
     struct Input {
         var signupEvent: Observable<String>
-        var nickNameTextFieldChangeEvent: Observable<String>
+        var nickNameValidationEvent: Observable<String>
     }
     
     struct Output {
@@ -34,7 +34,7 @@ class LoginViewModel: ViewModel {
             }
         }
         
-        input.nickNameTextFieldChangeEvent.bind { [weak self] nickName in
+        input.nickNameValidationEvent.bind { [weak self] nickName in
             self?.isValidNickName.value = self?.vaildateNickname(nickName)
         }
         

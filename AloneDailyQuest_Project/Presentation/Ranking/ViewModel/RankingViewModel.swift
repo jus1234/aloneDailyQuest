@@ -14,28 +14,26 @@ final class RankingViewModel: ViewModel {
     }
     
     struct Output {
-        var userInfo: Observable<UserInfo>
+        var userInfo: Observable<UserInfo?>
         var rankingList: Observable<[UserInfo]>
         var myRanking: Observable<Int>
         var errorMessage: Observable<String>
     }
     
     private let usecase: RankingUsecase
-    private let user: Observable<UserInfo>
+    private let user: Observable<UserInfo?> = Observable(nil)
     private var rankingList: Observable<[UserInfo]> = Observable([])
     private var myRanking: Observable<Int> = Observable(0)
     private var errorMessage: Observable<String> = Observable("")
     
-    init(usecase: RankingUsecase, user: UserInfo) {
+    init(usecase: RankingUsecase) {
         self.usecase = usecase
-        self.user = Observable(user)
     }
     
     func transform(input: Input) -> Output {
         input.viewDidLoad.bind { [weak self] _ in
             self?.viewDidLoad()
         }
-        
         return .init(userInfo: user,
                      rankingList: rankingList,
                      myRanking: myRanking,
@@ -50,9 +48,10 @@ final class RankingViewModel: ViewModel {
     
     private func fetchRanking() async {
         do {
-            user.value = user.value
             rankingList.value = try await usecase.fetch()
-            myRanking.value = try await usecase.fetchUserRanking(nickName: user.value.fetchNickName())
+            myRanking.value = try await usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "")
+            user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                                  experience: UserDefaults.standard.integer(forKey: "experience"))
         } catch {
             errorMessage.value = error.localizedDescription
         }

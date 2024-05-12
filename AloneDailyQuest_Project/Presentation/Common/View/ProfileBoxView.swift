@@ -144,6 +144,8 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
+    var user: Observable<UserInfo?>?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
@@ -154,9 +156,17 @@ class ProfileBoxView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupProfile(user: UserInfo) {
-        nickNameText.text = user.fetchNickName()
-        levelLabel.text = "LV.\(user.fetchLevel())"
+    private func bindExperience() {
+        user?.bind { [weak self] newValue in
+            self?.levelLabel.text = "LV. \(newValue?.fetchLevel())"
+        }
+    }
+    
+    func setupProfile(user: Observable<UserInfo?>) {
+        self.user = user
+        nickNameText.text = user.value?.fetchNickName()
+        levelLabel.text = "LV.\(user.value?.fetchLevel())"
+        bindExperience()
     }
     
     private func addViews() {

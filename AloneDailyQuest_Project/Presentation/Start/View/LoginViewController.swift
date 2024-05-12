@@ -1,9 +1,15 @@
+//
+//  AccountViewController.swift
+//  AloneDailyQuest_Project
+//
+//  Created by Matthew on 12/1/23.
+//
 
 import UIKit
 
-class LoginView: UIView {
-    
-    lazy var startButton: UIButton = {
+class LoginViewController: UIViewController {
+
+    private lazy var startButton: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
@@ -22,10 +28,11 @@ class LoginView: UIView {
         button.titleLabel!.layer.shadowOpacity = 1.0
         button.titleLabel!.layer.shadowRadius = 0
         button.titleLabel!.layer.masksToBounds = false
+        button.isEnabled = false
         return button
     }()
     
-    lazy var validationText: UILabel = {
+    private lazy var validationText: UILabel = {
         var text = UILabel()
         text.font = UIFont(name: "DungGeunMo", size: 14)
         text.textAlignment = .center
@@ -33,7 +40,7 @@ class LoginView: UIView {
         return text
     }()
     
-    lazy var nickNameTextField: UITextField = {
+    private lazy var nickNameTextField: UITextField = {
         var tf = UITextField()
         tf.frame = CGRect(x: 0, y: 0, width: 350, height: 50)
         tf.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
@@ -42,7 +49,7 @@ class LoginView: UIView {
         return tf
     }()
     
-    lazy var info2Text: UILabel = {
+    private lazy var info2Text: UILabel = {
         var text = UILabel()
         text.frame = CGRect(x: 0, y: 0, width: 222, height: 12)
         text.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
@@ -54,7 +61,7 @@ class LoginView: UIView {
         return text
     }()
     
-    lazy var infoText: UILabel = {
+    private lazy var infoText: UILabel = {
         var text = UILabel()
         text.frame = CGRect(x: 0, y: 0, width: 279, height: 18)
         text.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -71,14 +78,14 @@ class LoginView: UIView {
         return view
     }()
     
-    lazy var nickNameImageView: UIImageView = {
+    private lazy var nickNameImageView: UIImageView = {
         var view = UIImageView()
         view.frame = CGRect(x: 0, y: 0, width: 394, height: 204)
         view.image = UIImage(named: "img_account_background")
         return view
     }()
     
-    var logoText: UILabel = {
+    private var logoText: UILabel = {
         var label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -99,7 +106,7 @@ class LoginView: UIView {
         return label
     }()
     
-    var logoBackgroundText: UILabel = {
+    private var logoBackgroundText: UILabel = {
         var label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -120,26 +127,104 @@ class LoginView: UIView {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addViews()
-        autoLayoutConstraints()
+    weak var delegate: delegateViewController? = nil
+    private let viewModel: LoginViewModel
+    private lazy var input = LoginViewModel.Input(signupEvent: Observable(""),
+                                                  nickNameValidationEvent: Observable(""))
+    private lazy var output = viewModel.transform(input: input)
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addViews()
+        autoLayoutConstraints()
+        setupAddTarget()
+        setupAutoLayout()
+        configureUI()
+        bindOutput()
+    }
+}
+
+extension LoginViewController {
+    private func bindOutput() {
+        output.isValidNickName.bind { [weak self] isValid in
+            guard let isValid, !isValid else {
+                self?.startButton.isEnabled = false
+                self?.validationText.text = "잘못된 형식의 닉네임입니다."
+                self?.validationText.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+                return
+            }
+            self?.startButton.isEnabled = true
+            self?.validationText.text = "올바른 닉네임입니다."
+            self?.validationText.textColor = UIColor(hexCode: "21C131")
+        }
+        output.isSignupSucess.bind { [weak self] result in
+            guard let result, !result else {
+                self?.completedAlert(message: "중복된 닉네임입니다.")
+                return
+            }
+            self?.delegate?.moveView()
+        }
+        output.errorMessage.bind { [weak self] error in
+            self?.completedAlert(message: error)
+        }
+    }
+}
+
+extension LoginViewController {
+    private func setupAddTarget() {
+        startButton.addTarget(self, action: #selector(signup), for: .touchUpInside)
+        nickNameTextField.addTarget(self, action: #selector(checkText(_:)), for: .editingChanged)
+    }
+    
+    @objc private func checkText(_ textField: UITextField) {
+        guard let nickName = textField.text else {
+            return
+        }
+        input.signupEvent.value = nickName
+    }
+    
+    @objc private func signup() {
+        guard let nickName = nickNameTextField.text else {
+            return
+        }
+        input.signupEvent.value = nickName
+    }
+    
+    
+}
+
+extension LoginViewController {
+    func configureUI() {
+        view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
+    }
+    
+    func setupAutoLayout() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.leadingAnchor.constraint(equalTo: super.view.leadingAnchor, constant: 0).isActive = true
+        view.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 0).isActive = true
+        view.trailingAnchor.constraint(equalTo: super.view.trailingAnchor, constant: 0).isActive = true
+        view.bottomAnchor.constraint(equalTo: super.view.bottomAnchor, constant: 0).isActive = true
+    }
+    
     func addViews() {
-        addSubview(logoBackgroundText)
-        addSubview(logoText)
-        addSubview(backgroundBottomImageView)
-        addSubview(nickNameImageView)
-        addSubview(nickNameTextField)
-        addSubview(infoText)
-        addSubview(info2Text)
-        addSubview(validationText)
-        addSubview(startButton)
+        view.addSubview(logoBackgroundText)
+        view.addSubview(logoText)
+        view.addSubview(backgroundBottomImageView)
+        view.addSubview(nickNameImageView)
+        view.addSubview(nickNameTextField)
+        view.addSubview(infoText)
+        view.addSubview(info2Text)
+        view.addSubview(validationText)
+        view.addSubview(startButton)
         
     }
     func autoLayoutConstraints() {
@@ -155,21 +240,21 @@ class LoginView: UIView {
         
         logoText.widthAnchor.constraint(equalToConstant: 200).isActive = true
         logoText.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        logoText.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        logoText.topAnchor.constraint(equalTo: topAnchor, constant: 120).isActive = true
+        logoText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logoText.topAnchor.constraint(equalTo: view.topAnchor, constant: 120).isActive = true
         
         logoBackgroundText.widthAnchor.constraint(equalToConstant: 200).isActive = true
         logoBackgroundText.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        logoBackgroundText.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -3).isActive = true
-        logoBackgroundText.topAnchor.constraint(equalTo: topAnchor, constant: 123).isActive = true
+        logoBackgroundText.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -3).isActive = true
+        logoBackgroundText.topAnchor.constraint(equalTo: view.topAnchor, constant: 123).isActive = true
         
         backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
-        backgroundBottomImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        backgroundBottomImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         nickNameImageView.widthAnchor.constraint(equalToConstant: 394).isActive = true
         nickNameImageView.heightAnchor.constraint(equalToConstant: 204).isActive = true
-        nickNameImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        nickNameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nickNameImageView.topAnchor.constraint(equalTo: logoBackgroundText.bottomAnchor, constant: 60).isActive = true
         
         infoText.widthAnchor.constraint(equalToConstant: 279).isActive = true
@@ -191,20 +276,6 @@ class LoginView: UIView {
         validationText.centerXAnchor.constraint(equalTo: nickNameImageView.centerXAnchor).isActive = true
         
         startButton.topAnchor.constraint(equalTo: nickNameImageView.bottomAnchor, constant: 36).isActive = true
-        startButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-    }
-}
-
-extension UILabel {
-    func setLineSpacing(spacing: CGFloat) {
-        guard let text = text else { return }
-
-        let attributeString = NSMutableAttributedString(string: text)
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = spacing
-        attributeString.addAttribute(.paragraphStyle,
-                                     value: style,
-                                     range: NSRange(location: 0, length: attributeString.length))
-        attributedText = attributeString
+        startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 }

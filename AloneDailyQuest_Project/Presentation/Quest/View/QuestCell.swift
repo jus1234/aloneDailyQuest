@@ -121,7 +121,7 @@ final class QuestCell: UITableViewCell {
     }()
     
     // QuestData를 전달받을 변수 (전달 받으면 ==> 표시하는 메서드 실행) ⭐️
-    var questData: QuestDataModel? {
+    var questData: QuestInfo? {
         didSet {
             configureUIwithData()
         }

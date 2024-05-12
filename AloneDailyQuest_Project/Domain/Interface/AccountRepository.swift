@@ -10,8 +10,6 @@ import Foundation
 protocol AccountRepository {
     func signup(userId: String) async throws
     func checkId(userId: String) async throws -> Bool
-    func login(userId: String) async throws -> Bool
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
-    func addExperience(user: UserInfo) async throws -> Int
 }

@@ -340,10 +340,12 @@ extension RankingViewController {
         output.errorMessage.bind { [weak self] errorMessage in
             self?.completedAlert(message: "네트워크 오류가 발생했습니다.")
         }
+        profileBoxView.setupProfile(user: output.userInfo)
     }
     
-    private func setupProfile(user: UserInfo) {
+    private func setupProfile(user: UserInfo?) {
         guard
+            let user,
             let nickName = myRank.arrangedSubviews[1] as? UILabel,
             let level = myRank.arrangedSubviews[2] as? UILabel
         else {
@@ -351,7 +353,7 @@ extension RankingViewController {
         }
         nickName.text = user.fetchNickName()
         level.text = "\(user.fetchLevel())"
-        profileBoxView.setupProfile(user: user)
+        profileBoxView.user?.value = user
     }
     
     private func setupRankingTable(rankingList: [UserInfo]) {

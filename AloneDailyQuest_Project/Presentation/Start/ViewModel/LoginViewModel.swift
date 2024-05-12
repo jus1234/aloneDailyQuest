@@ -51,6 +51,8 @@ class LoginViewModel: ViewModel {
         let result = try await usecase.checkId(userId: nickName)
         if result {
             try await usecase.signup(userId: nickName)
+            UserDefaults.standard.set(nickName, forKey: "nickName")
+            UserDefaults.standard.setValue(0, forKey: "experience")
         }
         return result
     }

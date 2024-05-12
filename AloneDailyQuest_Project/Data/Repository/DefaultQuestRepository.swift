@@ -9,9 +9,13 @@ import CoreData
 import UIKit
 
 final class DefaultQuestRepository: QuestRepository {
-    static let sheard = DefaultQuestRepository()
+    private let networkService: NetworkService
+    private let decorder: JSONDecoder = JSONDecoder()
     
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "AloneDailyQuest_Project")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -21,17 +25,15 @@ final class DefaultQuestRepository: QuestRepository {
         })
         return container
     }()
-    private lazy var context = self.appDelegate?.persistentContainer.viewContext
+    private lazy var context: NSManagedObjectContext = {
+        return persistentContainer.viewContext
+    }()
     private let modelName: String = "QuestData"
 }
 
 // MARK: - Public Method
 extension DefaultQuestRepository {
     func createQuest(questInfo: QuestInfo) async throws {
-        guard let context = context else {
-            throw NSError(domain: "Error : Coredata not found context error", code: 0)
-        }
-        
         guard let entity = NSEntityDescription.entity(forEntityName: self.modelName, in: context) else {
             throw NSError(domain: "Error : Coredata not found entity quest error", code: 0)
         }
@@ -61,10 +63,6 @@ extension DefaultQuestRepository {
     func readQuest() async throws -> [QuestInfo] {
         var questList: [QuestInfo] = []
         
-        guard let context = context else {
-            throw NSError(domain: "Error : Coredata not found context error", code: 0)
-        }
-        
         let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
         
         guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
@@ -89,10 +87,6 @@ extension DefaultQuestRepository {
     }
     
     func updateQuest(newQuestInfo: QuestInfo) async throws {
-        guard let context = context else {
-            throw NSError(domain: "Error : Coredata not found context error", code: 0)
-        }
-        
         let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
         request.predicate = NSPredicate(format: "id = %@", newQuestInfo.id as CVarArg)
         
@@ -103,6 +97,7 @@ extension DefaultQuestRepository {
         guard let targetQuest = fetchedQuestList.first else {
             throw NSError(domain: "Error : Coredata not found first fetch data error", code: 0)
         }
+        
         targetQuest.quest = newQuestInfo.quest
         targetQuest.isMonday = newQuestInfo.selectedDate[0]
         targetQuest.isTuesday = newQuestInfo.selectedDate[1]
@@ -120,10 +115,6 @@ extension DefaultQuestRepository {
     }
     
     func deleteQuest(questInfo: QuestInfo) async throws {
-        guard let context = context else {
-            throw NSError(domain: "Error : Coredata not found context error", code: 0)
-        }
-        
         let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
         request.predicate = NSPredicate(format: "id = %@", questInfo.id as CVarArg)
         
@@ -142,10 +133,6 @@ extension DefaultQuestRepository {
     }
     
     func repeatingQuestNewDay() async throws {
-        guard let context = context else {
-            throw NSError(domain: "Error : Coredata not found context error", code: 0)
-        }
-        
         let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
         request.predicate = NSPredicate(format: "isMonday == false && isTuesday == false && isWednesday == false && isThursday == false && isFriday == false && isSaturday == false && isSunday == false")
         
@@ -161,5 +148,21 @@ extension DefaultQuestRepository {
         if context.hasChanges {
             try context.save()
         }
+    }
+    
+    func fetchUserInfo(userId: String) async throws -> UserInfo {
+        let data = try await networkService.request(.member(userId: UserIdRequestDTO(userId: userId)))
+        return try decorder.decode(UserInfoDTO.self, from: data).toEntity()
+    }
+    
+    func fetchExperience(userId: String) async throws -> Int {
+        let data = try await networkService.request(.experience(userId: UserIdRequestDTO(userId: userId)))
+        return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
+    }
+    
+    func addExperience(user: UserInfo) async throws -> Int {
+        let data = try await networkService.request(.addExperience(user: UserInfoDTO(userId: user.fetchNickName(),
+                                                                                     experience: user.fetchExperience())))
+        return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
     }
 }

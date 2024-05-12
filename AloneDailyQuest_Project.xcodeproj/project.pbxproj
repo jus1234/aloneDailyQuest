@@ -10,7 +10,6 @@
 		990BFD632B81D304001D8664 /* QuestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990BFD622B81D304001D8664 /* QuestView.swift */; };
 		990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */; };
 		990F92EE2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */; };
-		990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990F92EF2B4BFB1900F175C7 /* CoreDataManager.swift */; };
 		994C590B2B50C1B900D5808B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590A2B50C1B900D5808B /* DetailViewController.swift */; };
 		994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590C2B50C22E00D5808B /* QuestCell.swift */; };
 		994C590F2B50C25B00D5808B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590E2B50C25B00D5808B /* DetailView.swift */; };
@@ -39,8 +38,6 @@
 		BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0632BEB40BD0076E564 /* ViewModel.swift */; };
 		BDB4A0752BEE0AF70076E564 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0742BEE0AF70076E564 /* LoginViewModel.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
-		BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */; };
-		BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
 		C10D6C4C2B242250005783BD /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* APIService.swift */; };
@@ -65,6 +62,8 @@
 		C1E8ED3A2BEB9CAF00EA8B26 /* QuestUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8ED392BEB9CAF00EA8B26 /* QuestUsecase.swift */; };
 		C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EB515A2B6B75DE00744F64 /* UIColor+.swift */; };
 		C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */; };
+		C1F3D1252BEE039900EC1B26 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3D1242BEE039900EC1B26 /* QuestViewModel.swift */; };
+		C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3D1262BEE3E9A00EC1B26 /* DetailViewModel.swift */; };
 		C1FC22A92B8F17F40077D6FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1FC22A82B8F17F40077D6FC /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +71,6 @@
 		990BFD622B81D304001D8664 /* QuestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestView.swift; sourceTree = "<group>"; };
 		990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuestData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuestData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		990F92EF2B4BFB1900F175C7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		994C590A2B50C1B900D5808B /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		994C590C2B50C22E00D5808B /* QuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestCell.swift; sourceTree = "<group>"; };
 		994C590E2B50C25B00D5808B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -101,8 +99,6 @@
 		BDB4A0632BEB40BD0076E564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BDB4A0742BEE0AF70076E564 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
-		BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewCell.swift; sourceTree = "<group>"; };
-		BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
 		C10D6C4B2B242250005783BD /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -128,6 +124,8 @@
 		C1E8ED392BEB9CAF00EA8B26 /* QuestUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestUsecase.swift; sourceTree = "<group>"; };
 		C1EB515A2B6B75DE00744F64 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		C1F3D1242BEE039900EC1B26 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
+		C1F3D1262BEE3E9A00EC1B26 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		C1FC22A82B8F17F40077D6FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1FC22C62B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AloneDailyQuest_Project.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,45 +141,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		99233D5D2B2D6DBE000F9752 /* Quest_MVC */ = {
-			isa = PBXGroup;
-			children = (
-				99233D5E2B2D6DD7000F9752 /* Models */,
-				99233D5F2B2D6DDE000F9752 /* Views */,
-				99233D602B2D6DE5000F9752 /* Controllers */,
-			);
-			path = Quest_MVC;
-			sourceTree = "<group>";
-		};
-		99233D5E2B2D6DD7000F9752 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */,
-				990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */,
-				990F92EF2B4BFB1900F175C7 /* CoreDataManager.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		99233D5F2B2D6DDE000F9752 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				990BFD622B81D304001D8664 /* QuestView.swift */,
-				994C590C2B50C22E00D5808B /* QuestCell.swift */,
-				994C590E2B50C25B00D5808B /* DetailView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		99233D602B2D6DE5000F9752 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				997B81CC2B2876C200999F6E /* QuestViewController.swift */,
-				994C590A2B50C1B900D5808B /* DetailViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		BDB4A02B2BE9FE230076E564 /* Infra */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +245,7 @@
 		BDB4A05A2BEB3F300076E564 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				C1F3D1202BEE031700EC1B26 /* Quest */,
 				BDB4A06F2BEE07630076E564 /* Common */,
 				BDB4A0712BEE08340076E564 /* Profile */,
 				BDB4A06C2BEE05D10076E564 /* Start */,
@@ -538,8 +498,6 @@
 				BDB4A03A2BEA20D20076E564 /* Data */,
 				BDB4A02B2BE9FE230076E564 /* Infra */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
-				BDC88B422BB0140900FA0A2F /* Ranking */,
-				99233D5D2B2D6DBE000F9752 /* Quest_MVC */,
 				C174B4952B2D6DC300692447 /* Account */,
 				C10D6C4A2B2421D9005783BD /* Enum */,
 				C10D6C442B2420B9005783BD /* Font */,
@@ -549,6 +507,38 @@
 				C1FC22C22B8F1F890077D6FC /* App */,
 			);
 			path = AloneDailyQuest_Project;
+			sourceTree = "<group>";
+		};
+		C1F3D1202BEE031700EC1B26 /* Quest */ = {
+			isa = PBXGroup;
+			children = (
+				C1F3D1222BEE032700EC1B26 /* View */,
+				C1F3D1212BEE032100EC1B26 /* ViewModel */,
+			);
+			path = Quest;
+			sourceTree = "<group>";
+		};
+		C1F3D1212BEE032100EC1B26 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */,
+				990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */,
+				C1F3D1242BEE039900EC1B26 /* QuestViewModel.swift */,
+				C1F3D1262BEE3E9A00EC1B26 /* DetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C1F3D1222BEE032700EC1B26 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				997B81CC2B2876C200999F6E /* QuestViewController.swift */,
+				994C590A2B50C1B900D5808B /* DetailViewController.swift */,
+				990BFD622B81D304001D8664 /* QuestView.swift */,
+				994C590C2B50C22E00D5808B /* QuestCell.swift */,
+				994C590E2B50C25B00D5808B /* DetailView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		C1FC22C22B8F1F890077D6FC /* App */ = {
@@ -633,7 +623,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDC88B4B2BB016EC00FA0A2F /* RankingView.swift in Sources */,
 				BDB4A0402BEA3C4B0076E564 /* MyRankingResponseDTO.swift in Sources */,
 				C1E8ED3A2BEB9CAF00EA8B26 /* QuestUsecase.swift in Sources */,
 				990F92EE2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift in Sources */,
@@ -648,7 +637,6 @@
 				C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */,
 				BDB4A0752BEE0AF70076E564 /* LoginViewModel.swift in Sources */,
 				BDB4A0502BEA4D0E0076E564 /* ErrorResponseDTO.swift in Sources */,
-				BDC88B492BB016BC00FA0A2F /* RankingTableViewCell.swift in Sources */,
 				C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */,
 				C159E3932B1967AC00BB67F8 /* LoginViewController.swift in Sources */,
 				BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */,
@@ -659,9 +647,9 @@
 				BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
 				BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */,
-				990F92F02B4BFB1900F175C7 /* CoreDataManager.swift in Sources */,
 				BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
+				C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */,
 				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
 				C10D6C4C2B242250005783BD /* APIService.swift in Sources */,
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
@@ -671,6 +659,7 @@
 				BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
 				C1E8ED382BEB9C6500EA8B26 /* QuestRepository.swift in Sources */,
+				C1F3D1252BEE039900EC1B26 /* QuestViewModel.swift in Sources */,
 				C1E8ED362BEB9C4F00EA8B26 /* DefaultQuestRepository.swift in Sources */,
 				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,

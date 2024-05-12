@@ -10,10 +10,8 @@ import Foundation
 protocol AccountUsecase {
     func signup(userId: String) async throws
     func checkId(userId: String) async throws -> Bool
-    func login(userId: String) async throws -> Bool
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
-    func addExperience(user: UserInfo) async throws -> Int
 }
 
 final class DefaultAccountUsecase: AccountUsecase {
@@ -31,10 +29,6 @@ final class DefaultAccountUsecase: AccountUsecase {
         return try await repository.checkId(userId: userId)
     }
     
-    func login(userId: String) async throws -> Bool {
-        return try await repository.checkId(userId: userId)
-    }
-    
     func fetchUserInfo(userId: String) async throws -> UserInfo {
         return try await repository.fetchUserInfo(userId: userId)
     }
@@ -42,10 +36,4 @@ final class DefaultAccountUsecase: AccountUsecase {
     func fetchExperience(userId: String) async throws -> Int {
         return try await repository.fetchExperience(userId: userId)
     }
-    
-    func addExperience(user: UserInfo) async throws -> Int {
-        return try await repository.addExperience(user: user)
-    }
-    
-    
 }

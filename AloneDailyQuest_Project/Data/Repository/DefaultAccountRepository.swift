@@ -34,21 +34,6 @@ final class DefaultAccountRepository: AccountRepository {
         return try decorder.decode(CheckIdResponseDTO.self, from: data).exists
     }
     
-    func login(userId: String) async throws -> Bool {
-        let data = try await networkService.request(.login(userId: UserIdRequestDTO(userId: userId)))
-        do {
-            _ = try decorder.decode(LoginResponseDTO.self, from: data)
-            return true
-        } catch {
-            do {
-                _ = try decorder.decode(ErrorResponseDTO.self, from: data)
-                throw LoginError.invalidCredentials
-            } catch {
-                throw error
-            }
-        }
-    }
-    
     func fetchUserInfo(userId: String) async throws -> UserInfo {
         let data = try await networkService.request(.member(userId: UserIdRequestDTO(userId: userId)))
         return try decorder.decode(UserInfoDTO.self, from: data).toEntity()
@@ -64,7 +49,5 @@ final class DefaultAccountRepository: AccountRepository {
                                                                                      experience: user.fetchExperience())))
         return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
     }
-    
-    
 }
 

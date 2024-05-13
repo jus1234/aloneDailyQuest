@@ -44,6 +44,9 @@
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
 		C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F22B723BA80084FE36 /* ProfileView.swift */; };
 		C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F42B7250FD0084FE36 /* ProfileViewController.swift */; };
+		C131B3C82BF0A4E000020CFE /* ProfileUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3C72BF0A4E000020CFE /* ProfileUsecase.swift */; };
+		C131B3CA2BF0A58700020CFE /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3C92BF0A58700020CFE /* ProfileRepository.swift */; };
+		C131B3CC2BF0A61D00020CFE /* DefaultProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3CB2BF0A61D00020CFE /* DefaultProfileRepository.swift */; };
 		C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1FC22C52B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodeld */; };
 		C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE02B8F21160007C896 /* Bundle+Extension.swift */; };
 		C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE42B8F4B4C0007C896 /* TabView.swift */; };
@@ -105,6 +108,9 @@
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C12358F42B7250FD0084FE36 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C131B3C72BF0A4E000020CFE /* ProfileUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUsecase.swift; sourceTree = "<group>"; };
+		C131B3C92BF0A58700020CFE /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
+		C131B3CB2BF0A61D00020CFE /* DefaultProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileRepository.swift; sourceTree = "<group>"; };
 		C1479DE02B8F21160007C896 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		C1479DE42B8F4B4C0007C896 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
@@ -191,6 +197,7 @@
 				BDB4A03D2BEA20F20076E564 /* DefaultRankingRepository.swift */,
 				BDB4A04D2BEA4B9D0076E564 /* DefaultAccountRepository.swift */,
 				C1E8ED352BEB9C4F00EA8B26 /* DefaultQuestRepository.swift */,
+				C131B3CB2BF0A61D00020CFE /* DefaultProfileRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -211,6 +218,7 @@
 				BDB4A0432BEA3E6B0076E564 /* RankingRepository.swift */,
 				BDB4A0452BEA498E0076E564 /* AccountRepository.swift */,
 				C1E8ED372BEB9C6500EA8B26 /* QuestRepository.swift */,
+				C131B3C92BF0A58700020CFE /* ProfileRepository.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -229,6 +237,7 @@
 				BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */,
 				BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */,
 				C1E8ED392BEB9CAF00EA8B26 /* QuestUsecase.swift */,
+				C131B3C72BF0A4E000020CFE /* ProfileUsecase.swift */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -356,39 +365,6 @@
 			children = (
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		BDC88B422BB0140900FA0A2F /* Ranking */ = {
-			isa = PBXGroup;
-			children = (
-				BDC88B452BB0159700FA0A2F /* Models */,
-				BDC88B442BB0159200FA0A2F /* Views */,
-				BDC88B432BB0158900FA0A2F /* Controllers */,
-			);
-			path = Ranking;
-			sourceTree = "<group>";
-		};
-		BDC88B432BB0158900FA0A2F /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		BDC88B442BB0159200FA0A2F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				BDC88B482BB016BC00FA0A2F /* RankingTableViewCell.swift */,
-				BDC88B4A2BB016EC00FA0A2F /* RankingView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		BDC88B452BB0159700FA0A2F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		C10D6C442B2420B9005783BD /* Font */ = {
@@ -647,6 +623,8 @@
 				BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
 				BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */,
+				C131B3CA2BF0A58700020CFE /* ProfileRepository.swift in Sources */,
+				C131B3CC2BF0A61D00020CFE /* DefaultProfileRepository.swift in Sources */,
 				BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
 				C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */,
@@ -656,6 +634,7 @@
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				BDB4A0462BEA498E0076E564 /* AccountRepository.swift in Sources */,
 				BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */,
+				C131B3C82BF0A4E000020CFE /* ProfileUsecase.swift in Sources */,
 				BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
 				C1E8ED382BEB9C6500EA8B26 /* QuestRepository.swift in Sources */,

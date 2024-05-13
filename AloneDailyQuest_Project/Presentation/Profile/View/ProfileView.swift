@@ -6,13 +6,9 @@
 //
 
 import UIKit
+//import SwiftUI
 
 class ProfileView: UIView {
-    
-    var xpList: [Int] = [10, 20, 30, 40, 50, 60, 70]
-    
-    let profileBoxView: UIView = ProfileBoxView()
-    
     private lazy var backgroundBottomImageView: UIImageView = {
         var view = UIImageView()
         
@@ -60,616 +56,259 @@ class ProfileView: UIView {
         return label
     }()
     
-    let monthlyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("6개월간", for: .normal)
-        button.isSelected = false
-        button.setTitleFont(font: UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 40))
-        button.setTitleColor(UIColor(hexCode: "000000", alpha: 1), for: .selected)
-        button.setTitleColor(UIColor(hexCode: "CEB291", alpha: 1), for: .normal)
-        button.titleLabel?.attributedText = NSMutableAttributedString(string: "6개월간", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
-        button.addTarget(self, action: #selector(selectMonthlyButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    func startList() {
-        dailyButton.isSelected.toggle()
-        let listView: [UIStackView] = [xp1StackView, xp2StackView, xp3StackView, xp4StackView, xp5StackView, xp6StackView, xp7StackView]
-        
-        for view in listView {
-            centerStackView.addArrangedSubview(view)
-        }
-    }
-    
-    @objc func selectMonthlyButtonTapped(_ sender: UIButton) {
-        for button in [monthlyButton, dailyButton] {
-            button.isSelected = false
-        }
-        
-        sender.isSelected.toggle()
-        
-        let deleteListStackView: [UIStackView] = [xp1StackView, xp2StackView, xp3StackView, xp4StackView, xp5StackView, xp6StackView, xp7StackView]
-        
-        let updateListStackView: [UIStackView] = [xp1StackView, xp2StackView, xp3StackView, xp4StackView, xp5StackView, xp6StackView]
-        
-        if sender.isSelected {
-            deleteStackView(with: deleteListStackView)
-            updateStackView(with: updateListStackView)
-        }
-    }
-    
-    @objc func selectDailyButtonTapped(_ sender: UIButton) {
-        for button in [monthlyButton, dailyButton] {
-            button.isSelected = false
-        }
-        
-        sender.isSelected.toggle()
-        let deleteListStackView: [UIStackView] = [xp1StackView, xp2StackView, xp3StackView, xp4StackView, xp5StackView, xp6StackView, xp7StackView]
-        
-        let updateListStackView: [UIStackView] = [xp1StackView, xp2StackView, xp3StackView, xp4StackView, xp5StackView, xp6StackView, xp7StackView]
-        
-        if sender.isSelected {
-            deleteStackView(with: deleteListStackView)
-            updateStackView(with: updateListStackView)
-        }
-    }
-    
-    func deleteStackView(with views: [UIStackView]) {
-        for view in views {
-            view.removeFromSuperview()
-        }
-        guard let currentView = currentXpView, currentView.superview == self else { return }
-        currentView.removeFromSuperview()
-        currentXpView = nil
-    }
-    
-    func updateStackView(with views: [UIStackView]) {
-        for view in views {
-            centerStackView.addArrangedSubview(view)
-        }
-    }
-    
-    let dailyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("일별", for: .normal)
-        button.isSelected = false
-        button.setTitleFont(font: UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 16))
-        button.setTitleColor(UIColor(hexCode: "000000", alpha: 1), for: .selected)
-        button.setTitleColor(UIColor(hexCode: "CEB291", alpha: 1), for: .normal)
-        button.titleLabel?.attributedText = NSMutableAttributedString(string: "일별", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
-        button.addTarget(self, action: #selector(selectDailyButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    var currentXpView: UIImageView?
-    
-    lazy var xp1StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar1Button, xpBar1Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar1Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar1Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[0])).isActive = true
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[0])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp1ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp1ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[0])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var xp2StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar2Button, xpBar2Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar2Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar2Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[1])).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[1])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp2ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp2ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[1])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var xp3StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar3Button, xpBar3Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar3Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar3Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[2])).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[2])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp3ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp3ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[2])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var xp4StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar4Button, xpBar4Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar4Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar4Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[3])).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[3])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp4ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp4ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[3])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var xp5StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar5Button, xpBar5Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar5Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar5Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[4])).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[4])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp5ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp5ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[4])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var xp6StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar6Button, xpBar6Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar6Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar6Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[5])).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[5])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp6ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp6ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[5])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var xp7StackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [xpBar7Button, xpBar7Title])
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 10
-        return stack
-    }()
-    
-    lazy var xpBar7Title: UILabel = {
-        let label = UILabel()
-        label.text = "02.23"
-        label.font = UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.textColor = .black
-        return label
-    }()
-    
-    lazy var xpBar7Button: UIButton = {
-        let button = UIButton()
-        let backgroungImage = UIImage(named: "img_greenXpBar_background")
-        
-        let view = UIImageView(image: backgroungImage)
-        
-        button.addSubview(view)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.heightAnchor.constraint(equalToConstant: CGFloat(xpList[6])).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: CGFloat(xpList[6])).isActive = true
-        view.centerXAnchor.constraint(equalTo: button.centerXAnchor).isActive = true
-        
-        button.addTarget(self, action: #selector(xp7ViewTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func xp7ViewTapped(_ sender: UIView) {
-        if let currentView = currentXpView, currentView.superview == self {
-            currentView.removeFromSuperview()
-            currentXpView = nil
-        } else {
-            let view = UIImageView()
-            let label = UILabel()
-            label.textAlignment = .center
-            let attrString = NSAttributedString(
-                string: "\(xpList[6])xp",
-                attributes: [
-                    NSAttributedString.Key.foregroundColor: UIColor(hexCode: "A04802", alpha: 1),
-                    NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14),
-                ]
-            )
-            label.attributedText = attrString
-            
-            view.addSubview(label)
-            view.contentMode = .center
-            view.image = UIImage(named: "img_background_histoty_xp")
-            
-            self.addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 11).isActive = true
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-            
-            view.bottomAnchor.constraint(equalTo: sender.topAnchor).isActive = true
-            view.centerXAnchor.constraint(equalTo: sender.centerXAnchor).isActive = true
-            
-            currentXpView = view
-        }
-    }
-    
-    lazy var centerStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .bottom
-        return stack
-    }()
-    
-    lazy var topStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [dailyButton, monthlyButton])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    
-    lazy var backgroundView: UIImageView = {
+    private lazy var profileImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "img_background_history")
+        view.image = UIImage(named: "img_profile_Lv1-10")
+        return view
+    }()
+    
+    private lazy var nickNameTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "71380A")
+        label.attributedText = NSMutableAttributedString(string: "닉네임", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+        return label
+    }()
+    
+    private lazy var nickNameText: UILabel = {
+        let label = UILabel()
+        label.text = "매튜"
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "000000")
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var nickNameStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [nickNameTitleLabel, nickNameText])
+        stack.axis = .horizontal
+        stack.distribution = .fillProportionally
+        stack.alignment = .fill
+        stack.spacing = 10
+        return stack
+    }()
+    
+    private lazy var levelTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "71380A")
+        label.attributedText = NSMutableAttributedString(string: "레벨", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+        return label
+    }()
+    
+    private lazy var levelLabel: UILabel = {
+        let label = UILabel()
+        label.text = "LV.1"
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "000000")
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var levelStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [levelTitleLabel, levelLabel])
+        stack.axis = .horizontal
+        stack.distribution = .fillProportionally
+        stack.alignment = .fill
+        stack.spacing = 20
+        return stack
+    }()
+    
+    private lazy var infoStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [nickNameStackView, levelStackView])
+        stack.axis = .vertical
+        stack.distribution = .fillProportionally
+        stack.alignment = .fill
+        stack.spacing = 10
+        return stack
+    }()
+    
+    private lazy var firstStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [profileImage, infoStackView])
+        stack.axis = .horizontal
+        stack.distribution = .fillProportionally
+        stack.alignment = .fill
+        stack.spacing = 16
+        return stack
+    }()
+    
+    private lazy var experienceTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "71380A")
+        label.attributedText = NSMutableAttributedString(string: "경험치", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+        return label
+    }()
+    
+    private lazy var experienceBar: UIView = {
+        let view = UIView()
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "img_level_bar")
+        imageView.contentMode = .center
+        imageView.frame = CGRect(x: 0, y: 0, width: 270, height: 18)
+        
+        let label = UILabel()
+        label.text = "1/10"
+        label.textColor = UIColor(hexCode: "000000")
+        label.font = UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        label.sizeToFit()
+        label.center = view.center
+        label.textAlignment = .center
+        
+        let totalHeight = max(imageView.frame.size.height, label.frame.size.height)
+        view.frame = CGRect(x: 0, y: 0, width: 270, height: totalHeight)
+
+        imageView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
+        label.center = imageView.center
+
+        let firstHalfLayer = CALayer()
+        firstHalfLayer.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
+        firstHalfLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
+        
+        let secondHalfLayer = CALayer()
+        secondHalfLayer.backgroundColor = UIColor.clear.cgColor
+        secondHalfLayer.frame = CGRect(x: view.bounds.width / 10, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
+        
+        view.layer.addSublayer(firstHalfLayer)
+        view.layer.addSublayer(secondHalfLayer)
+        view.addSubview(imageView)
+        view.addSubview(label)
+
+        return view
+    }()
+    
+    private lazy var secondStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [experienceTitleLabel, experienceBar])
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.spacing = 16
+        return stack
+    }()
+    
+    private lazy var userInfoStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [firstStackView, secondStackView])
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.spacing = 16
+        return stack
+    }()
+    
+    private lazy var limitExperienceTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "71380A")
+        label.attributedText = NSMutableAttributedString(string: "일일 경험치한계", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+        return label
+    }()
+    
+    private lazy var limitExperienceNumerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "100"
+        label.font = UIFont(name: "DungGeunMo", size: 16)
+        label.textColor = UIColor(hexCode: "000000")
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var limitExperienceInfoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "DungGeunMo", size: 12)
+        label.text = "* 일일 경험치한계를 넘은 경험치는 추가되지 않습니다."
+        label.textColor = UIColor(hexCode: "FF0000")
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var limitExperienceFirstStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [limitExperienceTitleLabel, limitExperienceNumerLabel])
+        stack.axis = .horizontal
+        stack.distribution = .fillProportionally
+        stack.alignment = .fill
+        stack.spacing = 10
+        return stack
+    }()
+    
+    private lazy var limitExperienceAllStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [limitExperienceFirstStackView, limitExperienceInfoLabel])
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.alignment = .fill
+        stack.spacing = 10
+        return stack
+    }()
+    
+    lazy var profileView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "img_profilePage_background")
         view.contentMode = .scaleAspectFit
         return view
     }()
 
-    let customButton: UIButton = {
+    let lineView1: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hexCode: "E9D8C0")
+        return view
+    }()
+    
+    let lineView2: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hexCode: "E9D8C0")
+        return view
+    }()
+    
+    let lineView3: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hexCode: "E9D8C0")
+        return view
+    }()
+    
+    let lineView4: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hexCode: "E9D8C0")
+        return view
+    }()
+    
+    let noticeButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.contentHorizontalAlignment = .left
+        button.setTitle("공지사항", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        
+        button.setImage(UIImage(named: "btn_arrow_normal"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 320, bottom: 0, right: 0)
+
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    
+    let contactButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
         button.contentHorizontalAlignment = .left
         button.setTitle("문의하기", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        
+        button.setImage(UIImage(named: "btn_arrow_normal"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 320, bottom: 0, right: 0)
+
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let leaveButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.contentHorizontalAlignment = .left
+        button.setTitle("회원탈퇴", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 16)
         
@@ -689,7 +328,6 @@ class ProfileView: UIView {
         super.init(frame: frame)
         addViews()
         autoLayoutConstraints()
-        startList()
     }
     
     required init?(coder: NSCoder) {
@@ -697,49 +335,100 @@ class ProfileView: UIView {
     }
     
     func addViews() {
-        addSubview(profileBoxView)
         addSubview(backgroundBottomImageView)
         addSubview(titleBackgroundText)
         addSubview(titleText)
-        addSubview(backgroundView)
-        addSubview(topStackView)
-        addSubview(centerStackView)
-        addSubview(customButton)
+        addSubview(profileView)
+        addSubview(userInfoStackView)
+        addSubview(lineView1)
+        addSubview(limitExperienceAllStackView)
+        addSubview(lineView2)
+        addSubview(noticeButton)
+        addSubview(lineView3)
+        addSubview(contactButton)
+        addSubview(lineView4)
+        addSubview(leaveButton)
     }
     
     func autoLayoutConstraints() {
-        profileBoxView.translatesAutoresizingMaskIntoConstraints = false
         backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
         titleText.translatesAutoresizingMaskIntoConstraints = false
         titleBackgroundText.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
-        centerStackView.translatesAutoresizingMaskIntoConstraints = false
+        profileView.translatesAutoresizingMaskIntoConstraints = false
+        userInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        nickNameText.translatesAutoresizingMaskIntoConstraints = false
+        levelLabel.translatesAutoresizingMaskIntoConstraints = false
+        lineView1.translatesAutoresizingMaskIntoConstraints = false
+        limitExperienceAllStackView.translatesAutoresizingMaskIntoConstraints = false
+        limitExperienceNumerLabel.translatesAutoresizingMaskIntoConstraints = false
+        limitExperienceTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        lineView2.translatesAutoresizingMaskIntoConstraints = false
+        noticeButton.translatesAutoresizingMaskIntoConstraints = false
+        lineView3.translatesAutoresizingMaskIntoConstraints = false
+        contactButton.translatesAutoresizingMaskIntoConstraints = false
+        lineView4.translatesAutoresizingMaskIntoConstraints = false
+        leaveButton.translatesAutoresizingMaskIntoConstraints = false
         
-        customButton.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 30).isActive = true
-        customButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20).isActive = true
-        customButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20).isActive = true
-        customButton.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -20).isActive = true
+        leaveButton.topAnchor.constraint(equalTo: lineView4.bottomAnchor, constant: 16).isActive = true
+        leaveButton.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        leaveButton.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 24).isActive = true
+        leaveButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
         
-        centerStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor).isActive = true
-        centerStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 6).isActive = true
-        centerStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        centerStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -76).isActive = true
+        lineView4.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        lineView4.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 7).isActive = true
+        lineView4.trailingAnchor.constraint(equalTo: profileView.trailingAnchor
+                                            , constant: -3).isActive = true
+        lineView4.topAnchor.constraint(equalTo: contactButton.bottomAnchor, constant: 16).isActive = true
         
-        topStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor).isActive = true
-        topStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
-        topStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        topStackView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        contactButton.topAnchor.constraint(equalTo: lineView3.bottomAnchor, constant: 16).isActive = true
+        contactButton.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        contactButton.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 24).isActive = true
+        contactButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
         
-        backgroundView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        backgroundView.topAnchor.constraint(equalTo: profileBoxView.bottomAnchor, constant: 20).isActive = true
-        backgroundView.widthAnchor.constraint(equalToConstant: 374).isActive = true
-        backgroundView.heightAnchor.constraint(equalToConstant: 404).isActive = true
+        lineView3.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        lineView3.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 7).isActive = true
+        lineView3.trailingAnchor.constraint(equalTo: profileView.trailingAnchor
+                                            , constant: -3).isActive = true
+        lineView3.topAnchor.constraint(equalTo: noticeButton.bottomAnchor, constant: 16).isActive = true
         
-        profileBoxView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        profileBoxView.topAnchor.constraint(equalTo: titleBackgroundText.bottomAnchor, constant: 20).isActive = true
-        profileBoxView.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        profileBoxView.heightAnchor.constraint(equalToConstant: 104).isActive = true
+        noticeButton.topAnchor.constraint(equalTo: lineView2.bottomAnchor, constant: 16).isActive = true
+        noticeButton.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        noticeButton.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 24).isActive = true
+        noticeButton.heightAnchor.constraint(equalToConstant: 14).isActive = true
+        
+        lineView2.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        lineView2.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 7).isActive = true
+        lineView2.trailingAnchor.constraint(equalTo: profileView.trailingAnchor
+                                            , constant: -3).isActive = true
+        lineView2.topAnchor.constraint(equalTo: limitExperienceAllStackView.bottomAnchor, constant: 16).isActive = true
+        
+        limitExperienceTitleLabel.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        limitExperienceNumerLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        limitExperienceAllStackView.topAnchor.constraint(equalTo: lineView1.bottomAnchor
+                                                         , constant: 16).isActive = true
+        limitExperienceAllStackView.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 24).isActive = true
+        
+        
+        lineView1.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        lineView1.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 7).isActive = true
+        lineView1.trailingAnchor.constraint(equalTo: profileView.trailingAnchor
+                                            , constant: -3).isActive = true
+        lineView1.topAnchor.constraint(equalTo: userInfoStackView.bottomAnchor, constant: 16).isActive = true
+        
+        nickNameText.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        levelLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        profileImage.widthAnchor.constraint(equalToConstant: 46).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 46).isActive = true
+        
+        userInfoStackView.topAnchor.constraint(equalTo: profileView.topAnchor, constant: 20).isActive = true
+        userInfoStackView.leadingAnchor.constraint(equalTo: profileView.leadingAnchor, constant: 24).isActive = true
+        
+        
+        profileView.topAnchor.constraint(equalTo: titleBackgroundText.bottomAnchor, constant: 20).isActive = true
+        profileView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         titleText.widthAnchor.constraint(equalToConstant: 123).isActive = true
         titleText.heightAnchor.constraint(equalToConstant: 33).isActive = true
@@ -753,6 +442,12 @@ class ProfileView: UIView {
         
         backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
-        backgroundBottomImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        backgroundBottomImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
     }
 }
+
+//struct PreView: PreviewProvider {
+//    static var previews: some View {
+//        ProfileViewController().toPreview()
+//    }
+//}

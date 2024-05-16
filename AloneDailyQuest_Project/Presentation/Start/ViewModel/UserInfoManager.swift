@@ -23,7 +23,7 @@ class UserInfoManager {
     
     func updataUserInfo(inputNickName: String, updateExperience: Int) {
         if user?.fetchNickName() == inputNickName {
-            self.user?.formExperience(input: updateExperience)
+            self.user?.formExperience(input:  updateExperience)
         }
     }
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class SignupViewController: UIViewController {
 
     private lazy var startButton: UIButton = {
         var button = UIButton()
@@ -127,13 +127,12 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    weak var delegate: delegateViewController? = nil
-    private let viewModel: LoginViewModel
-    private lazy var input = LoginViewModel.Input(signupEvent: Observable(""),
+    private let viewModel: SignupViewModel
+    private lazy var input = SignupViewModel.Input(signupEvent: Observable(""),
                                                   nickNameValidationEvent: Observable(""))
     private lazy var output = viewModel.transform(input: input)
     
-    init(viewModel: LoginViewModel) {
+    init(viewModel: SignupViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -153,7 +152,7 @@ class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController {
+extension SignupViewController {
     private func bindOutput() {
         output.isValidNickName.bind { [weak self] isValid in
             guard let isValid, !isValid else {
@@ -171,7 +170,6 @@ extension LoginViewController {
                 self?.completedAlert(message: "중복된 닉네임입니다.")
                 return
             }
-            self?.delegate?.moveView()
         }
         output.errorMessage.bind { [weak self] error in
             self?.completedAlert(message: error)
@@ -179,7 +177,7 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController {
+extension SignupViewController {
     private func setupAddTarget() {
         startButton.addTarget(self, action: #selector(signup), for: .touchUpInside)
         nickNameTextField.addTarget(self, action: #selector(checkText(_:)), for: .editingChanged)
@@ -202,7 +200,7 @@ extension LoginViewController {
     
 }
 
-extension LoginViewController {
+extension SignupViewController {
     func configureUI() {
         view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
     }

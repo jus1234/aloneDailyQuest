@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor
-class LoginViewModel: ViewModel {
+class SignupViewModel: ViewModel {
     struct Input {
         var signupEvent: Observable<String>
         var nickNameValidationEvent: Observable<String>
@@ -21,12 +21,14 @@ class LoginViewModel: ViewModel {
     }
     
     private let usecase: AccountUsecase
+    private let coordinator: SignupCoordinator
     private var isValidNickName: Observable<Bool?> = Observable(false)
     private var isSignupSucess: Observable<Bool?> = Observable(false)
     private var errorMessage: Observable<String> = Observable("")
     
-    init(usecase: AccountUsecase) {
+    init(usecase: AccountUsecase, coordinator: SignupCoordinator) {
         self.usecase = usecase
+        self.coordinator = coordinator
     }
     
     func transform(input: Input) -> Output {
@@ -34,6 +36,9 @@ class LoginViewModel: ViewModel {
             Task {
                 do {
                     self?.isSignupSucess.value = try await self?.signup(nickName: nickName)
+                    if let result = self?.isSignupSucess.value, result {
+                        self?.coordinator.finish()
+                    }
                 } catch {
                     self?.errorMessage.value = error.localizedDescription
                 }

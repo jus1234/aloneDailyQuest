@@ -78,7 +78,13 @@ class RankingViewController: UIViewController {
     private var rank1: UIStackView = {
         var rankImg = UIImage(named: "img_rank_first")
         var rankImgView = UIImageView(image: rankImg)
-        rankImgView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        rankImgView.translatesAutoresizingMaskIntoConstraints = false
+        rankImgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        var imageStackView = UIStackView()
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+        imageStackView.addSubview(rankImgView)
+        imageStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        rankImgView.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 35).isActive = true
         var nickName = UILabel()
         nickName.text = "-"
         nickName.font = UIFont(name: "DungGeunMo", size: 14)
@@ -87,7 +93,7 @@ class RankingViewController: UIViewController {
         level.text = "-"
         level.font = UIFont(name: "DungGeunMo", size: 14)
         level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rankImgView, nickName, level])
+        let stack = UIStackView(arrangedSubviews: [imageStackView, nickName, level])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.alignment = .center
@@ -95,6 +101,14 @@ class RankingViewController: UIViewController {
     }()
     private var rank2: UIStackView = {
         var rankImg = UIImage(named: "img_rank_second")
+        var rankImgView = UIImageView(image: rankImg)
+        rankImgView.translatesAutoresizingMaskIntoConstraints = false
+        rankImgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        var imageStackView = UIStackView()
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+        imageStackView.addSubview(rankImgView)
+        imageStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        rankImgView.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 35).isActive = true
         var nickName = UILabel()
         nickName.text = "-"
         nickName.font = UIFont(name: "DungGeunMo", size: 14)
@@ -103,7 +117,7 @@ class RankingViewController: UIViewController {
         level.text = "-"
         level.font = UIFont(name: "DungGeunMo", size: 14)
         level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [UIImageView(image: rankImg), nickName, level])
+        let stack = UIStackView(arrangedSubviews: [imageStackView, nickName, level])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.alignment = .center
@@ -112,6 +126,14 @@ class RankingViewController: UIViewController {
     }()
     private var rank3: UIStackView = {
         var rankImg = UIImage(named: "img_rank_third")
+        var rankImgView = UIImageView(image: rankImg)
+        rankImgView.translatesAutoresizingMaskIntoConstraints = false
+        rankImgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        var imageStackView = UIStackView()
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+        imageStackView.addSubview(rankImgView)
+        imageStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        rankImgView.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 35).isActive = true
         var nickName = UILabel()
         nickName.text = "-"
         nickName.font = UIFont(name: "DungGeunMo", size: 14)
@@ -120,7 +142,7 @@ class RankingViewController: UIViewController {
         level.text = "-"
         level.font = UIFont(name: "DungGeunMo", size: 14)
         level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [UIImageView(image: rankImg), nickName, level])
+        let stack = UIStackView(arrangedSubviews: [imageStackView, nickName, level])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.alignment = .center
@@ -279,20 +301,23 @@ class RankingViewController: UIViewController {
         stack.alignment = .bottom
         return stack
     }()
-    private var myRank: UIStackView = {
+    private lazy var myRank: UIStackView = {
         var rank = UILabel()
         rank.text = "-"
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
+        rank.font = UIFont(name: "DungGeunMo", size: 25)
+        rank.textAlignment = .center
         var nickName = UILabel()
         nickName.text = "-"
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
+        nickName.font = UIFont(name: "DungGeunMo", size: 25)
+        nickName.textAlignment = .center
         var level = UILabel()
         level.text = "-"
-        level.font = UIFont(name: "DungGeunMo", size: 14)
+        level.font = UIFont(name: "DungGeunMo", size: 25)
+        level.textAlignment = .center
         let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
-        stack.alignment = .bottom
+        stack.alignment = .center
         return stack
     }()
     lazy var backgroundView: UIImageView = {
@@ -324,6 +349,7 @@ class RankingViewController: UIViewController {
         addViews()
         autoLayoutConstraints()
         bindOutput()
+        setupProfile()
         input.viewDidLoad.value = ()
     }
     
@@ -331,9 +357,6 @@ class RankingViewController: UIViewController {
 
 extension RankingViewController {
     private func bindOutput() {
-        output.userInfo.bind { [weak self] user in
-            self?.setupProfile(user: user)
-        }
         output.rankingList.bind { [weak self] rankingList in
             self?.setupRankingTable(rankingList: rankingList)
         }
@@ -343,20 +366,20 @@ extension RankingViewController {
         output.errorMessage.bind { [weak self] errorMessage in
             self?.completedAlert(message: "네트워크 오류가 발생했습니다.")
         }
-        profileBoxView.setupProfile(user: output.userInfo)
     }
     
-    private func setupProfile(user: UserInfo?) {
+    private func setupProfile() {
         guard
-            let user,
             let nickName = myRank.arrangedSubviews[1] as? UILabel,
             let level = myRank.arrangedSubviews[2] as? UILabel
         else {
             return
         }
+        let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
+                 experience: UserDefaults.standard.integer(forKey: "experience"))
         nickName.text = user.fetchNickName()
         level.text = "\(user.fetchLevel())"
-        profileBoxView.user?.value = user
+        profileBoxView.user.value = user
     }
     
     private func setupRankingTable(rankingList: [UserInfo]) {
@@ -378,7 +401,7 @@ extension RankingViewController {
         else {
             return
         }
-        ranking.text = "\(myRanking)"
+        ranking.text = "\(myRanking)위"
     }
 }
 
@@ -408,7 +431,7 @@ extension RankingViewController {
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         topStackView.translatesAutoresizingMaskIntoConstraints = false
         centerStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+        myRank.translatesAutoresizingMaskIntoConstraints = false
         
         profileBoxView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileBoxView.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 20).isActive = true
@@ -447,18 +470,27 @@ extension RankingViewController {
         centerStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor).isActive = true
         centerStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 6).isActive = true
         centerStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        centerStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -76).isActive = true
+        centerStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -65).isActive = true
         
         ranks.forEach { rank in
-            rank.leadingAnchor.constraint(equalTo: centerStackView.leadingAnchor).isActive = true
-            rank.trailingAnchor.constraint(equalTo: centerStackView.trailingAnchor).isActive = true
+            rank.leadingAnchor.constraint(equalTo: centerStackView.leadingAnchor, constant: 1).isActive = true
+            rank.trailingAnchor.constraint(equalTo: centerStackView.trailingAnchor, constant: -4).isActive = true
+//            if let rankImageView = rank.arrangedSubviews[0] as? UIImageView {
+//                rankImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+//            }
         }
+        myRank.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 15).isActive = true
+        myRank.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
+        myRank.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
+        myRank.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -20).isActive = true
 
-        
-
-//        myRank.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 30).isActive = true
-//        myRank.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20).isActive = true
-//        myRank.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -20).isActive = true
-//        myRank.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -20).isActive = true
+//        guard let firstRankImageView = rank1.arrangedSubviews[0] as? UIImageView,
+//              let secondRankImageView = rank2.arrangedSubviews[0] as? UIImageView,
+//              let thirdRankImageView = rank3.arrangedSubviews[0] as? UIImageView else {
+//            return
+//        }
+//        firstRankImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
+//        secondRankImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
+//        thirdRankImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
     }
 }

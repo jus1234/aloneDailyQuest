@@ -23,7 +23,7 @@ class ProfileBoxView: UIView {
     
     private lazy var nickNameText: UILabel = {
         let label = UILabel()
-        label.text = "매튜"
+        label.text = user.value.fetchNickName()
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.textAlignment = .left 
@@ -49,7 +49,7 @@ class ProfileBoxView: UIView {
     
     private lazy var levelLabel: UILabel = {
         let label = UILabel()
-        label.text = "LV.1"
+        label.text = "LV.\(user.value.fetchLevel())"
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.textAlignment = .left
@@ -144,7 +144,8 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    var user: Observable<UserInfo?>?
+    var user: Observable<UserInfo> = Observable(UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
+                                                         experience: UserDefaults.standard.integer(forKey: "experience")))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -157,15 +158,16 @@ class ProfileBoxView: UIView {
     }
     
     private func bindExperience() {
-        user?.bind { [weak self] newValue in
-            self?.levelLabel.text = "LV. \(newValue?.fetchLevel())"
+        user.bind { [weak self] newValue in
+            self?.levelLabel.text = "LV. \(newValue.fetchLevel())"
+            self?.nickNameText.text = newValue.fetchNickName()
         }
     }
     
-    func setupProfile(user: Observable<UserInfo?>) {
+    func setupProfile(user: Observable<UserInfo>) {
         self.user = user
-        nickNameText.text = user.value?.fetchNickName()
-        levelLabel.text = "LV.\(user.value?.fetchLevel())"
+        nickNameText.text = user.value.fetchNickName()
+        levelLabel.text = "LV.\(String(describing: user.value.fetchLevel()))"
         bindExperience()
     }
     

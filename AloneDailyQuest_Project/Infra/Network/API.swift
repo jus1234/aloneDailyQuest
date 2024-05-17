@@ -20,22 +20,29 @@ enum API {
 
 extension API {
     func toURLRequest() -> URLRequest? {
+        let header = [
+            API.contentTypeKey: API.contentType
+        ]
+        
         switch self {
         case .signup(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
                 .setMethod(.post)
+                .setHeaderParameters(header)
                 .setPath("/signup")
                 .setBodyParameters(userId)
                 .build()
         case .checkId(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
                 .setMethod(.post)
+                .setHeaderParameters(header)
                 .setPath("/check_id")
                 .setBodyParameters(userId)
                 .build()
         case .login(let userId):
             return URLRequestBuilder(baseURL: API.baseURL)
                 .setMethod(.post)
+                .setHeaderParameters(header)
                 .setPath("/login")
                 .setBodyParameters(userId)
                 .build()
@@ -52,6 +59,7 @@ extension API {
         case .addExperience(let user):
             return URLRequestBuilder(baseURL: API.baseURL)
                 .setMethod(.post)
+                .setHeaderParameters(header)
                 .setPath("/add_experience")
                 .setBodyParameters(user)
                 .build()
@@ -71,4 +79,6 @@ extension API {
 
 extension API {
     private static let baseURL = "wooseokjang.shop"
+    private static let contentTypeKey = "Content-Type"
+    private static let contentType = "application/json"
 }

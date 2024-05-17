@@ -11,6 +11,8 @@ import Foundation
 final class RankingViewModel: ViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>
+        var qeusetViewEvent: Observable<Void>
+        var rankViewEvent: Observable<Void>
     }
     
     struct Output {
@@ -21,18 +23,26 @@ final class RankingViewModel: ViewModel {
     }
     
     private let usecase: RankingUsecase
+    private let coordinator: RankingCoordinator
     private let user: Observable<UserInfo?> = Observable(nil)
     private var rankingList: Observable<[UserInfo]> = Observable([])
     private var myRanking: Observable<Int> = Observable(0)
     private var errorMessage: Observable<String> = Observable("")
     
-    init(usecase: RankingUsecase) {
+    init(usecase: RankingUsecase, coordinator: RankingCoordinator) {
         self.usecase = usecase
+        self.coordinator = coordinator
     }
     
     func transform(input: Input) -> Output {
         input.viewDidLoad.bind { [weak self] _ in
             self?.viewDidLoad()
+        }
+        input.qeusetViewEvent.bind { [weak self] _ in
+            self?.coordinator.finish(to: .quest)
+        }
+        input.rankViewEvent.bind { _ in
+            return
         }
         return .init(userInfo: user,
                      rankingList: rankingList,

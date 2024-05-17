@@ -16,7 +16,7 @@ final class DefaultAccountRepository: AccountRepository {
     }
     
     func signup(userId: String) async throws {
-        let data = try await networkService.request(.login(userId: UserIdRequestDTO(userId: userId)))
+        let data = try await networkService.request(.signup(userId: UserIdRequestDTO(userId: userId)))
         do {
             _ = try decorder.decode(LoginResponseDTO.self, from: data)
         } catch {

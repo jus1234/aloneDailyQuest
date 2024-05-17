@@ -27,7 +27,7 @@ final class DefaultSignupCoordinator: SignupCoordinator {
         let usecase = DefaultAccountUsecase(repository: repository)
         let viewModel = SignupViewModel(usecase: usecase, coordinator: self)
         let signupViewController = SignupViewController(viewModel: viewModel)
-        navigationController.pushViewController(signupViewController, animated: true)
+        navigationController.pushViewController(signupViewController, animated: false)
     }
     
     func finish() {

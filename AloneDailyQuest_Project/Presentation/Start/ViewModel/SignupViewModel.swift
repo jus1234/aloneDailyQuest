@@ -37,7 +37,7 @@ class SignupViewModel: ViewModel {
                 do {
                     self?.isSignupSucess.value = try await self?.signup(nickName: nickName)
                     if let result = self?.isSignupSucess.value, result {
-                        self?.coordinator.finish()
+                        self?.coordinator.finish(to: .ranking)
                     }
                 } catch {
                     self?.errorMessage.value = error.localizedDescription
@@ -53,16 +53,19 @@ class SignupViewModel: ViewModel {
     }
     
     private func signup(nickName: String) async throws -> Bool {
-        let result = try await usecase.checkId(userId: nickName)
-        if result {
+        let isExists = try await usecase.checkId(userId: nickName)
+        if !isExists {
             try await usecase.signup(userId: nickName)
             UserDefaults.standard.set(nickName, forKey: "nickName")
             UserDefaults.standard.setValue(0, forKey: "experience")
         }
-        return result
+        return isExists
     }
     
     private func vaildateNickname(_ text: String) -> Bool {
+        guard text.count > 0 else {
+            return false
+        }
         let nicknameRegex = "^[a-zA-Z0-9가-힣]{1,8}$"
         let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
         return nicknamePredicate.evaluate(with: text)

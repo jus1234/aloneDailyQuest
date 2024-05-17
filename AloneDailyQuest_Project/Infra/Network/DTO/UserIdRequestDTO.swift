@@ -9,8 +9,4 @@ import Foundation
 
 struct UserIdRequestDTO: Encodable {
     let userId: String
-    
-    enum CodingKeys: String, CodingKey {
-        case userId
-    }
 }

@@ -475,22 +475,11 @@ extension RankingViewController {
         ranks.forEach { rank in
             rank.leadingAnchor.constraint(equalTo: centerStackView.leadingAnchor, constant: 1).isActive = true
             rank.trailingAnchor.constraint(equalTo: centerStackView.trailingAnchor, constant: -4).isActive = true
-//            if let rankImageView = rank.arrangedSubviews[0] as? UIImageView {
-//                rankImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-//            }
         }
+        
         myRank.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 15).isActive = true
         myRank.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
         myRank.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
         myRank.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -20).isActive = true
-
-//        guard let firstRankImageView = rank1.arrangedSubviews[0] as? UIImageView,
-//              let secondRankImageView = rank2.arrangedSubviews[0] as? UIImageView,
-//              let thirdRankImageView = rank3.arrangedSubviews[0] as? UIImageView else {
-//            return
-//        }
-//        firstRankImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
-//        secondRankImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
-//        thirdRankImageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
     }
 }

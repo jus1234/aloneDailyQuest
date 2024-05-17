@@ -9,6 +9,8 @@ import UIKit
 //import SwiftUI
 
 class ProfileView: UIView {
+    lazy var tabView = TabView()
+    
     private lazy var backgroundBottomImageView: UIImageView = {
         var view = UIImageView()
         
@@ -16,7 +18,7 @@ class ProfileView: UIView {
         return view
     }()
     
-    let titleText: UILabel = {
+    private let titleText: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         label.numberOfLines = 0
@@ -36,7 +38,7 @@ class ProfileView: UIView {
         return label
     }()
     
-    let titleBackgroundText: UILabel = {
+    private let titleBackgroundText: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         label.numberOfLines = 0
@@ -72,7 +74,7 @@ class ProfileView: UIView {
     
     private lazy var nickNameText: UILabel = {
         let label = UILabel()
-        label.text = "매튜"
+        label.text = ""
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(hexCode: "000000")
         label.textAlignment = .left
@@ -98,7 +100,7 @@ class ProfileView: UIView {
     
     private lazy var levelLabel: UILabel = {
         let label = UILabel()
-        label.text = "LV.1"
+        label.text = ""
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(hexCode: "000000")
         label.textAlignment = .left
@@ -162,16 +164,12 @@ class ProfileView: UIView {
         imageView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
         label.center = imageView.center
 
-        let firstHalfLayer = CALayer()
-        firstHalfLayer.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
-        firstHalfLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
+        let experienceLayer = CALayer()
+        experienceLayer.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
+        experienceLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
+            
         
-        let secondHalfLayer = CALayer()
-        secondHalfLayer.backgroundColor = UIColor.clear.cgColor
-        secondHalfLayer.frame = CGRect(x: view.bounds.width / 10, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
-        
-        view.layer.addSublayer(firstHalfLayer)
-        view.layer.addSublayer(secondHalfLayer)
+        view.layer.addSublayer(experienceLayer)
         view.addSubview(imageView)
         view.addSubview(label)
 
@@ -348,6 +346,7 @@ class ProfileView: UIView {
         addSubview(contactButton)
         addSubview(lineView4)
         addSubview(leaveButton)
+        addSubview(tabView)
     }
     
     func autoLayoutConstraints() {
@@ -369,6 +368,12 @@ class ProfileView: UIView {
         contactButton.translatesAutoresizingMaskIntoConstraints = false
         lineView4.translatesAutoresizingMaskIntoConstraints = false
         leaveButton.translatesAutoresizingMaskIntoConstraints = false
+        tabView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tabView.heightAnchor.constraint(equalToConstant: 146).isActive = true
+        tabView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        tabView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        tabView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
         
         leaveButton.topAnchor.constraint(equalTo: lineView4.bottomAnchor, constant: 16).isActive = true
         leaveButton.widthAnchor.constraint(equalToConstant: 340).isActive = true
@@ -444,10 +449,31 @@ class ProfileView: UIView {
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
         backgroundBottomImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
     }
+    
+    func configureLabel(nickName: String, level: String) {
+        nickNameText.text = nickName
+        levelLabel.text = "LV.\(level)"
+    }
+    func updateExperienceBar(currentExp: Int) {
+        let label = experienceBar.subviews.compactMap { $0 as? UILabel }.first
+        let imageView = experienceBar.subviews.compactMap { $0 as? UIImageView }.first
+        let experienceLayer = experienceBar.layer.sublayers?.compactMap { $0 as? CALayer }.first
+
+        let progressFraction = CGFloat(currentExp) / 10.0
+        label?.text = "\(currentExp)/10"
+        label?.sizeToFit()
+        if let imageView = imageView {
+            label?.center = CGPoint(x: imageView.bounds.midX, y: imageView.bounds.midY)
+        }
+
+        experienceLayer?.frame = CGRect(x: 0, y: 0, width: experienceBar.bounds.width * progressFraction, height: experienceBar.bounds.height)
+    }
 }
 
 //struct PreView: PreviewProvider {
 //    static var previews: some View {
-//        ProfileViewController().toPreview()
+//        let navi = UINavigationController()
+//        let profileVC = ProfileViewController(viewModel: ProfileViewModel(usecase: DefaultProfileUsecase(repository: DefaultProfileRepository(networkService: DefaultNetworkService())), coordinator: DefaultProfileCoordinator(navi)))
+//        profileVC.toPreview()
 //    }
 //}

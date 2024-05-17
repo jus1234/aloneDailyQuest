@@ -23,10 +23,10 @@ class ProfileBoxView: UIView {
     
     private lazy var nickNameText: UILabel = {
         let label = UILabel()
-        label.text = user.value.fetchNickName()
+        label.text = ""
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.textAlignment = .left 
+        label.textAlignment = .left
         return label
     }()
     
@@ -49,7 +49,7 @@ class ProfileBoxView: UIView {
     
     private lazy var levelLabel: UILabel = {
         let label = UILabel()
-        label.text = "LV.\(user.value.fetchLevel())"
+        label.text = ""
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.textAlignment = .left
@@ -91,7 +91,7 @@ class ProfileBoxView: UIView {
         imageView.frame = CGRect(x: 0, y: 0, width: 270, height: 18)
         
         let label = UILabel()
-        label.text = "1/10"
+        label.text = ""
         label.textColor = UIColor.black
         label.font = UIFont(name: "DungGeunMo", size: 16) ?? UIFont.systemFont(ofSize: 16)
         label.sizeToFit()
@@ -104,16 +104,11 @@ class ProfileBoxView: UIView {
         imageView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
         label.center = imageView.center
 
-        let firstHalfLayer = CALayer()
-        firstHalfLayer.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
-        firstHalfLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
+        let experienceBar = CALayer()
+        experienceBar.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
+        experienceBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
         
-        let secondHalfLayer = CALayer()
-        secondHalfLayer.backgroundColor = UIColor.clear.cgColor
-        secondHalfLayer.frame = CGRect(x: view.bounds.width / 10, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
-        
-        view.layer.addSublayer(firstHalfLayer)
-        view.layer.addSublayer(secondHalfLayer)
+        view.layer.addSublayer(experienceBar)
         view.addSubview(imageView)
         view.addSubview(label)
 
@@ -144,8 +139,7 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    var user: Observable<UserInfo> = Observable(UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
-                                                         experience: UserDefaults.standard.integer(forKey: "experience")))
+    var user: Observable<UserInfo?>?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -157,17 +151,36 @@ class ProfileBoxView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configureLabel(nickName: String, level: String) {
+        nickNameText.text = nickName
+        levelLabel.text = "LV.\(level)"
+    }
+    
+    func updateExperienceBar(currentExp: Int) {
+        let label = experienceBar.subviews.compactMap { $0 as? UILabel }.first
+        let imageView = experienceBar.subviews.compactMap { $0 as? UIImageView }.first
+        let experienceLayer = experienceBar.layer.sublayers?.compactMap { $0 as? CALayer }.first
+
+        let progressFraction = CGFloat(currentExp) / 10.0
+        label?.text = "\(currentExp)/10"
+        label?.sizeToFit()
+        if let imageView = imageView {
+            label?.center = CGPoint(x: imageView.bounds.midX, y: imageView.bounds.midY)
+        }
+
+        experienceLayer?.frame = CGRect(x: 0, y: 0, width: experienceBar.bounds.width * progressFraction, height: experienceBar.bounds.height)
+    }
+    
     private func bindExperience() {
-        user.bind { [weak self] newValue in
-            self?.levelLabel.text = "LV. \(newValue.fetchLevel())"
-            self?.nickNameText.text = newValue.fetchNickName()
+        user?.bind { [weak self] newValue in
+            self?.levelLabel.text = "LV. \(newValue?.fetchLevel())"
         }
     }
     
-    func setupProfile(user: Observable<UserInfo>) {
+    func setupProfile(user: Observable<UserInfo?>) {
         self.user = user
-        nickNameText.text = user.value.fetchNickName()
-        levelLabel.text = "LV.\(String(describing: user.value.fetchLevel()))"
+        nickNameText.text = user.value?.fetchNickName()
+        levelLabel.text = "LV.\(user.value?.fetchLevel())"
         bindExperience()
     }
     

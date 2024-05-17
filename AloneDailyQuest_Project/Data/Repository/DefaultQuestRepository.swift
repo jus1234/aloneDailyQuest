@@ -160,9 +160,9 @@ extension DefaultQuestRepository {
         return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
     }
     
-    func addExperience(user: UserInfo) async throws -> Int {
-        let data = try await networkService.request(.addExperience(user: UserInfoDTO(userId: user.fetchNickName(),
-                                                                                     experience: user.fetchExperience())))
+    func addExperience(userId: String, experience: Int) async throws -> Int {
+        let data = try await networkService.request(.addExperience(user: UserInfoDTO(userId: userId,
+                                                                                     experience: experience)))
         return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
     }
 }

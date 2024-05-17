@@ -78,6 +78,9 @@
 		C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */; };
 		C1F3D1252BEE039900EC1B26 /* QuestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3D1242BEE039900EC1B26 /* QuestViewModel.swift */; };
 		C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3D1262BEE3E9A00EC1B26 /* DetailViewModel.swift */; };
+		C1FB22F32BF77CA50026079C /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FB22F22BF77CA50026079C /* ProfileCoordinator.swift */; };
+		C1FB22F52BF77CB70026079C /* DefaultProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FB22F42BF77CB70026079C /* DefaultProfileCoordinator.swift */; };
+		C1FB22F72BF77CC60026079C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1FB22F62BF77CC60026079C /* ProfileViewModel.swift */; };
 		C1FC22A92B8F17F40077D6FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1FC22A82B8F17F40077D6FC /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -154,6 +157,9 @@
 		C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		C1F3D1242BEE039900EC1B26 /* QuestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewModel.swift; sourceTree = "<group>"; };
 		C1F3D1262BEE3E9A00EC1B26 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		C1FB22F22BF77CA50026079C /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		C1FB22F42BF77CB70026079C /* DefaultProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileCoordinator.swift; sourceTree = "<group>"; };
+		C1FB22F62BF77CC60026079C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = AloneDailyQuest_Project/Presentation/Profile/Coordinator/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
 		C1FC22A82B8F17F40077D6FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1FC22C62B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AloneDailyQuest_Project.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -447,6 +453,7 @@
 		BDB4A0712BEE08340076E564 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C1FB22F02BF77C700026079C /* Coordinator */,
 				BDB4A0732BEE08500076E564 /* ViewModel */,
 				BDB4A0722BEE084B0076E564 /* View */,
 			);
@@ -465,6 +472,7 @@
 		BDB4A0732BEE08500076E564 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C1FB22F62BF77CC60026079C /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -637,6 +645,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		C1FB22F02BF77C700026079C /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				C1FB22F12BF77C7A0026079C /* Protocol */,
+				C1FB22F42BF77CB70026079C /* DefaultProfileCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		C1FB22F12BF77C7A0026079C /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				C1FB22F22BF77CA50026079C /* ProfileCoordinator.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		C1FC22C22B8F1F890077D6FC /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +753,7 @@
 				BDB4A0572BEB316F0076E564 /* RankingUsecase.swift in Sources */,
 				BDB4A04C2BEA4B320076E564 /* ExperienceResponseDTO.swift in Sources */,
 				BD1035B52BF5E1BB001EBF0A /* CoordinatorFinishDelegate.swift in Sources */,
+				C1FB22F32BF77CA50026079C /* ProfileCoordinator.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
 				C1E8ED342BEB9C2C00EA8B26 /* QuestInfo.swift in Sources */,
 				BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */,
@@ -749,6 +775,7 @@
 				BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */,
 				BD1035C82BF611F5001EBF0A /* RankingCoordinator.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
+				C1FB22F72BF77CC60026079C /* ProfileViewModel.swift in Sources */,
 				BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */,
 				C131B3CA2BF0A58700020CFE /* ProfileRepository.swift in Sources */,
 				C131B3CC2BF0A61D00020CFE /* DefaultProfileRepository.swift in Sources */,
@@ -769,6 +796,7 @@
 				C1E8ED362BEB9C4F00EA8B26 /* DefaultQuestRepository.swift in Sources */,
 				C131B3D02BF24E5A00020CFE /* NoticeViewController.swift in Sources */,
 				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
+				C1FB22F52BF77CB70026079C /* DefaultProfileCoordinator.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				BDB4A0622BEB40370076E564 /* Observable.swift in Sources */,

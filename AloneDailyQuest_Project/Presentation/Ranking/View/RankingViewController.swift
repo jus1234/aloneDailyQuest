@@ -331,7 +331,8 @@ class RankingViewController: UIViewController {
     private var viewDidLoadEvent: Observable<Void> = Observable(())
     private lazy var input = RankingViewModel.Input(viewDidLoad: viewDidLoadEvent,
                                                     qeusetViewEvent: tabView.qeusetViewEvent,
-                                                    rankViewEvent: tabView.rankiViewEvent)
+                                                    rankViewEvent: tabView.rankiViewEvent, 
+                                                    profileViewEvent: tabView.profileViewEvent)
     private lazy var output = viewModel.transform(input: input)
     
     init(viewModel: RankingViewModel) {
@@ -379,7 +380,6 @@ extension RankingViewController {
                  experience: UserDefaults.standard.integer(forKey: "experience"))
         nickName.text = user.fetchNickName()
         level.text = "\(user.fetchLevel())"
-        profileBoxView.user.value = user
     }
     
     private func setupRankingTable(rankingList: [UserInfo]) {

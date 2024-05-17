@@ -13,6 +13,7 @@ final class RankingViewModel: ViewModel {
         var viewDidLoad: Observable<Void>
         var qeusetViewEvent: Observable<Void>
         var rankViewEvent: Observable<Void>
+        var profileViewEvent: Observable<Void>
     }
     
     struct Output {
@@ -41,6 +42,9 @@ final class RankingViewModel: ViewModel {
         }
         input.rankViewEvent.bind { _ in
             return
+        }
+        input.profileViewEvent.bind { [weak self] _ in
+            self?.coordinator.finish(to: .profile)
         }
         return .init(rankingList: rankingList,
                      myRanking: myRanking,

@@ -9,12 +9,19 @@ import UIKit
 
 final class QuestViewController: UIViewController{
     
-    private let questView = QuestView()
+    private let questView: QuestView = QuestView()
     private let viewModel: QuestViewModel
-    private var questList: [QuestInfo] = []
-    private var deleteQuestInfo: QuestInfo? = nil
-    private var userExperience: Int = 0
-    
+    private lazy var questList: [QuestInfo] = []
+    private lazy var deleteQuestInfo: QuestInfo? = nil
+    private lazy var userExperience: Int = UserDefaults.standard.integer(forKey: "experince")
+    private lazy var userInfo: UserInfo? = nil
+    private lazy var input = QuestViewModel.Input(viewDidLoad: Observable<Void>(()),
+                                             deleteTrigger: Observable(deleteQuestInfo),
+                                             experienceTrigger: Observable(userExperience),
+                                             qeusetViewEvent: questView.tabView.qeusetViewEvent,
+                                             rankViewEvent: questView.tabView.rankiViewEvent,
+                                             profileViewEvent: questView.tabView.profileViewEvent)
+    private lazy var output = viewModel.transform(input: input)
     weak var delegate: UITableViewDelegate? = nil
     
     var index: IndexPath?
@@ -29,33 +36,31 @@ final class QuestViewController: UIViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        self.view = questView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         questView.tableView.dataSource = self
         configureUI()
         bindViewModel()
+        input.viewDidLoad.value = ()
+        view = questView
     }
     
     func configureUI() {
         questView.plusButton.addTarget(self, action: #selector(addQuest), for: .touchUpInside)
     }
     
+    
     func bindViewModel() {
-        let input = QuestViewModel.Input(viewDidLoad: Observable<Void>(()),
-                                         deleteTrigger: Observable(deleteQuestInfo),
-                                         experienceTrigger: Observable(userExperience), 
-                                         qeusetViewEvent: questView.tabView.qeusetViewEvent,
-                                         rankViewEvent: questView.tabView.rankiViewEvent)
-        let output = viewModel.transform(input: input)
+        output.userInfo.bind { user in
+            guard
+                let nickName = user?.fetchNickName(),
+                let level = user?.fetchLevel(),
+                let experience = user?.fetchExperience() else { return }
+            self.questView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
+            self.questView.profileBoxView.updateExperienceBar(currentExp: experience)
+        }
         output.questList.bind { questList in
             self.questList = questList
-        }
-        output.experience.bind { experience in
-            self.userExperience = experience
         }
     }
     

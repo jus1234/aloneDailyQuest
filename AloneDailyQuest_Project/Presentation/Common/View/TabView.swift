@@ -12,6 +12,7 @@ class TabView: UIStackView {
 //    weak var delegate: delegateViewController? = nil
     var qeusetViewEvent: Observable<Void> = Observable(())
     var rankiViewEvent: Observable<Void> = Observable(())
+    var profileViewEvent: Observable<Void> = Observable(())
     
     lazy var questLabel: UILabel = {
         let label = UILabel()
@@ -60,6 +61,10 @@ class TabView: UIStackView {
     @objc func didrankButtonTap() {
 //        rankiViewDelegate?()
         rankiViewEvent.value = ()
+    }
+    
+    @objc func didProfileButtonTap() {
+        profileViewEvent.value = ()
     }
     
     lazy var questStack: UIStackView = {
@@ -154,7 +159,7 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(didrankButtonTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didProfileButtonTap), for: .touchUpInside)
         return button
     }()
     

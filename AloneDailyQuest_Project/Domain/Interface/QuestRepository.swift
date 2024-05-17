@@ -15,5 +15,5 @@ protocol QuestRepository {
     func repeatingQuestNewDay() async throws
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
-    func addExperience(user: UserInfo) async throws -> Int
+    func addExperience(userId: String, experience: Int) async throws -> Int
 }

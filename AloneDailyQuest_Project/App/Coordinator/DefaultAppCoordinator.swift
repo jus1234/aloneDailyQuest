@@ -46,6 +46,13 @@ final class DefaultAppCoordinator: AppCoordinator {
         rankingCoordinator.start()
         childCoordinators.append(rankingCoordinator)
     }
+    
+    @MainActor func showProfileFlow() {
+        let profileCoordinator = DefaultProfileCoordinator(self.navigationController)
+        profileCoordinator.finishDelegate = self
+        profileCoordinator.start()
+        childCoordinators.append(profileCoordinator)
+    }
 }
 
 extension DefaultAppCoordinator: CoordinatorFinishDelegate {
@@ -62,8 +69,8 @@ extension DefaultAppCoordinator: CoordinatorFinishDelegate {
             self.showQuestFlow()
         case .ranking:
             showRankingFlow()
-        default:
-            break
+        case .profile:
+            showProfileFlow()
         }
     }
     

@@ -15,7 +15,7 @@ protocol QuestUsecase {
     func repeatingQuestNewDay() async throws
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
-    func addExperience(user: UserInfo) async throws -> Int
+    func addExperience(userId: String, experience: Int) async throws -> Int
 }
 
 final class DefaultQuestUsecase: QuestUsecase {
@@ -53,7 +53,7 @@ final class DefaultQuestUsecase: QuestUsecase {
         return try await repository.fetchExperience(userId: userId)
     }
     
-    func addExperience(user: UserInfo) async throws -> Int {
-        return try await repository.addExperience(user: user)
+    func addExperience(userId: String, experience: Int) async throws -> Int {
+        return try await repository.addExperience(userId: userId, experience: experience)
     }
 }

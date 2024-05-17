@@ -15,20 +15,20 @@ final class QuestViewModel: ViewModel {
         var experienceTrigger: Observable<Int>
         var qeusetViewEvent: Observable<Void>
         var rankViewEvent: Observable<Void>
+        var profileViewEvent: Observable<Void>
     }
     
     struct Output {
         var questList: Observable<[QuestInfo]>
         var errorMessage: Observable<String>
-        var experience: Observable<Int>
+        var userInfo: Observable<UserInfo?>
     }
     
     private let usecase: QuestUsecase
     private let coordinator: QuestCoordinator
     private let questList: Observable<[QuestInfo]> = Observable([])
     private let errorMessage: Observable<String> = Observable("")
-    private let nickName: String = UserDefaults.standard.object(forKey: "nickName") as! String
-    private var experience: Int = 0
+    private let user: Observable<UserInfo?> = Observable(nil)
     
     init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
         self.usecase = usecase
@@ -40,8 +40,13 @@ final class QuestViewModel: ViewModel {
             await fetchQuest()
             checkUserDefaultsLastVisitDate()
             await checkUserDefaultsDeleteData()
-            await fetchUserInfo()
+            fetchUserInfo()
         }
+    }
+    
+    private func fetchUserInfo() {
+        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                                   experience: UserDefaults.standard.integer(forKey: "experience"))
     }
     
     private func fetchQuest() async {
@@ -76,16 +81,6 @@ final class QuestViewModel: ViewModel {
         }
     }
     
-    func fetchUserInfo() async {
-        Task {
-            do {
-                self.experience =  try await usecase.fetchExperience(userId: UserDefaults.standard.object(forKey: "nickName") as! String)
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
     func deleteQuest(quest: QuestInfo) {
         Task {
             do {
@@ -106,10 +101,12 @@ final class QuestViewModel: ViewModel {
         }
     }
     
-    func updateExperience(experience: Int) {
+    func updateExperience(experienceData: Int) {
         Task {
             do {
-                self.experience = try await usecase.addExperience(user: UserInfo(nickName: nickName, experience: experience))
+                let result = try await usecase.addExperience(userId: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                                                             experience: experienceData)
+                UserDefaults.standard.set(result, forKey: "experience")
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -127,7 +124,7 @@ final class QuestViewModel: ViewModel {
         }
         
         input.experienceTrigger.bind { experience in
-            self.updateExperience(experience: experience)
+            self.updateExperience(experienceData: experience)
             self.viewDidLoad()
         }
         input.qeusetViewEvent.bind { _ in
@@ -136,8 +133,11 @@ final class QuestViewModel: ViewModel {
         input.rankViewEvent.bind { [weak self] _ in
             self?.coordinator.finish(to: .ranking)
         }
+        input.profileViewEvent.bind { [weak self] _ in
+            self?.coordinator.finish(to: .profile)
+        }
         return .init(questList: self.questList,
-                     errorMessage: self.errorMessage, 
-                     experience: Observable(self.experience))
+                     errorMessage: self.errorMessage,
+                     userInfo: self.user)
     }
 }

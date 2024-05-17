@@ -47,6 +47,8 @@
 		C131B3C82BF0A4E000020CFE /* ProfileUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3C72BF0A4E000020CFE /* ProfileUsecase.swift */; };
 		C131B3CA2BF0A58700020CFE /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3C92BF0A58700020CFE /* ProfileRepository.swift */; };
 		C131B3CC2BF0A61D00020CFE /* DefaultProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3CB2BF0A61D00020CFE /* DefaultProfileRepository.swift */; };
+		C131B3D02BF24E5A00020CFE /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3CF2BF24E5A00020CFE /* NoticeViewController.swift */; };
+		C131B3D22BF24E7F00020CFE /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C131B3D12BF24E7F00020CFE /* NoticeView.swift */; };
 		C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1FC22C52B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodeld */; };
 		C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE02B8F21160007C896 /* Bundle+Extension.swift */; };
 		C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE42B8F4B4C0007C896 /* TabView.swift */; };
@@ -111,6 +113,8 @@
 		C131B3C72BF0A4E000020CFE /* ProfileUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUsecase.swift; sourceTree = "<group>"; };
 		C131B3C92BF0A58700020CFE /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		C131B3CB2BF0A61D00020CFE /* DefaultProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileRepository.swift; sourceTree = "<group>"; };
+		C131B3CF2BF24E5A00020CFE /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		C131B3D12BF24E7F00020CFE /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		C1479DE02B8F21160007C896 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		C1479DE42B8F4B4C0007C896 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 		BDB4A05A2BEB3F300076E564 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				C131B3CD2BF24C9800020CFE /* Notice */,
 				C1F3D1202BEE031700EC1B26 /* Quest */,
 				BDB4A06F2BEE07630076E564 /* Common */,
 				BDB4A0712BEE08340076E564 /* Profile */,
@@ -381,6 +386,23 @@
 				C10D6C482B242192005783BD /* StatsType.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		C131B3CD2BF24C9800020CFE /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				C131B3CE2BF24E4000020CFE /* View */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		C131B3CE2BF24E4000020CFE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C131B3CF2BF24E5A00020CFE /* NoticeViewController.swift */,
+				C131B3D12BF24E7F00020CFE /* NoticeView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		C159E38C2B19671B00BB67F8 /* Models */ = {
@@ -640,12 +662,14 @@
 				C1E8ED382BEB9C6500EA8B26 /* QuestRepository.swift in Sources */,
 				C1F3D1252BEE039900EC1B26 /* QuestViewModel.swift in Sources */,
 				C1E8ED362BEB9C4F00EA8B26 /* DefaultQuestRepository.swift in Sources */,
+				C131B3D02BF24E5A00020CFE /* NoticeViewController.swift in Sources */,
 				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				BDB4A0622BEB40370076E564 /* Observable.swift in Sources */,
 				BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */,
 				C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */,
+				C131B3D22BF24E7F00020CFE /* NoticeView.swift in Sources */,
 				BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */,
 				BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */,
 				C1479DDF2B8F201F0007C896 /* AloneDailyQuest_Project.xcdatamodeld in Sources */,

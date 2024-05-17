@@ -14,6 +14,7 @@
 		994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590C2B50C22E00D5808B /* QuestCell.swift */; };
 		994C590F2B50C25B00D5808B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994C590E2B50C25B00D5808B /* DetailView.swift */; };
 		997B81CD2B2876C200999F6E /* QuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B81CC2B2876C200999F6E /* QuestViewController.swift */; };
+		BD0A16892BF795C8009826E5 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0A16882BF795C8009826E5 /* DIContainer.swift */; };
 		BD1035B32BF5E162001EBF0A /* CoordinatorCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1035B22BF5E162001EBF0A /* CoordinatorCase.swift */; };
 		BD1035B52BF5E1BB001EBF0A /* CoordinatorFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1035B42BF5E1BB001EBF0A /* CoordinatorFinishDelegate.swift */; };
 		BD1035B72BF5E29A001EBF0A /* DefaultAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1035B62BF5E29A001EBF0A /* DefaultAppCoordinator.swift */; };
@@ -89,6 +90,7 @@
 		994C590C2B50C22E00D5808B /* QuestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestCell.swift; sourceTree = "<group>"; };
 		994C590E2B50C25B00D5808B /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		997B81CC2B2876C200999F6E /* QuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestViewController.swift; sourceTree = "<group>"; };
+		BD0A16882BF795C8009826E5 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		BD1035B22BF5E162001EBF0A /* CoordinatorCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorCase.swift; sourceTree = "<group>"; };
 		BD1035B42BF5E1BB001EBF0A /* CoordinatorFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishDelegate.swift; sourceTree = "<group>"; };
 		BD1035B62BF5E29A001EBF0A /* DefaultAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppCoordinator.swift; sourceTree = "<group>"; };
@@ -169,6 +171,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD0A16872BF7959B009826E5 /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				BD0A16882BF795C8009826E5 /* DIContainer.swift */,
+			);
+			path = "DI\U0010Container";
+			sourceTree = "<group>";
+		};
 		BD1035B82BF5E445001EBF0A /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +602,7 @@
 		C1FC22C22B8F1F890077D6FC /* App */ = {
 			isa = PBXGroup;
 			children = (
+				BD0A16872BF7959B009826E5 /* DIContainer */,
 				BD22DC062BF1E2AB00416D35 /* Coordinator */,
 				C1FC22C52B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodeld */,
 				C1FC22A82B8F17F40077D6FC /* Assets.xcassets */,
@@ -714,6 +725,7 @@
 				BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */,
 				C131B3C82BF0A4E000020CFE /* ProfileUsecase.swift in Sources */,
 				BDB4A0392BEA19BA0076E564 /* UserIdRequestDTO.swift in Sources */,
+				BD0A16892BF795C8009826E5 /* DIContainer.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
 				C1E8ED382BEB9C6500EA8B26 /* QuestRepository.swift in Sources */,
 				C1F3D1252BEE039900EC1B26 /* QuestViewModel.swift in Sources */,

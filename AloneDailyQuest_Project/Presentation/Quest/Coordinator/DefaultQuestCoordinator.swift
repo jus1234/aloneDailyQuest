@@ -27,7 +27,7 @@ final class DefaultQuestCoordinator: QuestCoordinator {
         let usecase = DefaultQuestUsecase(repository: repository)
         let videwModel = QuestViewModel(usecase: usecase, coordinator: self)
         let questViewController = QuestViewController(viewModel: videwModel)
-        navigationController.pushViewController(questViewController, animated: true)
+        navigationController.pushViewController(questViewController, animated: false)
     }
     
     func finish(to nextCoordinator: CoordinatorCase) {

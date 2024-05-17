@@ -154,6 +154,10 @@ class ProfileBoxView: UIView {
     func configureLabel(nickName: String, level: String) {
         nickNameText.text = nickName
         levelLabel.text = "LV.\(level)"
+        guard let levelInt = Int(level) else {
+            return
+        }
+        profileImage.image = UIImage(named: configLevelImage(with: levelInt))
     }
     
     func updateExperienceBar(currentExp: Int) {
@@ -174,6 +178,13 @@ class ProfileBoxView: UIView {
     private func bindExperience() {
         user?.bind { [weak self] newValue in
             self?.levelLabel.text = "LV. \(newValue?.fetchLevel())"
+            guard 
+                let level = newValue?.fetchLevel(),
+                let levelImage = self?.configLevelImage(with: level)
+            else {
+                return
+            }
+            self?.profileImage.image = UIImage(named: levelImage)
         }
     }
     
@@ -182,6 +193,39 @@ class ProfileBoxView: UIView {
         nickNameText.text = user.value?.fetchNickName()
         levelLabel.text = "LV.\(user.value?.fetchLevel())"
         bindExperience()
+    }
+    
+    private func configLevelImage(with level: Int) -> String {
+        switch level {
+        case 1...5:
+            return "img_profile_Lv1-10"
+        case 6...10:
+            return "img_profile_Lv6-10"
+        case 11...15:
+            return "img_profile_Lv11-15"
+        case 16...20:
+            return "img_profile_Lv16-20"
+        case 21...25:
+            return "img_profile_Lv21-25"
+        case 26...30:
+            return "img_profile_Lv26-30"
+        case 31...35:
+            return "img_profile_Lv31-35"
+        case 36...40:
+            return "img_profile_Lv36-40"
+        case 41...45:
+            return "img_profile_Lv41-45"
+        case 46...50:
+            return "img_profile_Lv46-50"
+        case 51...55:
+            return "img_profile_Lv51-55"
+        case 56...60:
+            return "img_profile_Lv56-60"
+        case 61...65:
+            return "img_profile_Lv61-65"
+        default:
+            return "img_profile_Lv66-70"
+        }
     }
     
     private func addViews() {

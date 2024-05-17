@@ -379,7 +379,7 @@ extension RankingViewController {
         let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
                  experience: UserDefaults.standard.integer(forKey: "experience"))
         profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
-        profileBoxView.updateExperienceBar(currentExp: user.fetchExperience())
+        profileBoxView.updateExperienceBar(currentExp: user.fetchExperience() % 10)
         nickName.text = user.fetchNickName()
         level.text = "\(user.fetchLevel())"
     }

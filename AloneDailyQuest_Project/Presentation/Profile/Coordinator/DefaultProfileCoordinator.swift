@@ -27,7 +27,7 @@ final class DefaultProfileCoordinator: ProfileCoordinator {
         let usecase = DefaultProfileUsecase(repository: repository)
         let videwModel = ProfileViewModel(usecase: usecase, coordinator: self)
         let questViewController = ProfileViewController(viewModel: videwModel)
-        navigationController.pushViewController(questViewController, animated: true)
+        navigationController.pushViewController(questViewController, animated: false)
     }
     
     func finish(to nextCoordinator: CoordinatorCase) {

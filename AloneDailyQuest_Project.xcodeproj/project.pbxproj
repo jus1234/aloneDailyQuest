@@ -50,8 +50,6 @@
 		BDB4A0752BEE0AF70076E564 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
-		C10D6C492B242192005783BD /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C482B242192005783BD /* StatsType.swift */; };
-		C10D6C4C2B242250005783BD /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D6C4B2B242250005783BD /* APIService.swift */; };
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
 		C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F22B723BA80084FE36 /* ProfileView.swift */; };
 		C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F42B7250FD0084FE36 /* ProfileViewController.swift */; };
@@ -69,7 +67,6 @@
 		C174B4942B2D4D5600692447 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C174B4932B2D4D5600692447 /* UIView+.swift */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
-		C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3F2B0602DE003248C0 /* ViewController.swift */; };
 		C1E8ED342BEB9C2C00EA8B26 /* QuestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8ED332BEB9C2C00EA8B26 /* QuestInfo.swift */; };
 		C1E8ED362BEB9C4F00EA8B26 /* DefaultQuestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8ED352BEB9C4F00EA8B26 /* DefaultQuestRepository.swift */; };
 		C1E8ED382BEB9C6500EA8B26 /* QuestRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8ED372BEB9C6500EA8B26 /* QuestRepository.swift */; };
@@ -128,8 +125,6 @@
 		BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
-		C10D6C482B242192005783BD /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
-		C10D6C4B2B242250005783BD /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C12358F42B7250FD0084FE36 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -147,7 +142,6 @@
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C1D40C3F2B0602DE003248C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C1D40C4C2B0602E0003248C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1E8ED332BEB9C2C00EA8B26 /* QuestInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestInfo.swift; sourceTree = "<group>"; };
 		C1E8ED352BEB9C4F00EA8B26 /* DefaultQuestRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultQuestRepository.swift; sourceTree = "<group>"; };
@@ -420,6 +414,7 @@
 		BDB4A06D2BEE05DE0076E564 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */,
 				C159E3912B1967AC00BB67F8 /* SignupViewController.swift */,
 			);
 			path = View;
@@ -485,14 +480,6 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
-		C10D6C4A2B2421D9005783BD /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				C10D6C482B242192005783BD /* StatsType.swift */,
-			);
-			path = Enum;
-			sourceTree = "<group>";
-		};
 		C131B3CD2BF24C9800020CFE /* Notice */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,30 +497,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		C159E38C2B19671B00BB67F8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C10D6C4B2B242250005783BD /* APIService.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		C159E38D2B19672400BB67F8 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		C159E38E2B19672A00BB67F8 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				C1D40C3F2B0602DE003248C0 /* ViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		C174B4922B2D4D3B00692447 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,37 +507,6 @@
 				BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		C174B4952B2D6DC300692447 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-				C174B4982B2D6DDE00692447 /* Controllers */,
-				C174B4972B2D6DD800692447 /* Views */,
-				C174B4962B2D6DCD00692447 /* Models */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
-		C174B4962B2D6DCD00692447 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		C174B4972B2D6DD800692447 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		C174B4982B2D6DDE00692447 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		C1D40C2F2B0602DE003248C0 = {
@@ -601,12 +533,7 @@
 				BDB4A03A2BEA20D20076E564 /* Data */,
 				BDB4A02B2BE9FE230076E564 /* Infra */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
-				C174B4952B2D6DC300692447 /* Account */,
-				C10D6C4A2B2421D9005783BD /* Enum */,
 				C10D6C442B2420B9005783BD /* Font */,
-				C159E38C2B19671B00BB67F8 /* Models */,
-				C159E38D2B19672400BB67F8 /* Views */,
-				C159E38E2B19672A00BB67F8 /* Controllers */,
 				C1FC22C22B8F1F890077D6FC /* App */,
 			);
 			path = AloneDailyQuest_Project;
@@ -754,7 +681,6 @@
 				BDB4A04C2BEA4B320076E564 /* ExperienceResponseDTO.swift in Sources */,
 				BD1035B52BF5E1BB001EBF0A /* CoordinatorFinishDelegate.swift in Sources */,
 				C1FB22F32BF77CA50026079C /* ProfileCoordinator.swift in Sources */,
-				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
 				C1E8ED342BEB9C2C00EA8B26 /* QuestInfo.swift in Sources */,
 				BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */,
 				BD1035BC2BF5E959001EBF0A /* SignupCoordinator.swift in Sources */,
@@ -782,8 +708,6 @@
 				BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
 				C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */,
-				C10D6C492B242192005783BD /* StatsType.swift in Sources */,
-				C10D6C4C2B242250005783BD /* APIService.swift in Sources */,
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				BDB4A0462BEA498E0076E564 /* AccountRepository.swift in Sources */,

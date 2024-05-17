@@ -9,6 +9,7 @@ import UIKit
 
 class RankingViewController: UIViewController {
     private let profileBoxView: ProfileBoxView = ProfileBoxView()
+    private let tabView: TabView = TabView()
     private lazy var backgroundBottomImageView: UIImageView = {
         var view = UIImageView()
         
@@ -303,7 +304,9 @@ class RankingViewController: UIViewController {
     
     private let viewModel: RankingViewModel
     private var viewDidLoadEvent: Observable<Void> = Observable(())
-    private lazy var input = RankingViewModel.Input(viewDidLoad: viewDidLoadEvent)
+    private lazy var input = RankingViewModel.Input(viewDidLoad: viewDidLoadEvent,
+                                                    qeusetViewEvent: tabView.qeusetViewEvent,
+                                                    rankViewEvent: tabView.rankiViewEvent)
     private lazy var output = viewModel.transform(input: input)
     
     init(viewModel: RankingViewModel) {
@@ -389,15 +392,17 @@ extension RankingViewController {
         view.addSubview(titleText)
         view.addSubview(profileBoxView)
         view.addSubview(backgroundView)
-        view.addSubview(backgroundBottomImageView)
         view.addSubview(topStackView)
         view.addSubview(centerStackView)
         view.addSubview(myRank)
+        view.addSubview(backgroundBottomImageView)
+        view.addSubview(tabView)
     }
     
     func autoLayoutConstraints() {
         profileBoxView.translatesAutoresizingMaskIntoConstraints = false
         backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
+        tabView.translatesAutoresizingMaskIntoConstraints = false
         titleText.translatesAutoresizingMaskIntoConstraints = false
         titleBackgroundText.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -429,6 +434,11 @@ extension RankingViewController {
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
         backgroundBottomImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
+        tabView.heightAnchor.constraint(equalToConstant: 146).isActive = true
+        tabView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+        tabView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        tabView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
         topStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor).isActive = true
         topStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
         topStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
@@ -443,8 +453,8 @@ extension RankingViewController {
             rank.leadingAnchor.constraint(equalTo: centerStackView.leadingAnchor).isActive = true
             rank.trailingAnchor.constraint(equalTo: centerStackView.trailingAnchor).isActive = true
         }
-        
 
+        
 
 //        myRank.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 30).isActive = true
 //        myRank.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 20).isActive = true

@@ -25,7 +25,7 @@ final class DefaultQuestCoordinator: QuestCoordinator {
         let networkService = DefaultNetworkService()
         let repository = DefaultQuestRepository(networkService: networkService)
         let usecase = DefaultQuestUsecase(repository: repository)
-        let videwModel = QuestViewModel(usecase: usecase)
+        let videwModel = QuestViewModel(usecase: usecase, coordinator: self)
         let questViewController = QuestViewController(viewModel: videwModel)
         navigationController.pushViewController(questViewController, animated: true)
     }

@@ -11,8 +11,10 @@ import Foundation
 final class QuestViewModel: ViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>
-        var deleteTrigger: Observable<QuestInfo>
+        var deleteTrigger: Observable<QuestInfo?>
         var experienceTrigger: Observable<Int>
+        var qeusetViewEvent: Observable<Void>
+        var rankViewEvent: Observable<Void>
     }
     
     struct Output {
@@ -22,13 +24,15 @@ final class QuestViewModel: ViewModel {
     }
     
     private let usecase: QuestUsecase
+    private let coordinator: QuestCoordinator
     private let questList: Observable<[QuestInfo]> = Observable([])
     private let errorMessage: Observable<String> = Observable("")
     private let nickName: String = UserDefaults.standard.object(forKey: "nickName") as! String
     private var experience: Int = 0
     
-    init(usecase: QuestUsecase) {
+    init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
         self.usecase = usecase
+        self.coordinator = coordinator
     }
     
     private func viewDidLoad() {
@@ -118,7 +122,7 @@ final class QuestViewModel: ViewModel {
         }
         
         input.deleteTrigger.bind { quest in
-            self.deleteQuest(quest: quest)
+            self.deleteQuest(quest: quest!)
             self.viewDidLoad()
         }
         
@@ -126,7 +130,12 @@ final class QuestViewModel: ViewModel {
             self.updateExperience(experience: experience)
             self.viewDidLoad()
         }
-        
+        input.qeusetViewEvent.bind { _ in
+            return
+        }
+        input.rankViewEvent.bind { [weak self] _ in
+            self?.coordinator.finish(to: .ranking)
+        }
         return .init(questList: self.questList,
                      errorMessage: self.errorMessage, 
                      experience: Observable(self.experience))

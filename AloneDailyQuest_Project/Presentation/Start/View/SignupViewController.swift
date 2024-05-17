@@ -146,7 +146,6 @@ class SignupViewController: UIViewController {
         addViews()
         autoLayoutConstraints()
         setupAddTarget()
-        setupAutoLayout()
         configureUI()
         bindOutput()
     }
@@ -155,7 +154,7 @@ class SignupViewController: UIViewController {
 extension SignupViewController {
     private func bindOutput() {
         output.isValidNickName.bind { [weak self] isValid in
-            guard let isValid, !isValid else {
+            guard let isValid, isValid else {
                 self?.startButton.isEnabled = false
                 self?.validationText.text = "잘못된 형식의 닉네임입니다."
                 self?.validationText.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
@@ -166,7 +165,7 @@ extension SignupViewController {
             self?.validationText.textColor = UIColor(hexCode: "21C131")
         }
         output.isSignupSucess.bind { [weak self] result in
-            guard let result, !result else {
+            guard let result, result else {
                 self?.completedAlert(message: "중복된 닉네임입니다.")
                 return
             }
@@ -187,7 +186,7 @@ extension SignupViewController {
         guard let nickName = textField.text else {
             return
         }
-        input.signupEvent.value = nickName
+        input.nickNameValidationEvent.value = nickName
     }
     
     @objc private func signup() {
@@ -203,14 +202,6 @@ extension SignupViewController {
 extension SignupViewController {
     func configureUI() {
         view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
-    }
-    
-    func setupAutoLayout() {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraint(equalTo: super.view.leadingAnchor, constant: 0).isActive = true
-        view.topAnchor.constraint(equalTo: super.view.topAnchor, constant: 0).isActive = true
-        view.trailingAnchor.constraint(equalTo: super.view.trailingAnchor, constant: 0).isActive = true
-        view.bottomAnchor.constraint(equalTo: super.view.bottomAnchor, constant: 0).isActive = true
     }
     
     func addViews() {

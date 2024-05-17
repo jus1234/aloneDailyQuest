@@ -25,9 +25,9 @@ final class DefaultRankingCoordinator: RankingCoordinator {
         let networkService = DefaultNetworkService()
         let repository = DefaultRankingRepository(networkService: networkService)
         let usecase = DefaultRankingUsecase(repository: repository)
-        let viewModel = RankingViewModel(usecase: usecase)
+        let viewModel = RankingViewModel(usecase: usecase, coordinator: self)
         let rankingViewContorller = RankingViewController(viewModel: viewModel)
-        navigationController.pushViewController(rankingViewContorller, animated: true)
+        navigationController.pushViewController(rankingViewContorller, animated: false)
     }
     
     func finish(to nextCoordinator: CoordinatorCase) {

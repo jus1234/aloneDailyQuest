@@ -13,7 +13,7 @@ final class QuestView: UIView {
     // MARK: - 프로필 부분
     
     let profileBoxView: UIView = ProfileBoxView()
-    let tabView: UIStackView = TabView()
+    let tabView: TabView = TabView()
     
     let titleText: UILabel = {
         var label = UILabel()
@@ -62,7 +62,7 @@ final class QuestView: UIView {
         return label
     }()
     
-    weak var delegate: delegateViewController? = nil
+//    weak var delegate: delegateViewController? = nil
     
     // 플러스 버튼 생성
     lazy var plusButton: UIButton = {

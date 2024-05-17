@@ -22,7 +22,7 @@ final class QuestViewController: UIViewController{
     
     init(viewModel: QuestViewModel) {
         self.viewModel = viewModel
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -46,8 +46,10 @@ final class QuestViewController: UIViewController{
     
     func bindViewModel() {
         let input = QuestViewModel.Input(viewDidLoad: Observable<Void>(()),
-                                         deleteTrigger: Observable(deleteQuestInfo!),
-                                         experienceTrigger: Observable(userExperience))
+                                         deleteTrigger: Observable(deleteQuestInfo),
+                                         experienceTrigger: Observable(userExperience), 
+                                         qeusetViewEvent: questView.tabView.qeusetViewEvent,
+                                         rankViewEvent: questView.tabView.rankiViewEvent)
         let output = viewModel.transform(input: input)
         output.questList.bind { questList in
             self.questList = questList
@@ -93,9 +95,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numberOfRowsInSection")
         let count = filterQuest().count
-        print(count)
         return count
     }
     

@@ -63,9 +63,7 @@
 		C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1479DE42B8F4B4C0007C896 /* TabView.swift */; };
 		C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */; };
 		C159E3932B1967AC00BB67F8 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* SignupViewController.swift */; };
-		C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3952B1968F200BB67F8 /* LoginView.swift */; };
 		C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AD2B61F646002EA255 /* UserInfo.swift */; };
-		C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AF2B61F737002EA255 /* UserInfoManager.swift */; };
 		C174B4942B2D4D5600692447 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C174B4932B2D4D5600692447 /* UIView+.swift */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
@@ -137,9 +135,7 @@
 		C1479DE42B8F4B4C0007C896 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		C151F3C92B5FD6BB00311869 /* ProfileBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBoxView.swift; sourceTree = "<group>"; };
 		C159E3912B1967AC00BB67F8 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		C159E3952B1968F200BB67F8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C15C48AD2B61F646002EA255 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
-		C15C48AF2B61F737002EA255 /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		C174B4932B2D4D5600692447 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -414,7 +410,6 @@
 			isa = PBXGroup;
 			children = (
 				C159E3912B1967AC00BB67F8 /* SignupViewController.swift */,
-				C159E3952B1968F200BB67F8 /* LoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -422,7 +417,6 @@
 		BDB4A06E2BEE05E20076E564 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C15C48AF2B61F737002EA255 /* UserInfoManager.swift */,
 				BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */,
 			);
 			path = ViewModel;
@@ -712,14 +706,12 @@
 				BDB4A0572BEB316F0076E564 /* RankingUsecase.swift in Sources */,
 				BDB4A04C2BEA4B320076E564 /* ExperienceResponseDTO.swift in Sources */,
 				BD1035B52BF5E1BB001EBF0A /* CoordinatorFinishDelegate.swift in Sources */,
-				C159E3962B1968F200BB67F8 /* LoginView.swift in Sources */,
 				C1D40C402B0602DE003248C0 /* ViewController.swift in Sources */,
 				C1E8ED342BEB9C2C00EA8B26 /* QuestInfo.swift in Sources */,
 				BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */,
 				BD1035BC2BF5E959001EBF0A /* SignupCoordinator.swift in Sources */,
 				C1479DE12B8F21160007C896 /* Bundle+Extension.swift in Sources */,
 				BD1035C22BF60CD1001EBF0A /* QuestCoordinator.swift in Sources */,
-				C15C48B02B61F737002EA255 /* UserInfoManager.swift in Sources */,
 				BDB4A0752BEE0AF70076E564 /* SignupViewModel.swift in Sources */,
 				BDB4A0502BEA4D0E0076E564 /* ErrorResponseDTO.swift in Sources */,
 				C151F3CA2B5FD6BB00311869 /* ProfileBoxView.swift in Sources */,

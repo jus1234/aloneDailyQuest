@@ -10,11 +10,13 @@ import UIKit
 final class DefaultSignupCoordinator: SignupCoordinator {
     weak var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
+    var depengencyManager: DIContainer
     var childCoordinators: [Coordinator] = [Coordinator]()
     var type: CoordinatorCase { .signup }
     
-    init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController, _ depengencyManager: DIContainer) {
         self.navigationController = navigationController
+        self.depengencyManager = depengencyManager
     }
     
     @MainActor func start() {
@@ -22,10 +24,7 @@ final class DefaultSignupCoordinator: SignupCoordinator {
     }
     
     @MainActor func showSignupViewController() {
-        let networkService = DefaultNetworkService()
-        let repository = DefaultAccountRepository(networkService: networkService)
-        let usecase = DefaultAccountUsecase(repository: repository)
-        let viewModel = SignupViewModel(usecase: usecase, coordinator: self)
+        let viewModel = SignupViewModel(usecase: depengencyManager.makeAccountUsecase(), coordinator: self)
         let signupViewController = SignupViewController(viewModel: viewModel)
         navigationController.pushViewController(signupViewController, animated: false)
     }

@@ -10,11 +10,13 @@ import UIKit
 final class DefaultRankingCoordinator: RankingCoordinator {
     var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
+    var depengencyManager: DIContainer
     var childCoordinators: [Coordinator] = [Coordinator]()
     var type: CoordinatorCase { .ranking }
     
-    init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController, _ depengencyManager: DIContainer) {
         self.navigationController = navigationController
+        self.depengencyManager = depengencyManager
     }
     
     @MainActor func start() {
@@ -22,10 +24,7 @@ final class DefaultRankingCoordinator: RankingCoordinator {
     }
     
     @MainActor func showRankingViewController() {
-        let networkService = DefaultNetworkService()
-        let repository = DefaultRankingRepository(networkService: networkService)
-        let usecase = DefaultRankingUsecase(repository: repository)
-        let viewModel = RankingViewModel(usecase: usecase, coordinator: self)
+        let viewModel = RankingViewModel(usecase: depengencyManager.makeRnakingUsecase(), coordinator: self)
         let rankingViewContorller = RankingViewController(viewModel: viewModel)
         navigationController.pushViewController(rankingViewContorller, animated: false)
     }

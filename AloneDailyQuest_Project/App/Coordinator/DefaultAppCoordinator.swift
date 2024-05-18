@@ -10,11 +10,13 @@ import UIKit
 final class DefaultAppCoordinator: AppCoordinator {
     weak var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
+    var depengencyManager: DIContainer
     var childCoordinators: [Coordinator] = [Coordinator]()
     var type: CoordinatorCase { .app }
     
-    required init(_ navigationController: UINavigationController) {
+    required init(_ navigationController: UINavigationController, _ depengencyManager: DIContainer) {
         self.navigationController = navigationController
+        self.depengencyManager = depengencyManager
         navigationController.setNavigationBarHidden(true, animated: false)
     }
     
@@ -27,28 +29,28 @@ final class DefaultAppCoordinator: AppCoordinator {
     }
     
     @MainActor func showSignupFlow() {
-        let signupCoordinator = DefaultSignupCoordinator(self.navigationController)
+        let signupCoordinator = DefaultSignupCoordinator(self.navigationController, self.depengencyManager)
         signupCoordinator.finishDelegate = self
         signupCoordinator.start()
         childCoordinators.append(signupCoordinator)
     }
     
     @MainActor func showQuestFlow() {
-        let questCoordinator = DefaultQuestCoordinator(self.navigationController)
+        let questCoordinator = DefaultQuestCoordinator(self.navigationController, self.depengencyManager)
         questCoordinator.finishDelegate = self
         questCoordinator.start()
         childCoordinators.append(questCoordinator)
     }
     
     @MainActor func showRankingFlow() {
-        let rankingCoordinator = DefaultRankingCoordinator(self.navigationController)
+        let rankingCoordinator = DefaultRankingCoordinator(self.navigationController, self.depengencyManager)
         rankingCoordinator.finishDelegate = self
         rankingCoordinator.start()
         childCoordinators.append(rankingCoordinator)
     }
     
     @MainActor func showProfileFlow() {
-        let profileCoordinator = DefaultProfileCoordinator(self.navigationController)
+        let profileCoordinator = DefaultProfileCoordinator(self.navigationController, self.depengencyManager)
         profileCoordinator.finishDelegate = self
         profileCoordinator.start()
         childCoordinators.append(profileCoordinator)

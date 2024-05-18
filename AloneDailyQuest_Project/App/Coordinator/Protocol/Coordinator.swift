@@ -10,13 +10,14 @@ import UIKit
 protocol Coordinator: AnyObject  {
     var finishDelegate: CoordinatorFinishDelegate? { get set }
     var navigationController: UINavigationController { get set }
+    var depengencyManager: DIContainer { get set }
     var childCoordinators: [Coordinator] { get set }
     var type: CoordinatorCase { get }
     
     func start()
     func finish(to nextCoordinator: CoordinatorCase)
     
-    init(_ navigationController: UINavigationController)
+    init(_ navigationController: UINavigationController, _ depengencyManager: DIContainer)
 }
 
 extension Coordinator {

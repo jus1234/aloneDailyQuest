@@ -10,11 +10,13 @@ import UIKit
 final class DefaultQuestCoordinator: QuestCoordinator {
     weak var finishDelegate: CoordinatorFinishDelegate?
     var navigationController: UINavigationController
+    var depengencyManager: DIContainer
     var childCoordinators: [Coordinator] = [Coordinator]()
     var type: CoordinatorCase { .quest }
     
-    init(_ navigationController: UINavigationController) {
+    init(_ navigationController: UINavigationController, _ depengencyManager: DIContainer) {
         self.navigationController = navigationController
+        self.depengencyManager = depengencyManager
     }
     
     @MainActor func start() {
@@ -22,10 +24,7 @@ final class DefaultQuestCoordinator: QuestCoordinator {
     }
     
     @MainActor func showQuestViewController() {
-        let networkService = DefaultNetworkService()
-        let repository = DefaultQuestRepository(networkService: networkService)
-        let usecase = DefaultQuestUsecase(repository: repository)
-        let videwModel = QuestViewModel(usecase: usecase, coordinator: self)
+        let videwModel = QuestViewModel(usecase: depengencyManager.makeQuestUsecase(), coordinator: self)
         let questViewController = QuestViewController(viewModel: videwModel)
         navigationController.pushViewController(questViewController, animated: false)
     }

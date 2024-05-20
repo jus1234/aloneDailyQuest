@@ -53,6 +53,19 @@ class ProfileViewController: UIViewController {
             self.profileView.configureLabel(nickName: nickName, level: String(level))
             self.profileView.updateExperienceBar(currentExp: experience)
         }
+        output.ourEmail.bind { email in
+            self.completedAlert(message: "이메일 복사 완료!")
+            UIPasteboard.general.string = email
+        }
+        output.warningMessage.bind { message in
+            let deleteAction = UIAlertAction(title: "탈퇴", style: .destructive)
+            let cancelAction = UIAlertAction(title: "취소", style: .default)
+            
+            self.customAlert(message: message, actions: [cancelAction, deleteAction]) {
+                UserDefaults.standard.removeObject(forKey: "nickName")
+                UserDefaults.standard.removeObject(forKey: "experience")
+            }
+        }
     }
 }
 

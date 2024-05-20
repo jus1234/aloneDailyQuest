@@ -8,6 +8,19 @@
 import UIKit
 
 extension UIViewController {
+    public func customAlert(title: String? = nil,
+                               message: String,
+                               actions: [UIAlertAction],
+                               completion: (() -> ())? = nil) {
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        for action in actions {
+            alertViewController.addAction(action)
+        }
+        
+        self.present(alertViewController, animated: true, completion: completion)
+    }
+    
     public func completedAlert(title: String? = nil,
                                message: String,
                                okAction: ((UIAlertAction) -> ())? = nil,

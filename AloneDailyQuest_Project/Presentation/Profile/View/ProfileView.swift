@@ -280,7 +280,7 @@ class ProfileView: UIView {
         button.setImage(UIImage(named: "btn_arrow_normal"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 320, bottom: 0, right: 0)
 
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tapNoticeButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -297,7 +297,7 @@ class ProfileView: UIView {
         button.setImage(UIImage(named: "btn_arrow_normal"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 320, bottom: 0, right: 0)
 
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tapContactButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -313,14 +313,14 @@ class ProfileView: UIView {
         button.setImage(UIImage(named: "btn_arrow_normal"), for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 320, bottom: 0, right: 0)
 
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tapLeaveButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    @objc private func buttonTapped() {
-        print("Button tapped")
-    }
+    var didNoticeButtonTap: Observable<Void> = Observable(())
+    var didContactButton: Observable<Void> = Observable(())
+    var didLeaveButtonTap: Observable<Void> = Observable(())
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -330,6 +330,18 @@ class ProfileView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc private func tapNoticeButton() {
+        didNoticeButtonTap.value = ()
+    }
+    
+    @objc private func tapContactButton() {
+        didContactButton.value = ()
+    }
+    
+    @objc private func tapLeaveButton() {
+        didLeaveButtonTap.value = ()
     }
     
     func addViews() {

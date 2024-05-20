@@ -29,7 +29,25 @@ final class DefaultProfileCoordinator: ProfileCoordinator {
         navigationController.pushViewController(questViewController, animated: false)
     }
     
+    @MainActor func connectNoticeCoordinator() {
+        let noticeCoordinator = DefaultNoticeCoordinator(self.navigationController, depengencyManager)
+        noticeCoordinator.finishDelegate = self
+        self.childCoordinators.append(noticeCoordinator)
+        noticeCoordinator.start()
+    }
+    
     func finish(to nextCoordinator: CoordinatorCase) {
         finishDelegate?.didFinish(childCoordinator: self, to: nextCoordinator)
+    }
+}
+
+extension DefaultProfileCoordinator: CoordinatorFinishDelegate {
+    func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
+        if nextCoordinator == .profile {
+            self.childCoordinators = self.childCoordinators.filter { $0.type != childCoordinator.type }
+            childCoordinator.navigationController.popToRootViewController(animated: true)
+            return
+        }
+        finish(to: nextCoordinator)
     }
 }

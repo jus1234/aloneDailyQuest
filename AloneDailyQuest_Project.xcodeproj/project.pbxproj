@@ -571,13 +571,13 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
+				C1FC22C22B8F1F890077D6FC /* App */,
 				BDB4A05A2BEB3F300076E564 /* Presentation */,
 				BDB4A0412BEA3E1F0076E564 /* Domain */,
 				BDB4A03A2BEA20D20076E564 /* Data */,
 				BDB4A02B2BE9FE230076E564 /* Infra */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
 				C10D6C442B2420B9005783BD /* Font */,
-				C1FC22C22B8F1F890077D6FC /* App */,
 			);
 			path = AloneDailyQuest_Project;
 			sourceTree = "<group>";

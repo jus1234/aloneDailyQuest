@@ -13,4 +13,5 @@ enum CoordinatorCase {
     case quest
     case ranking
     case profile
+    case notice
 }

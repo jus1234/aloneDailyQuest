@@ -73,6 +73,8 @@ extension DefaultAppCoordinator: CoordinatorFinishDelegate {
             showRankingFlow()
         case .profile:
             showProfileFlow()
+        default:
+            break
         }
     }
     

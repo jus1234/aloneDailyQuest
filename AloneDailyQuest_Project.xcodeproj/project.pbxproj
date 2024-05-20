@@ -26,6 +26,9 @@
 		BD1035CA2BF61316001EBF0A /* DefaultRankingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1035C92BF61316001EBF0A /* DefaultRankingCoordinator.swift */; };
 		BD22DC082BF1E2C500416D35 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22DC072BF1E2C500416D35 /* Coordinator.swift */; };
 		BD22DC0A2BF1E31F00416D35 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22DC092BF1E31F00416D35 /* AppCoordinator.swift */; };
+		BDA4C62D2BFB29770054DF33 /* NoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */; };
+		BDA4C62F2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */; };
+		BDA4C6322BFB2A850054DF33 /* NoticeVewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */; };
 		BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */; };
 		BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */; };
 		BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */; };
@@ -102,6 +105,9 @@
 		BD1035C92BF61316001EBF0A /* DefaultRankingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRankingCoordinator.swift; sourceTree = "<group>"; };
 		BD22DC072BF1E2C500416D35 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		BD22DC092BF1E31F00416D35 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCoordinator.swift; sourceTree = "<group>"; };
+		BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoticeCoordinator.swift; sourceTree = "<group>"; };
+		BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVewModel.swift; sourceTree = "<group>"; };
 		BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
@@ -255,6 +261,31 @@
 				BD22DC072BF1E2C500416D35 /* Coordinator.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		BDA4C62A2BFB294E0054DF33 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				BDA4C62B2BFB295A0054DF33 /* Protocol */,
+				BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		BDA4C62B2BFB295A0054DF33 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		BDA4C6302BFB2A2F0054DF33 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		BDB4A02B2BE9FE230076E564 /* Infra */ = {
@@ -493,7 +524,9 @@
 		C131B3CD2BF24C9800020CFE /* Notice */ = {
 			isa = PBXGroup;
 			children = (
+				BDA4C62A2BFB294E0054DF33 /* Coordinator */,
 				C131B3CE2BF24E4000020CFE /* View */,
+				BDA4C6302BFB2A2F0054DF33 /* ViewModel */,
 			);
 			path = Notice;
 			sourceTree = "<group>";
@@ -711,6 +744,7 @@
 				C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */,
 				BDB4A0532BEA56710076E564 /* AccountError.swift in Sources */,
 				BD1035C82BF611F5001EBF0A /* RankingCoordinator.swift in Sources */,
+				BDA4C62D2BFB29770054DF33 /* NoticeCoordinator.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
 				C1FB22F72BF77CC60026079C /* ProfileViewModel.swift in Sources */,
 				BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */,
@@ -718,6 +752,7 @@
 				C131B3CC2BF0A61D00020CFE /* DefaultProfileRepository.swift in Sources */,
 				BDB4A03E2BEA20F20076E564 /* DefaultRankingRepository.swift in Sources */,
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
+				BDA4C62F2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift in Sources */,
 				C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */,
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
@@ -734,6 +769,7 @@
 				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
 				C1FB22F52BF77CB70026079C /* DefaultProfileCoordinator.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
+				BDA4C6322BFB2A850054DF33 /* NoticeVewModel.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				BDB4A0622BEB40370076E564 /* Observable.swift in Sources */,
 				BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */,
@@ -901,8 +937,8 @@
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -929,8 +965,8 @@
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

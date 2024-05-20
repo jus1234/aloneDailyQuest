@@ -8,7 +8,7 @@
 import UIKit
 
 class NoticeView: UIView {
-    let tabView: UIStackView = TabView()
+    let tabView = TabView()
     
     let titleText: UILabel = {
         var label = UILabel()
@@ -153,8 +153,11 @@ class NoticeView: UIView {
     lazy var backButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(named: "btn_back_normal"), for: .normal)
+        button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
         return button
     }()
+    
+    var didBackButtonTap: Observable<Void> = Observable(())
     
     func addSubviews() {
         addSubview(tabView)
@@ -181,6 +184,10 @@ class NoticeView: UIView {
     
     func configureUI() {
         self.backgroundColor = UIColor(hexCode: "38C8C8")
+    }
+    
+    @objc private func tapBackButton() {
+        didBackButtonTap.value = ()
     }
     
     func setupConstraint() {

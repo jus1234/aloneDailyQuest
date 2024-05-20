@@ -13,6 +13,9 @@ final class ProfileViewModel: ViewModel {
         var qeusetViewEvent: Observable<Void>
         var rankViewEvent: Observable<Void>
         var profileViewEvent: Observable<Void>
+        var didNoticeTap: Observable<Void>
+        var didContactTap: Observable<Void>
+        var didLeaveTap: Observable<Void>
     }
     
     struct Output {
@@ -45,6 +48,15 @@ final class ProfileViewModel: ViewModel {
             self?.coordinator.finish(to: .ranking)
         }
         input.profileViewEvent.bind { _ in
+            return
+        }
+        input.didNoticeTap.bind { [weak self] _ in
+            self?.coordinator.connectNoticeCoordinator()
+        }
+        input.didContactTap.bind { _ in
+            return
+        }
+        input.didLeaveTap.bind { _ in
             return
         }
         return .init(userInfo: self.user)

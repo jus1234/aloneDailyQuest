@@ -9,4 +9,5 @@ import Foundation
 
 protocol ProfileCoordinator: Coordinator {
     func showProfileViewController()
+    func connectNoticeCoordinator()
 }

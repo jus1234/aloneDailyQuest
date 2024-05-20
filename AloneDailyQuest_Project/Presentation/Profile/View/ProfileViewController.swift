@@ -34,7 +34,10 @@ class ProfileViewController: UIViewController {
     private lazy var input = ProfileViewModel.Input(viewDidLoad: Observable(()),
                                                     qeusetViewEvent: profileView.tabView.qeusetViewEvent,
                                                     rankViewEvent: profileView.tabView.rankiViewEvent,
-                                                    profileViewEvent: profileView.tabView.profileViewEvent)
+                                                    profileViewEvent: profileView.tabView.profileViewEvent,
+                                                    didNoticeTap: profileView.didNoticeButtonTap,
+                                                    didContactTap: profileView.didContactButton,
+                                                    didLeaveTap: profileView.didLeaveButtonTap)
     private lazy var output = viewModel.transform(input: input)
     
     func configureUI() {

@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class ProfileViewModel: ViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>

@@ -168,7 +168,6 @@ class ProfileView: UIView {
         experienceLayer.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
         experienceLayer.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
             
-        
         view.layer.addSublayer(experienceLayer)
         view.addSubview(imageView)
         view.addSubview(label)

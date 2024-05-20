@@ -21,11 +21,15 @@ final class ProfileViewModel: ViewModel {
     
     struct Output {
         var userInfo: Observable<UserInfo?>
+        var ourEmail: Observable<String>
+        var warningMessage: Observable<String>
     }
     
     private let usecase: ProfileUsecase
     private let coordinator: ProfileCoordinator
     private var user: Observable<UserInfo?> = Observable(nil)
+    private var email: Observable<String> = Observable("")
+    private var message: Observable<String> = Observable("")
     
     init(usecase: ProfileUsecase, coordinator: ProfileCoordinator) {
         self.usecase = usecase
@@ -35,6 +39,14 @@ final class ProfileViewModel: ViewModel {
     func viewDidLoad() {
         self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
                              experience: UserDefaults.standard.integer(forKey: "experience"))
+    }
+    
+    func sendOurEmail() {
+        self.email.value = "krsder@naver.com"
+    }
+    
+    func sendWarningMessage() {
+        self.message.value = "회원탈퇴시 회원정보를 복구할 수 없습니다. 정말 탈퇴하시겠습니까?"
     }
     
     func transform(input: Input) -> Output {
@@ -54,13 +66,13 @@ final class ProfileViewModel: ViewModel {
         input.didNoticeTap.bind { [weak self] _ in
             self?.coordinator.connectNoticeCoordinator()
         }
-        input.didContactTap.bind { _ in
-            return
+        input.didContactTap.bind { [weak self] _ in
+            self?.sendOurEmail()
         }
-        input.didLeaveTap.bind { _ in
-            return
+        input.didLeaveTap.bind { [weak self] _ in
+            self?.sendWarningMessage()
         }
-        return .init(userInfo: self.user)
+        return .init(userInfo: self.user, ourEmail: self.email, warningMessage: self.message)
     }
     
 }

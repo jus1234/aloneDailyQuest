@@ -16,6 +16,8 @@ final class QuestViewModel: ViewModel {
         var qeusetViewEvent: Observable<Void>
         var rankViewEvent: Observable<Void>
         var profileViewEvent: Observable<Void>
+        var didPlusButtonTap: Observable<Void>
+        var updateQuestEvent: Observable<QuestInfo>
     }
     
     struct Output {
@@ -135,6 +137,9 @@ final class QuestViewModel: ViewModel {
         }
         input.profileViewEvent.bind { [weak self] _ in
             self?.coordinator.finish(to: .profile)
+        }
+        input.didPlusButtonTap.bind { [weak self] _ in
+            self?.coordinator.connectDetailCoordinator(quest: nil)
         }
         return .init(questList: self.questList,
                      errorMessage: self.errorMessage,

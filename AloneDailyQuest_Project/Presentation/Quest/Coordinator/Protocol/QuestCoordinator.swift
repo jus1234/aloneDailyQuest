@@ -9,4 +9,5 @@ import Foundation
 
 protocol QuestCoordinator: Coordinator {
     func showQuestViewController()
+    func connectDetailCoordinator(quest: QuestInfo?)
 }

@@ -11,6 +11,8 @@ final class QuestViewController: UIViewController{
     
     private let questView: QuestView = QuestView()
     private let viewModel: QuestViewModel
+    private let didPlusButtonTap: Observable<Void> = Observable(())
+    private let updateQuestEvent: Observable<QuestInfo> = Observable(QuestInfo(id: UUID(), quest: "", date: Date(), selectedDate: [], repeatDay: "", completed: false))
     private lazy var questList: [QuestInfo] = []
     private lazy var deleteQuestInfo: QuestInfo? = nil
     private lazy var userExperience: Int = UserDefaults.standard.integer(forKey: "experince")
@@ -20,7 +22,7 @@ final class QuestViewController: UIViewController{
                                              experienceTrigger: Observable(userExperience),
                                              qeusetViewEvent: questView.tabView.qeusetViewEvent,
                                              rankViewEvent: questView.tabView.rankiViewEvent,
-                                             profileViewEvent: questView.tabView.profileViewEvent)
+                                                  profileViewEvent: questView.tabView.profileViewEvent, didPlusButtonTap: didPlusButtonTap, updateQuestEvent: updateQuestEvent)
     private lazy var output = viewModel.transform(input: input)
     weak var delegate: UITableViewDelegate? = nil
     
@@ -65,12 +67,16 @@ final class QuestViewController: UIViewController{
     }
     
     @objc func addQuest() {
-//        delegate?.addQuest()
+        didPlusButtonTap.value = ()
     }
     
     @objc func updateQuest(sender: UIButton) {
-        guard let index = index else { return }
-//        delegate?.updateQuest(indexPath: sender.tag)
+        guard let index = index else {
+            return
+        }
+        let questData = self.filterQuest()
+        let questInfo = questData[sender.tag]
+        updateQuestEvent.value = questInfo
     }
     
     @objc func deleteQuest(sender: UIButton) {

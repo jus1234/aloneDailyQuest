@@ -11,11 +11,18 @@ final class DetailViewController: UIViewController {
     
     private let detailView = DetailView()
     private let viewModel: DetailViewModel
+    private var viewDidLoadEvent: Observable<Void> = Observable(())
+    private lazy var updateEvent: Observable<QuestInfo?> = Observable(questData)
+    private lazy var addEvent: Observable<QuestInfo?> = Observable(nil)
+    private lazy var input = DetailViewModel.Input(viewDidLoad: viewDidLoadEvent,
+                                                   updateTrigger: updateEvent,
+                                                   addTrigger: addEvent)
+    private lazy var output = viewModel.transform(input: input)
     
-    init(viewModel: DetailViewModel, questData: QuestInfo) {
+    init(viewModel: DetailViewModel, questData: QuestInfo?) {
         self.viewModel = viewModel
         self.questData = questData
-        super.init()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -30,13 +37,10 @@ final class DetailViewController: UIViewController {
         setup()
         configureUI()
         bindViewModel()
+        input.viewDidLoad.value = ()
     }
     
     func bindViewModel() {
-        let input = DetailViewModel.Input(viewDidLoad: Observable<Void>(()),
-                                          updateTrigger: Observable(self.questData!),
-                                          addTrigger: Observable(self.questData!))
-        let output = viewModel.transform(input: input)
         output.errorMessage.bind { errorMessage in
             self.completedAlert(message: errorMessage)
         }
@@ -123,6 +127,7 @@ final class DetailViewController: UIViewController {
             questData.selectedDate[5] = isDaySelected[5]
             questData.selectedDate[6] = isDaySelected[6]
             questData.repeatDay = repeatLabel
+            input.updateTrigger.value = questData
             
             self.questData = questData
             
@@ -136,6 +141,7 @@ final class DetailViewController: UIViewController {
     
     func registerQuestForSelectedDays(questText: String, repeatLabel: String) {
         let data = QuestInfo(id: UUID(), quest: questText, date: Date(), selectedDate: isDaySelected, repeatDay: repeatLabel, completed: isCompleted)
+        input.addTrigger.value = data
         self.questData = data
     }
     

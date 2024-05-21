@@ -42,7 +42,7 @@ final class DefaultProfileCoordinator: ProfileCoordinator {
 }
 
 extension DefaultProfileCoordinator: CoordinatorFinishDelegate {
-    func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
+    @MainActor func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
         if nextCoordinator == .profile {
             self.childCoordinators = self.childCoordinators.filter { $0.type != childCoordinator.type }
             childCoordinator.navigationController.popToRootViewController(animated: true)

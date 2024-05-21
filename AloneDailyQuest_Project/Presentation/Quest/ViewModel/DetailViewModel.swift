@@ -7,11 +7,12 @@
 
 import Foundation
 
+@MainActor
 final class DetailViewModel: ViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>
-        var updateTrigger: Observable<QuestInfo>
-        var addTrigger: Observable<QuestInfo>
+        var updateTrigger: Observable<QuestInfo?>
+        var addTrigger: Observable<QuestInfo?>
     }
     
     struct Output {
@@ -19,11 +20,13 @@ final class DetailViewModel: ViewModel {
     }
     
     private let usecase: QuestUsecase
-    private var quest: Observable<QuestInfo>
+    private let coordinator: DetailCoordinator
+    private var quest: Observable<QuestInfo?>
     private let errorMessage: Observable<String> = Observable("")
     
-    init(usecase: QuestUsecase, quest: QuestInfo) {
+    init(usecase: QuestUsecase, coordinator: DetailCoordinator, quest: QuestInfo?) {
         self.usecase = usecase
+        self.coordinator = coordinator
         self.quest = Observable(quest)
     }
     
@@ -31,8 +34,8 @@ final class DetailViewModel: ViewModel {
         Task {
             do {
                 let coreQuests = try await self.usecase.readQuest()
-                for quest in coreQuests {
-                    if self.quest.value.id == quest.id {
+                for coreQuest in coreQuests {
+                    if let quest = self.quest.value, quest.id == coreQuest.id {
                         self.quest.value = quest
                     }
                 }
@@ -61,6 +64,7 @@ final class DetailViewModel: ViewModel {
     private func createQuest(quest: QuestInfo) {
         Task {
             await coreDataCreate(quest: quest)
+            coordinator.finish(to: .quest)
         }
     }
     
@@ -77,6 +81,7 @@ final class DetailViewModel: ViewModel {
     private func updateQuest(newQuest: QuestInfo) {
         Task {
             await coreDataUpdate(newQuest: newQuest)
+            coordinator.finish(to: .quest)
         }
     }
     
@@ -86,10 +91,16 @@ final class DetailViewModel: ViewModel {
         }
         
         input.updateTrigger.bind { quest in
+            guard let quest else {
+                return
+            }
             self.updateQuest(newQuest: quest)
         }
         
         input.addTrigger.bind { quest in
+            guard let quest else {
+                return
+            }
             self.createQuest(quest: quest)
         }
         

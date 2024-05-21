@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 final class QuestViewModel: ViewModel {
     struct Input {
-        var viewDidLoad: Observable<Void>
+        var viewWillAppear: Observable<Void>
         var deleteTrigger: Observable<QuestInfo?>
         var experienceTrigger: Observable<Int>
         var qeusetViewEvent: Observable<Void>
@@ -116,18 +116,18 @@ final class QuestViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewDidLoad.bind { _ in
-            self.viewDidLoad()
+        input.viewWillAppear.bind { [weak self] _ in
+            self?.viewDidLoad()
         }
         
-        input.deleteTrigger.bind { quest in
-            self.deleteQuest(quest: quest!)
-            self.viewDidLoad()
+        input.deleteTrigger.bind { [weak self] quest in
+            self?.deleteQuest(quest: quest!)
+            self?.viewDidLoad()
         }
         
-        input.experienceTrigger.bind { experience in
-            self.updateExperience(experienceData: experience)
-            self.viewDidLoad()
+        input.experienceTrigger.bind { [weak self] experience in
+            self?.updateExperience(experienceData: experience)
+            self?.viewDidLoad()
         }
         input.qeusetViewEvent.bind { _ in
             return

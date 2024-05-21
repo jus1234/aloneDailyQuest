@@ -17,14 +17,18 @@ final class QuestViewController: UIViewController{
     private lazy var deleteQuestInfo: QuestInfo? = nil
     private lazy var userExperience: Int = UserDefaults.standard.integer(forKey: "experince")
     private lazy var userInfo: UserInfo? = nil
-    private lazy var input = QuestViewModel.Input(viewDidLoad: Observable<Void>(()),
-                                             deleteTrigger: Observable(deleteQuestInfo),
-                                             experienceTrigger: Observable(userExperience),
-                                             qeusetViewEvent: questView.tabView.qeusetViewEvent,
-                                             rankViewEvent: questView.tabView.rankiViewEvent,
-                                                  profileViewEvent: questView.tabView.profileViewEvent, didPlusButtonTap: didPlusButtonTap, updateQuestEvent: updateQuestEvent)
+    private var viewWillAppearEvent: Observable<Void> = Observable(())
+    private var deleteEvent: Observable<QuestInfo?> = Observable(nil)
+    private var updateUserExperienceEvent: Observable<Int> = Observable(0)
+    private lazy var input = QuestViewModel.Input(viewWillAppear: viewWillAppearEvent,
+                                                  deleteTrigger: deleteEvent,
+                                                  experienceTrigger: updateUserExperienceEvent,
+                                                  qeusetViewEvent: questView.tabView.qeusetViewEvent,
+                                                  rankViewEvent: questView.tabView.rankiViewEvent,
+                                                  profileViewEvent: questView.tabView.profileViewEvent,
+                                                  didPlusButtonTap: didPlusButtonTap, 
+                                                  updateQuestEvent: updateQuestEvent)
     private lazy var output = viewModel.transform(input: input)
-    weak var delegate: UITableViewDelegate? = nil
     
     var index: IndexPath?
     var todayExp = 0
@@ -41,10 +45,15 @@ final class QuestViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         questView.tableView.dataSource = self
+        questView.tableView.delegate = self
         configureUI()
-        bindViewModel()
-        input.viewDidLoad.value = ()
         view = questView
+        bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        input.viewWillAppear.value = ()
     }
     
     func configureUI() {
@@ -53,16 +62,20 @@ final class QuestViewController: UIViewController{
     
     
     func bindViewModel() {
-        output.userInfo.bind { user in
+        output.userInfo.bind { [weak self] user in
             guard
                 let nickName = user?.fetchNickName(),
                 let level = user?.fetchLevel(),
                 let experience = user?.fetchExperience() else { return }
-            self.questView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
-            self.questView.profileBoxView.updateExperienceBar(currentExp: experience)
+            self?.questView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
+            self?.questView.profileBoxView.updateExperienceBar(currentExp: experience)
         }
-        output.questList.bind { questList in
-            self.questList = questList
+        output.questList.bind { [weak self] questList in
+            self?.questList = questList
+            self?.reload()
+        }
+        output.errorMessage.bind { [weak self] errorMessage in
+            self?.completedAlert(message: errorMessage)
         }
     }
     

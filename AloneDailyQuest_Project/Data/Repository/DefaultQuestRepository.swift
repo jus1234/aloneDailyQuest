@@ -131,6 +131,20 @@ extension DefaultQuestRepository {
         }
     }
     
+    func deleteQuests() async throws {
+        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
+        
+         let fetchedQuestList = try context.fetch(request)
+        
+        for quest in fetchedQuestList {
+            context.delete(quest)
+        }
+        
+        if context.hasChanges {
+            try context.save()
+        }
+    }
+    
     func repeatingQuestNewDay() async throws {
         let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
         request.predicate = NSPredicate(format: "isMonday == false && isTuesday == false && isWednesday == false && isThursday == false && isFriday == false && isSaturday == false && isSunday == false")

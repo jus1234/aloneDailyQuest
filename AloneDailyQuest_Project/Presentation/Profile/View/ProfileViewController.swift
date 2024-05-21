@@ -31,13 +31,15 @@ class ProfileViewController: UIViewController {
     }
     
     private var viewDidLoadEvent: Observable<Void> = Observable(())
+    private var dropMembershipEvent: Observable<Void> = Observable(())
     private lazy var input = ProfileViewModel.Input(viewDidLoad: Observable(()),
                                                     qeusetViewEvent: profileView.tabView.qeusetViewEvent,
                                                     rankViewEvent: profileView.tabView.rankiViewEvent,
                                                     profileViewEvent: profileView.tabView.profileViewEvent,
                                                     didNoticeTap: profileView.didNoticeButtonTap,
                                                     didContactTap: profileView.didContactButton,
-                                                    didLeaveTap: profileView.didLeaveButtonTap)
+                                                    didLeaveTap: profileView.didLeaveButtonTap,
+                                                    dropMembershipEvent: dropMembershipEvent)
     private lazy var output = viewModel.transform(input: input)
     
     func configureUI() {
@@ -58,17 +60,10 @@ class ProfileViewController: UIViewController {
             UIPasteboard.general.string = email
         }
         output.warningMessage.bind { [weak self] message in
-//            let deleteAction = UIAlertAction(title: "탈퇴", style: .destructive)
-//            let cancelAction = UIAlertAction(title: "취소", style: .default)
-//            
-//            self?.customAlert(message: message, actions: [cancelAction, deleteAction]) {
-//                UserDefaults.standard.removeObject(forKey: "nickName")
-//                UserDefaults.standard.removeObject(forKey: "experience")
-//            }
-            
-            self?.makeCancelAlert(message: message) { _ in
+            self?.makeCancelAlert(message: message) { [weak self] _ in
                 UserDefaults.standard.removeObject(forKey: "nickName")
                 UserDefaults.standard.removeObject(forKey: "experience")
+                self?.dropMembershipEvent.value = ()
             }
         }
     }

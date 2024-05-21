@@ -17,6 +17,7 @@ final class ProfileViewModel: ViewModel {
         var didNoticeTap: Observable<Void>
         var didContactTap: Observable<Void>
         var didLeaveTap: Observable<Void>
+        var dropMembershipEvent: Observable<Void>
     }
     
     struct Output {
@@ -49,6 +50,13 @@ final class ProfileViewModel: ViewModel {
         self.message.value = "회원탈퇴시 회원정보를 복구할 수 없습니다. 정말 탈퇴하시겠습니까?"
     }
     
+    func dropMembership() {
+        Task {
+            try await usecase.dropMembership()
+            coordinator.finish(to: .app)
+        }
+    }
+    
     func transform(input: Input) -> Output {
         input.viewDidLoad.bind { [weak self] _ in
             self?.viewDidLoad()
@@ -71,6 +79,9 @@ final class ProfileViewModel: ViewModel {
         }
         input.didLeaveTap.bind { [weak self] _ in
             self?.sendWarningMessage()
+        }
+        input.dropMembershipEvent.bind { [weak self] _ in
+            self?.dropMembership()
         }
         return .init(userInfo: self.user, ourEmail: self.email, warningMessage: self.message)
     }

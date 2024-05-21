@@ -10,13 +10,16 @@ import Foundation
 protocol ProfileUsecase {
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
+    func dropMembership() async throws
 }
 
 final class DefaultProfileUsecase: ProfileUsecase {
     private let repository: ProfileRepository
+    private let questRepository: QuestRepository
     
-    init(repository: ProfileRepository) {
+    init(repository: ProfileRepository, questRepository: QuestRepository) {
         self.repository = repository
+        self.questRepository = questRepository
     }
     
     func fetchUserInfo(userId: String) async throws -> UserInfo {
@@ -25,5 +28,9 @@ final class DefaultProfileUsecase: ProfileUsecase {
     
     func fetchExperience(userId: String) async throws -> Int {
         return try await repository.fetchExperience(userId: userId)
+    }
+    
+    func dropMembership() async throws {
+        try await questRepository.deleteQuests()
     }
 }

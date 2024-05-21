@@ -23,7 +23,7 @@ final class DIContainer {
     }
     
     func makeProfileUsecase() -> ProfileUsecase {
-        return DefaultProfileUsecase(repository: makeProfileRepository())
+        return DefaultProfileUsecase(repository: makeProfileRepository(), questRepository: makeQuestRepository())
     }
     
     private func makeAccountRepository() -> AccountRepository {

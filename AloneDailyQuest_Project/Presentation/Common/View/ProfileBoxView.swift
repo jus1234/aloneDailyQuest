@@ -165,8 +165,8 @@ class ProfileBoxView: UIView {
         let imageView = experienceBar.subviews.compactMap { $0 as? UIImageView }.first
         let experienceLayer = experienceBar.layer.sublayers?.compactMap { $0 as? CALayer }.first
 
-        let progressFraction = CGFloat(currentExp) / 10.0
-        label?.text = "\(currentExp)/10"
+        let progressFraction = CGFloat(currentExp % 10) / 10.0
+        label?.text = "\(currentExp % 10)/10"
         label?.sizeToFit()
         if let imageView = imageView {
             label?.center = CGPoint(x: imageView.bounds.midX, y: imageView.bounds.midY)

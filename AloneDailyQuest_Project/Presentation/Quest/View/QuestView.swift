@@ -68,6 +68,7 @@ final class QuestView: UIView {
     
     let tableView: UITableView = {
         var view = UITableView()
+        view.showsVerticalScrollIndicator = false
         view.backgroundColor = UIColor(hexCode: "38C8C8")
         return view
     }()

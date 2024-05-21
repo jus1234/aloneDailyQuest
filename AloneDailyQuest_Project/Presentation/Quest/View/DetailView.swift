@@ -11,7 +11,7 @@ final class DetailView: UIView {
 
     // MARK: - 프로필 부분
     
-    let profileBoxView: UIView = ProfileBoxView()
+    let profileBoxView: ProfileBoxView = ProfileBoxView()
     
     let titleText: UILabel = {
         var label = UILabel()

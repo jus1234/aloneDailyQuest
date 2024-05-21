@@ -44,6 +44,14 @@ final class DetailViewController: UIViewController {
         output.errorMessage.bind { errorMessage in
             self.completedAlert(message: errorMessage)
         }
+        output.userInfo.bind { [weak self] user in
+            guard
+                let nickName = user?.fetchNickName(),
+                let level = user?.fetchLevel(),
+                let experience = user?.fetchExperience() else { return }
+            self?.detailView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
+            self?.detailView.profileBoxView.updateExperienceBar(currentExp: experience)
+        }
     }
     
     func setup() {

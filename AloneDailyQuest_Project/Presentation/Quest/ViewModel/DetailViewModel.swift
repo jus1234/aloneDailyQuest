@@ -17,12 +17,14 @@ final class DetailViewModel: ViewModel {
     
     struct Output {
         var errorMessage: Observable<String>
+        var userInfo: Observable<UserInfo?>
     }
     
     private let usecase: QuestUsecase
     private let coordinator: DetailCoordinator
     private var quest: Observable<QuestInfo?>
     private let errorMessage: Observable<String> = Observable("")
+    private let user: Observable<UserInfo?> = Observable(nil)
     
     init(usecase: QuestUsecase, coordinator: DetailCoordinator, quest: QuestInfo?) {
         self.usecase = usecase
@@ -39,10 +41,16 @@ final class DetailViewModel: ViewModel {
         }
     }
     
+    private func fetchUserInfo() {
+        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                                   experience: UserDefaults.standard.integer(forKey: "experience"))
+    }
+    
     private func viewDidLoad() {
         Task {
             do {
                 try await fetchQuest()
+                fetchUserInfo()
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -98,6 +106,7 @@ final class DetailViewModel: ViewModel {
             self.createQuest(quest: quest)
         }
         
-        return Output(errorMessage: self.errorMessage)
+        return Output(errorMessage: self.errorMessage,
+                      userInfo: self.user)
     }
 }

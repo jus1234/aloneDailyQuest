@@ -12,12 +12,12 @@ final class QuestViewModel: ViewModel {
     struct Input {
         var viewWillAppear: Observable<Void>
         var deleteTrigger: Observable<QuestInfo?>
-        var experienceTrigger: Observable<Int>
         var qeusetViewEvent: Observable<Void>
         var rankViewEvent: Observable<Void>
         var profileViewEvent: Observable<Void>
         var didPlusButtonTap: Observable<Void>
         var updateQuestEvent: Observable<QuestInfo>
+        var completeQuestEvent: Observable<QuestInfo>
     }
     
     struct Output {
@@ -37,7 +37,7 @@ final class QuestViewModel: ViewModel {
         self.coordinator = coordinator
     }
     
-    private func viewDidLoad() {
+    private func viewWillAppear() {
         Task {
             await fetchQuest()
             checkUserDefaultsLastVisitDate()
@@ -99,6 +99,7 @@ final class QuestViewModel: ViewModel {
             do {
                 try await usecase.updateQuest(newQuestInfo: quest)
                 questList.value = try await usecase.readQuest()
+                updateExperience(experienceData: 1)
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -120,19 +121,16 @@ final class QuestViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         input.viewWillAppear.bind { [weak self] _ in
-            self?.viewDidLoad()
+            self?.viewWillAppear()
         }
         input.updateQuestEvent.bind { [weak self] quest in
             self?.coordinator.connectDetailCoordinator(quest: quest)
         }
         input.deleteTrigger.bind { [weak self] quest in
             self?.deleteQuest(quest: quest!)
-            self?.viewDidLoad()
         }
-        
-        input.experienceTrigger.bind { [weak self] experience in
-            self?.updateExperience(experienceData: experience)
-            self?.viewDidLoad()
+        input.completeQuestEvent.bind { [weak self] quest in
+            self?.updateQuest(quest: quest)
         }
         input.qeusetViewEvent.bind { _ in
             return

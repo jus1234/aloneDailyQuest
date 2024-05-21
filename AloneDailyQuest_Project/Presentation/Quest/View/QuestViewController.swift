@@ -13,21 +13,21 @@ final class QuestViewController: UIViewController{
     private let viewModel: QuestViewModel
     private let didPlusButtonTap: Observable<Void> = Observable(())
     private let updateQuestEvent: Observable<QuestInfo> = Observable(QuestInfo(id: UUID(), quest: "", date: Date(), selectedDate: [], repeatDay: "", completed: false))
+    private let completeQuestEvent: Observable<QuestInfo> = Observable(QuestInfo(id: UUID(), quest: "", date: Date(), selectedDate: [], repeatDay: "", completed: false))
     private lazy var questList: [QuestInfo] = []
     private lazy var deleteQuestInfo: QuestInfo? = nil
     private lazy var userExperience: Int = UserDefaults.standard.integer(forKey: "experince")
     private lazy var userInfo: UserInfo? = nil
     private var viewWillAppearEvent: Observable<Void> = Observable(())
     private var deleteEvent: Observable<QuestInfo?> = Observable(nil)
-    private var updateUserExperienceEvent: Observable<Int> = Observable(0)
     private lazy var input = QuestViewModel.Input(viewWillAppear: viewWillAppearEvent,
                                                   deleteTrigger: deleteEvent,
-                                                  experienceTrigger: updateUserExperienceEvent,
                                                   qeusetViewEvent: questView.tabView.qeusetViewEvent,
                                                   rankViewEvent: questView.tabView.rankiViewEvent,
                                                   profileViewEvent: questView.tabView.profileViewEvent,
                                                   didPlusButtonTap: didPlusButtonTap, 
-                                                  updateQuestEvent: updateQuestEvent)
+                                                  updateQuestEvent: updateQuestEvent,
+                                                  completeQuestEvent: completeQuestEvent)
     private lazy var output = viewModel.transform(input: input)
     
     var index: IndexPath?
@@ -103,6 +103,13 @@ final class QuestViewController: UIViewController{
         }))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    @objc func completeQuest(sender: UIButton) {
+        let questData = self.filterQuest()
+        var questInfo = questData[sender.tag]
+        questInfo.completed = true
+        input.completeQuestEvent.value = questInfo
+    }
 }
 
 extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
@@ -130,8 +137,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
         let questData = filterQuest()
         cell.questData = questData[indexPath.row]
-        var completedCheck = cell.questData!.completed
-        
+        let completedCheck = cell.questData!.completed
         // 테이블뷰 시작시 UI 기본 설정
         cell.repeatday.text = cell.questData?.repeatDay
         cell.questTitle.text = cell.questData?.quest
@@ -139,7 +145,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         index = indexPath
     
         if todayExp < 100 {
-            cell.expAmount.text = "보상 : 20xp"
+            cell.expAmount.text = "보상 : 1xp"
         } else {
             cell.expAmount.text = "보상 : - "
         }
@@ -163,12 +169,8 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         cell.updateButton.tag = indexPath.row
         cell.deleteButton.addTarget(self, action: #selector(deleteQuest), for: .touchUpInside)
         cell.deleteButton.tag = indexPath.row
-        cell.completeButtonPressed = { senderCell in
-            completedCheck.toggle()
-            completedToggle()
-            toggleExpAdd()
-            tableView.reloadData()
-        }
+        cell.completeButton.addTarget(self, action: #selector(completeQuest), for: .touchUpInside)
+        cell.completeButton.tag = indexPath.row
         
         func completedToggle() {
             if var questData = cell.self.questData {

@@ -106,7 +106,7 @@ class ProfileBoxView: UIView {
 
         let experienceBar = CALayer()
         experienceBar.backgroundColor = UIColor(red: 0.261, green: 0.872, blue: 0.248, alpha: 1).cgColor
-        experienceBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: view.bounds.height)
+        experienceBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width / 10, height: 18)
         
         view.layer.addSublayer(experienceBar)
         view.addSubview(imageView)
@@ -172,7 +172,7 @@ class ProfileBoxView: UIView {
             label?.center = CGPoint(x: imageView.bounds.midX, y: imageView.bounds.midY)
         }
 
-        experienceLayer?.frame = CGRect(x: 0, y: 0, width: experienceBar.bounds.width * progressFraction, height: experienceBar.bounds.height)
+        experienceLayer?.frame = CGRect(x: 0, y: 0, width: experienceBar.bounds.width * progressFraction, height: 18)
     }
     
     private func bindExperience() {

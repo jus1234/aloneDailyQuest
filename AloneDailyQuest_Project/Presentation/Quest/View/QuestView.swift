@@ -150,12 +150,12 @@ final class QuestView: UIView {
         
     }
     
-    func configureLabel(nickName: String, level: String) {
-        profileBoxView.configureLabel(nickName: nickName, level: level)
-    }
-    
-    func updateExperienceBar(currentExp: Int) {
-        profileBoxView.updateExperienceBar(currentExp: currentExp)
-    }
+//    func configureLabel(nickName: String, level: String) {
+//        profileBoxView.configureLabel(nickName: nickName, level: level)
+//    }
+//    
+//    func updateExperienceBar(currentExp: Int) {
+//        profileBoxView.updateExperienceBar(currentExp: currentExp)
+//    }
 
 }

@@ -10,12 +10,14 @@ import Foundation
 @MainActor
 final class QuestViewModel: ViewModel {
     struct Input {
-        var viewDidLoad: Observable<Void>
+        var viewWillAppear: Observable<Void>
         var deleteTrigger: Observable<QuestInfo?>
-        var experienceTrigger: Observable<Int>
         var qeusetViewEvent: Observable<Void>
         var rankViewEvent: Observable<Void>
         var profileViewEvent: Observable<Void>
+        var didPlusButtonTap: Observable<Void>
+        var updateQuestEvent: Observable<QuestInfo>
+        var completeQuestEvent: Observable<QuestInfo>
     }
     
     struct Output {
@@ -35,7 +37,7 @@ final class QuestViewModel: ViewModel {
         self.coordinator = coordinator
     }
     
-    private func viewDidLoad() {
+    private func viewWillAppear() {
         Task {
             await fetchQuest()
             checkUserDefaultsLastVisitDate()
@@ -85,6 +87,7 @@ final class QuestViewModel: ViewModel {
         Task {
             do {
                 try await usecase.deleteQuest(questInfo: quest)
+                questList.value = try await usecase.readQuest()
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -95,6 +98,8 @@ final class QuestViewModel: ViewModel {
         Task {
             do {
                 try await usecase.updateQuest(newQuestInfo: quest)
+                questList.value = try await usecase.readQuest()
+                updateExperience(experienceData: 1)
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -107,6 +112,7 @@ final class QuestViewModel: ViewModel {
                 let result = try await usecase.addExperience(userId: UserDefaults.standard.string(forKey: "nickName") ?? "",
                                                              experience: experienceData)
                 UserDefaults.standard.set(result, forKey: "experience")
+                fetchUserInfo() 
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -114,18 +120,17 @@ final class QuestViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewDidLoad.bind { _ in
-            self.viewDidLoad()
+        input.viewWillAppear.bind { [weak self] _ in
+            self?.viewWillAppear()
         }
-        
-        input.deleteTrigger.bind { quest in
-            self.deleteQuest(quest: quest!)
-            self.viewDidLoad()
+        input.updateQuestEvent.bind { [weak self] quest in
+            self?.coordinator.connectDetailCoordinator(quest: quest)
         }
-        
-        input.experienceTrigger.bind { experience in
-            self.updateExperience(experienceData: experience)
-            self.viewDidLoad()
+        input.deleteTrigger.bind { [weak self] quest in
+            self?.deleteQuest(quest: quest!)
+        }
+        input.completeQuestEvent.bind { [weak self] quest in
+            self?.updateQuest(quest: quest)
         }
         input.qeusetViewEvent.bind { _ in
             return
@@ -135,6 +140,9 @@ final class QuestViewModel: ViewModel {
         }
         input.profileViewEvent.bind { [weak self] _ in
             self?.coordinator.finish(to: .profile)
+        }
+        input.didPlusButtonTap.bind { [weak self] _ in
+            self?.coordinator.connectDetailCoordinator(quest: nil)
         }
         return .init(questList: self.questList,
                      errorMessage: self.errorMessage,

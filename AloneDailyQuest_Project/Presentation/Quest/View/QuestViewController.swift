@@ -11,18 +11,24 @@ final class QuestViewController: UIViewController{
     
     private let questView: QuestView = QuestView()
     private let viewModel: QuestViewModel
+    private let didPlusButtonTap: Observable<Void> = Observable(())
+    private let updateQuestEvent: Observable<QuestInfo> = Observable(QuestInfo(id: UUID(), quest: "", date: Date(), selectedDate: [], repeatDay: "", completed: false))
+    private let completeQuestEvent: Observable<QuestInfo> = Observable(QuestInfo(id: UUID(), quest: "", date: Date(), selectedDate: [], repeatDay: "", completed: false))
     private lazy var questList: [QuestInfo] = []
     private lazy var deleteQuestInfo: QuestInfo? = nil
     private lazy var userExperience: Int = UserDefaults.standard.integer(forKey: "experince")
     private lazy var userInfo: UserInfo? = nil
-    private lazy var input = QuestViewModel.Input(viewDidLoad: Observable<Void>(()),
-                                             deleteTrigger: Observable(deleteQuestInfo),
-                                             experienceTrigger: Observable(userExperience),
-                                             qeusetViewEvent: questView.tabView.qeusetViewEvent,
-                                             rankViewEvent: questView.tabView.rankiViewEvent,
-                                             profileViewEvent: questView.tabView.profileViewEvent)
+    private var viewWillAppearEvent: Observable<Void> = Observable(())
+    private var deleteEvent: Observable<QuestInfo?> = Observable(nil)
+    private lazy var input = QuestViewModel.Input(viewWillAppear: viewWillAppearEvent,
+                                                  deleteTrigger: deleteEvent,
+                                                  qeusetViewEvent: questView.tabView.qeusetViewEvent,
+                                                  rankViewEvent: questView.tabView.rankiViewEvent,
+                                                  profileViewEvent: questView.tabView.profileViewEvent,
+                                                  didPlusButtonTap: didPlusButtonTap, 
+                                                  updateQuestEvent: updateQuestEvent,
+                                                  completeQuestEvent: completeQuestEvent)
     private lazy var output = viewModel.transform(input: input)
-    weak var delegate: UITableViewDelegate? = nil
     
     var index: IndexPath?
     var todayExp = 0
@@ -39,10 +45,15 @@ final class QuestViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         questView.tableView.dataSource = self
+        questView.tableView.delegate = self
         configureUI()
-        bindViewModel()
-        input.viewDidLoad.value = ()
         view = questView
+        bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        input.viewWillAppear.value = ()
     }
     
     func configureUI() {
@@ -51,41 +62,53 @@ final class QuestViewController: UIViewController{
     
     
     func bindViewModel() {
-        output.userInfo.bind { user in
+        output.userInfo.bind { [weak self] user in
             guard
                 let nickName = user?.fetchNickName(),
                 let level = user?.fetchLevel(),
                 let experience = user?.fetchExperience() else { return }
-            self.questView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
-            self.questView.profileBoxView.updateExperienceBar(currentExp: experience)
+            self?.questView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
+            self?.questView.profileBoxView.updateExperienceBar(currentExp: experience)
         }
-        output.questList.bind { questList in
-            self.questList = questList
+        output.questList.bind { [weak self] questList in
+            self?.questList = questList
+            self?.reload()
+        }
+        output.errorMessage.bind { [weak self] errorMessage in
+            self?.completedAlert(message: errorMessage)
         }
     }
     
     @objc func addQuest() {
-//        delegate?.addQuest()
+        didPlusButtonTap.value = ()
     }
     
     @objc func updateQuest(sender: UIButton) {
-        guard let index = index else { return }
-//        delegate?.updateQuest(indexPath: sender.tag)
+        let questData = self.filterQuest()
+        let questInfo = questData[sender.tag]
+        updateQuestEvent.value = questInfo
     }
     
     @objc func deleteQuest(sender: UIButton) {
         let alert = UIAlertController(title: "퀘스트 삭제", message: "정말로 퀘스트를 삭제하시겠습니까", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
-            guard let indexPath = self.index else { return }
-            
-            let questData = self.filterQuest()
-            if questData[sender.tag].completed {
-                self.todayExp -= 20
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
+            guard let questData = self?.filterQuest() else {
+                return
             }
-            self.deleteQuestInfo = questData[sender.tag]
+            if questData[sender.tag].completed {
+                self?.todayExp -= 20
+            }
+            self?.deleteEvent.value = questData[sender.tag]
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func completeQuest(sender: UIButton) {
+        let questData = self.filterQuest()
+        var questInfo = questData[sender.tag]
+        questInfo.completed = true
+        input.completeQuestEvent.value = questInfo
     }
 }
 
@@ -114,9 +137,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
         let questData = filterQuest()
         cell.questData = questData[indexPath.row]
-        print(cell.questData ?? [])
-        var completedCheck = cell.questData!.completed
-        
+        let completedCheck = cell.questData!.completed
         // 테이블뷰 시작시 UI 기본 설정
         cell.repeatday.text = cell.questData?.repeatDay
         cell.questTitle.text = cell.questData?.quest
@@ -124,7 +145,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         index = indexPath
     
         if todayExp < 100 {
-            cell.expAmount.text = "보상 : 20xp"
+            cell.expAmount.text = "보상 : 1xp"
         } else {
             cell.expAmount.text = "보상 : - "
         }
@@ -148,12 +169,8 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         cell.updateButton.tag = indexPath.row
         cell.deleteButton.addTarget(self, action: #selector(deleteQuest), for: .touchUpInside)
         cell.deleteButton.tag = indexPath.row
-        cell.completeButtonPressed = { [weak self] (senderCell) in
-            completedCheck.toggle()
-            completedToggle()
-            toggleExpAdd()
-            tableView.reloadData()
-        }
+        cell.completeButton.addTarget(self, action: #selector(completeQuest), for: .touchUpInside)
+        cell.completeButton.tag = indexPath.row
         
         func completedToggle() {
             if var questData = cell.self.questData {

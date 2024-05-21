@@ -96,13 +96,12 @@ final class QuestCell: UITableViewCell {
         button.setTitleFont(font: UIFont(name: "DungGeunMo", size: 14) ?? UIFont.systemFont(ofSize: 14))
         button.setTitle("완료하기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(test), for: .touchUpInside)
-        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(test), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
     
     @objc func test() {
-        print("눌림")
     }
     
     private lazy var secondStackView: UIStackView = {
@@ -204,10 +203,10 @@ final class QuestCell: UITableViewCell {
         deleteButton.isUserInteractionEnabled = true
     }
     
-    var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
-        
-    @objc func completeButtonTapped(_ sender: UIButton) {
-            completeButtonPressed(self)
-    }
+//    var completeButtonPressed: (QuestCell) -> Void = { (sender) in }
+//        
+//    @objc func completeButtonTapped(_ sender: UIButton) {
+//            completeButtonPressed(self)
+//    }
     
 }

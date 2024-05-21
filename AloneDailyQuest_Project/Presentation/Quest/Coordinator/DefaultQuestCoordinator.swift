@@ -29,7 +29,26 @@ final class DefaultQuestCoordinator: QuestCoordinator {
         navigationController.pushViewController(questViewController, animated: false)
     }
     
+    @MainActor func connectDetailCoordinator(quest: QuestInfo?) {
+        let detailCoordinator = DefaultDetailCoordinator(self.navigationController, self.depengencyManager)
+        detailCoordinator.finishDelegate = self
+        self.childCoordinators.append(detailCoordinator)
+        detailCoordinator.start(quest: quest)
+    }
+    
     func finish(to nextCoordinator: CoordinatorCase) {
         finishDelegate?.didFinish(childCoordinator: self, to: nextCoordinator)
+    }
+}
+
+extension DefaultQuestCoordinator: CoordinatorFinishDelegate {
+    
+    func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
+        if nextCoordinator == .quest {
+            self.childCoordinators = self.childCoordinators.filter { $0.type != childCoordinator.type }
+            childCoordinator.navigationController.popToRootViewController(animated: true)
+            return
+        }
+        finish(to: nextCoordinator)
     }
 }

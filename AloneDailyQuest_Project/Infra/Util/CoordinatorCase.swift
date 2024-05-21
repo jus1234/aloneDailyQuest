@@ -14,4 +14,5 @@ enum CoordinatorCase {
     case ranking
     case profile
     case notice
+    case detail
 }

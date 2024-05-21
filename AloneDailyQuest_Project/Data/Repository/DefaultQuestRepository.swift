@@ -6,7 +6,6 @@
 //
 
 import CoreData
-import UIKit
 
 final class DefaultQuestRepository: QuestRepository {
     private let networkService: NetworkService
@@ -141,7 +140,7 @@ extension DefaultQuestRepository {
         }
         
         guard let targetQuest = fetchedQuestList.first else {
-            throw NSError(domain: "Error : Coredata not found first fetch data error", code: 0)
+            return
         }
         
         context.delete(targetQuest)

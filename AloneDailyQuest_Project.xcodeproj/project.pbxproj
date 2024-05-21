@@ -29,6 +29,8 @@
 		BDA4C62D2BFB29770054DF33 /* NoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */; };
 		BDA4C62F2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */; };
 		BDA4C6322BFB2A850054DF33 /* NoticeVewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */; };
+		BDA4C6342BFB41A50054DF33 /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C6332BFB41A50054DF33 /* DetailCoordinator.swift */; };
+		BDA4C6362BFB41D30054DF33 /* DefaultDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C6352BFB41D30054DF33 /* DefaultDetailCoordinator.swift */; };
 		BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */; };
 		BDB4A02E2BE9FEE80076E564 /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */; };
 		BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */; };
@@ -108,6 +110,8 @@
 		BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCoordinator.swift; sourceTree = "<group>"; };
 		BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoticeCoordinator.swift; sourceTree = "<group>"; };
 		BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVewModel.swift; sourceTree = "<group>"; };
+		BDA4C6332BFB41A50054DF33 /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
+		BDA4C6352BFB41D30054DF33 /* DefaultDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDetailCoordinator.swift; sourceTree = "<group>"; };
 		BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		BDB4A02D2BE9FEE80076E564 /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
 		BDB4A02F2BE9FF140076E564 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
@@ -215,6 +219,7 @@
 			children = (
 				BD1035C02BF60C60001EBF0A /* Protocol */,
 				BD1035C32BF60DDC001EBF0A /* DefaultQuestCoordinator.swift */,
+				BDA4C6352BFB41D30054DF33 /* DefaultDetailCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -223,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				BD1035C12BF60CD1001EBF0A /* QuestCoordinator.swift */,
+				BDA4C6332BFB41A50054DF33 /* DetailCoordinator.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -571,13 +577,13 @@
 		C1D40C3A2B0602DE003248C0 /* AloneDailyQuest_Project */ = {
 			isa = PBXGroup;
 			children = (
+				C1FC22C22B8F1F890077D6FC /* App */,
 				BDB4A05A2BEB3F300076E564 /* Presentation */,
 				BDB4A0412BEA3E1F0076E564 /* Domain */,
 				BDB4A03A2BEA20D20076E564 /* Data */,
 				BDB4A02B2BE9FE230076E564 /* Infra */,
 				C1D40C4C2B0602E0003248C0 /* Info.plist */,
 				C10D6C442B2420B9005783BD /* Font */,
-				C1FC22C22B8F1F890077D6FC /* App */,
 			);
 			path = AloneDailyQuest_Project;
 			sourceTree = "<group>";
@@ -738,6 +744,7 @@
 				BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */,
 				990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */,
 				BD1035B72BF5E29A001EBF0A /* DefaultAppCoordinator.swift in Sources */,
+				BDA4C6362BFB41D30054DF33 /* DefaultDetailCoordinator.swift in Sources */,
 				BD1035BE2BF5F74A001EBF0A /* DefaultSignupCoordinator.swift in Sources */,
 				994C590D2B50C22E00D5808B /* QuestCell.swift in Sources */,
 				BDB4A0302BE9FF140076E564 /* HTTPMethod.swift in Sources */,
@@ -763,6 +770,7 @@
 				BD0A16892BF795C8009826E5 /* DIContainer.swift in Sources */,
 				C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */,
 				C1E8ED382BEB9C6500EA8B26 /* QuestRepository.swift in Sources */,
+				BDA4C6342BFB41A50054DF33 /* DetailCoordinator.swift in Sources */,
 				C1F3D1252BEE039900EC1B26 /* QuestViewModel.swift in Sources */,
 				C1E8ED362BEB9C4F00EA8B26 /* DefaultQuestRepository.swift in Sources */,
 				C131B3D02BF24E5A00020CFE /* NoticeViewController.swift in Sources */,

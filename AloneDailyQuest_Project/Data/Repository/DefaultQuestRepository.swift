@@ -6,7 +6,6 @@
 //
 
 import CoreData
-import UIKit
 
 final class DefaultQuestRepository: QuestRepository {
     private let networkService: NetworkService

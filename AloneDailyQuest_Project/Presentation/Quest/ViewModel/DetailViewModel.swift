@@ -30,58 +30,52 @@ final class DetailViewModel: ViewModel {
         self.quest = Observable(quest)
     }
     
-    private func fetchQuest() async {
-        Task {
-            do {
-                let coreQuests = try await self.usecase.readQuest()
-                for coreQuest in coreQuests {
-                    if let quest = self.quest.value, quest.id == coreQuest.id {
-                        self.quest.value = quest
-                    }
-                }
-            } catch {
-                errorMessage.value = error.localizedDescription
+    private func fetchQuest() async throws {
+        let coreQuests = try await self.usecase.readQuest()
+        for coreQuest in coreQuests {
+            if let quest = self.quest.value, quest.id == coreQuest.id {
+                self.quest.value = quest
             }
         }
     }
     
     private func viewDidLoad() {
         Task {
-            await fetchQuest()
-        }
-    }
-    
-    private func coreDataCreate(quest: QuestInfo) async {
-        Task {
             do {
-                try await self.usecase.createQuest(questInfo: quest)
+                try await fetchQuest()
             } catch {
                 errorMessage.value = error.localizedDescription
             }
         }
+    }
+    
+    private func coreDataCreate(quest: QuestInfo) async throws {
+        try await self.usecase.createQuest(questInfo: quest)
     }
     
     private func createQuest(quest: QuestInfo) {
         Task {
-            await coreDataCreate(quest: quest)
-            coordinator.finish(to: .quest)
-        }
-    }
-    
-    private func coreDataUpdate(newQuest: QuestInfo) async {
-        Task {
             do {
-                try await self.usecase.updateQuest(newQuestInfo: newQuest)
+                try await coreDataCreate(quest: quest)
+                coordinator.finish(to: .quest)
             } catch {
                 errorMessage.value = error.localizedDescription
             }
         }
     }
     
+    private func coreDataUpdate(newQuest: QuestInfo) async throws {
+        try await self.usecase.updateQuest(newQuestInfo: newQuest)
+    }
+    
     private func updateQuest(newQuest: QuestInfo) {
         Task {
-            await coreDataUpdate(newQuest: newQuest)
-            coordinator.finish(to: .quest)
+            do {
+                try await coreDataUpdate(newQuest: newQuest)
+                coordinator.finish(to: .quest)
+            } catch {
+                errorMessage.value = error.localizedDescription
+            }
         }
     }
     

@@ -45,23 +45,28 @@ class ProfileViewController: UIViewController {
     }
     
     func bindViewModel() {
-        output.userInfo.bind { user in
+        output.userInfo.bind { [weak self] user in
             guard
                 let nickName = user?.fetchNickName(),
                 let level = user?.fetchLevel(),
                 let experience = user?.fetchExperience() else { return }
-            self.profileView.configureLabel(nickName: nickName, level: String(level))
-            self.profileView.updateExperienceBar(currentExp: experience)
+            self?.profileView.configureLabel(nickName: nickName, level: String(level))
+            self?.profileView.updateExperienceBar(currentExp: experience)
         }
-        output.ourEmail.bind { email in
-            self.completedAlert(message: "이메일 복사 완료!")
+        output.ourEmail.bind {[weak self] email in
+            self?.completedAlert(message: "이메일 복사 완료!")
             UIPasteboard.general.string = email
         }
-        output.warningMessage.bind { message in
-            let deleteAction = UIAlertAction(title: "탈퇴", style: .destructive)
-            let cancelAction = UIAlertAction(title: "취소", style: .default)
+        output.warningMessage.bind { [weak self] message in
+//            let deleteAction = UIAlertAction(title: "탈퇴", style: .destructive)
+//            let cancelAction = UIAlertAction(title: "취소", style: .default)
+//            
+//            self?.customAlert(message: message, actions: [cancelAction, deleteAction]) {
+//                UserDefaults.standard.removeObject(forKey: "nickName")
+//                UserDefaults.standard.removeObject(forKey: "experience")
+//            }
             
-            self.customAlert(message: message, actions: [cancelAction, deleteAction]) {
+            self?.makeCancelAlert(message: message) { _ in
                 UserDefaults.standard.removeObject(forKey: "nickName")
                 UserDefaults.standard.removeObject(forKey: "experience")
             }

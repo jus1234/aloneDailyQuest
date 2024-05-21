@@ -33,6 +33,22 @@ extension UIViewController {
         
         self.present(alertViewController, animated: true, completion: completion)
     }
+    
+    func makeCancelAlert(title: String? = nil,
+                          message: String,
+                          destructiveAction: ((UIAlertAction) -> Void)?,
+                          cancelAction: ((UIAlertAction) -> Void)? = nil,
+                          completion: (() -> Void)? = nil) {
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let destruction = UIAlertAction(title: "탈퇴", style: .destructive, handler: destructiveAction)
+        alertViewController.addAction(destruction)
+
+        let cancellation = UIAlertAction(title: "취소", style: .cancel, handler: cancelAction)
+        alertViewController.addAction(cancellation)
+        
+        self.present(alertViewController, animated: true, completion: completion)
+    }
 }
 
 import SwiftUI

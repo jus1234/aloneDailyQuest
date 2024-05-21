@@ -102,7 +102,6 @@ final class QuestCell: UITableViewCell {
     }()
     
     @objc func test() {
-        print("눌림")
     }
     
     private lazy var secondStackView: UIStackView = {

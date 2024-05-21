@@ -87,6 +87,7 @@ final class QuestViewModel: ViewModel {
         Task {
             do {
                 try await usecase.deleteQuest(questInfo: quest)
+                questList.value = try await usecase.readQuest()
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -97,6 +98,7 @@ final class QuestViewModel: ViewModel {
         Task {
             do {
                 try await usecase.updateQuest(newQuestInfo: quest)
+                questList.value = try await usecase.readQuest()
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -109,6 +111,7 @@ final class QuestViewModel: ViewModel {
                 let result = try await usecase.addExperience(userId: UserDefaults.standard.string(forKey: "nickName") ?? "",
                                                              experience: experienceData)
                 UserDefaults.standard.set(result, forKey: "experience")
+                fetchUserInfo() 
             } catch {
                 errorMessage.value = error.localizedDescription
             }
@@ -119,7 +122,9 @@ final class QuestViewModel: ViewModel {
         input.viewWillAppear.bind { [weak self] _ in
             self?.viewDidLoad()
         }
-        
+        input.updateQuestEvent.bind { [weak self] quest in
+            self?.coordinator.connectDetailCoordinator(quest: quest)
+        }
         input.deleteTrigger.bind { [weak self] quest in
             self?.deleteQuest(quest: quest!)
             self?.viewDidLoad()

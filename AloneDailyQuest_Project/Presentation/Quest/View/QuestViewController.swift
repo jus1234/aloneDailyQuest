@@ -84,9 +84,6 @@ final class QuestViewController: UIViewController{
     }
     
     @objc func updateQuest(sender: UIButton) {
-        guard let index = index else {
-            return
-        }
         let questData = self.filterQuest()
         let questInfo = questData[sender.tag]
         updateQuestEvent.value = questInfo
@@ -95,14 +92,14 @@ final class QuestViewController: UIViewController{
     @objc func deleteQuest(sender: UIButton) {
         let alert = UIAlertController(title: "퀘스트 삭제", message: "정말로 퀘스트를 삭제하시겠습니까", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
-            guard let indexPath = self.index else { return }
-            
-            let questData = self.filterQuest()
-            if questData[sender.tag].completed {
-                self.todayExp -= 20
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
+            guard let questData = self?.filterQuest() else {
+                return
             }
-            self.deleteQuestInfo = questData[sender.tag]
+            if questData[sender.tag].completed {
+                self?.todayExp -= 20
+            }
+            self?.deleteEvent.value = questData[sender.tag]
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -133,7 +130,6 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCell", for: indexPath) as! QuestCell
         let questData = filterQuest()
         cell.questData = questData[indexPath.row]
-        print(cell.questData ?? [])
         var completedCheck = cell.questData!.completed
         
         // 테이블뷰 시작시 UI 기본 설정
@@ -167,7 +163,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         cell.updateButton.tag = indexPath.row
         cell.deleteButton.addTarget(self, action: #selector(deleteQuest), for: .touchUpInside)
         cell.deleteButton.tag = indexPath.row
-        cell.completeButtonPressed = { [weak self] (senderCell) in
+        cell.completeButtonPressed = { senderCell in
             completedCheck.toggle()
             completedToggle()
             toggleExpAdd()

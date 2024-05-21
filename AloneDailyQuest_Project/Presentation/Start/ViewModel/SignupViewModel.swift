@@ -36,9 +36,6 @@ class SignupViewModel: ViewModel {
             Task {
                 do {
                     self?.isSignupSucess.value = try await self?.signup(nickName: nickName)
-                    if let result = self?.isSignupSucess.value, result {
-                        self?.coordinator.finish(to: .ranking)
-                    }
                 } catch {
                     self?.errorMessage.value = error.localizedDescription
                 }
@@ -58,6 +55,7 @@ class SignupViewModel: ViewModel {
             try await usecase.signup(userId: nickName)
             UserDefaults.standard.set(nickName, forKey: "nickName")
             UserDefaults.standard.setValue(0, forKey: "experience")
+            self.coordinator.finish(to: .ranking)
         }
         return isExists
     }

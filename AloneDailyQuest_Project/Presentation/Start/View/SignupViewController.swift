@@ -165,7 +165,7 @@ extension SignupViewController {
             self?.validationText.textColor = UIColor(hexCode: "21C131")
         }
         output.isSignupSucess.bind { [weak self] result in
-            guard let result, result else {
+            guard let result, !result else {
                 self?.completedAlert(message: "중복된 닉네임입니다.")
                 return
             }

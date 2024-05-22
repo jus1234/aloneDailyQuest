@@ -12,16 +12,16 @@
     <th>프로필</th>
   </tr>
     <td>
-      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/c5e7ff1b-07dc-471e-8797-14c53315fbb4" width="250" height="500" >
+      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/c5e7ff1b-07dc-471e-8797-14c53315fbb4" width="200" heig0ht="400" >
     </td>
     <td>
-      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/a9bb0d68-908b-47a4-8a6b-4d155ca99a51" width="250" height="500">
+      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/a9bb0d68-908b-47a4-8a6b-4d155ca99a51" width="200" height="400">
     </td>
     <td>
-      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/2b209695-2547-4535-9ebf-b753cd76d7ff" width="250" height="500">
+      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/2b209695-2547-4535-9ebf-b753cd76d7ff" width="200" height="400">
     </td>
     <td>
-      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/ad6ba6c1-9d63-42fb-abfd-071fe658b1c7" width="250" height="500">
+      <img src="https://github.com/jus1234/aloneDailyQuest/assets/47639904/ad6ba6c1-9d63-42fb-abfd-071fe658b1c7" width="200" height="400">
     </td>
   </tr>
 </table>

@@ -64,11 +64,9 @@ App Architecture: Clean Architecture with MVVM-C
 1. QuestInfo Model의 저장과 변환 작업을 수행합니다. 
 앱이 종료되어도 데이터를 저장하기 위해 필요합니다.
 2. CoreData CRUD(Create, Read, Update, Delete) 기능을 구현하여 데이터를 효율적으로 관리합니다.
-3. 자정마다 저장된 퀘스트가 재설정되어야하는 요구 사항을 충족시키시 위해, 
-매일 자정마다 저장된 퀘스트를 초기화합니다.
 - **Network 통신**
 1. Back-End서버와의 통신을 위한 네트워크 모듈을 구축합니다. 
-2. 모든 형태의 HTTP 통신을 지원할 수 있는 네트워크 모델을 구축합니다.
+2. 디자인 패턴(`Builder Pattern`)을 적용해 모든 형태의 HTTP 통신을 지원할 수 있는 네트워크 모델을 구축합니다.
 - **AutoLayout**
 1. UIKit을 기반으로 한 코드를 통해 AutoLayout을 구현합니다.
 이는 다양한 디바이스 크기 및 방향에 대해 유연한 UI를 제공합니다.

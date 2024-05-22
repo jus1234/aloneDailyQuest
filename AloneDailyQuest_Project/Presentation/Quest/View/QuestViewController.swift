@@ -119,7 +119,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func filterQuest() -> [QuestInfo] {
-        return questList.filter{ $0.selectedDate[currentDayOfWeek()] || Calendar.current.component(.weekday, from:  $0.date) == Calendar.current.component(.weekday, from: Date()) }
+        return questList.filter{ $0.selectedDate[currentDayOfWeek()] }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

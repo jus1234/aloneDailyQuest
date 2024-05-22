@@ -29,7 +29,7 @@ final class DetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var questData: QuestInfo? = nil
+    var questData: QuestInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()

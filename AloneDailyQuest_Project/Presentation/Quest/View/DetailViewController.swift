@@ -16,7 +16,8 @@ final class DetailViewController: UIViewController {
     private lazy var addEvent: Observable<QuestInfo?> = Observable(nil)
     private lazy var input = DetailViewModel.Input(viewDidLoad: viewDidLoadEvent,
                                                    updateTrigger: updateEvent,
-                                                   addTrigger: addEvent)
+                                                   addTrigger: addEvent, 
+                                                   didBackButtonTap: detailView.didBackButtonTap)
     private lazy var output = viewModel.transform(input: input)
     
     init(viewModel: DetailViewModel, questData: QuestInfo?) {
@@ -29,7 +30,7 @@ final class DetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var questData: QuestInfo? = nil
+    var questData: QuestInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +70,6 @@ final class DetailViewController: UIViewController {
             detailView.questTextView.text = questData.quest
             
             detailView.questTextView.textColor = .black
-            detailView.saveButton.setTitle("퀘스트 수정하기", for: .normal)
             detailView.questTextView.becomeFirstResponder()
             isDaySelected = questData.selectedDate
             zip(detailView.buttons, questData.selectedDate).forEach { toggleButtonAppearance(button: $0.0, isSelected: $0.1) }

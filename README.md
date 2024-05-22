@@ -25,10 +25,10 @@ bit 도트 그래픽 내부 저장 프레임 워크를 사용한 To-Do App
 1. UIKit을 기반으로 한 코드를 통해 AutoLayout을 구현합니다.
 이는 다양한 디바이스 크기 및 방향에 대해 유연한 UI를 제공합니다.
 2. UI라이브러리를 사용하지 않고 Constraint를 구축하여 UI 요소 간의 관계를 명확하게 정의합니다.
-- **Clean Architecture**
-1. MVVM 패턴을 채택하여 Clean Architecture를 구현합니다.
-이를 통해 UI 로직과 비즈니스 로직을 분리하여 유지보수성을 향상시킵니다.
+- **Clean Architecture with MVVM-C**
+1. MVVM 패턴을 채택하 UI 로직과 비즈니스 로직을 분리하여 유지보수성을 향상시킵니다.
 2. Clean Architecture를 적용하기 위해 비즈니스 로직 모듈을 구현하여 의존성을 최소화하고 코드의 재사용성을 높입니다.
+3. Coordinator Pattern을 통해 뷰와 화면 전환, 의존성 관리를 분리해 단일 책임 원칙을 준수합니다.
 
 # **📱 UI&UX App Design**
 

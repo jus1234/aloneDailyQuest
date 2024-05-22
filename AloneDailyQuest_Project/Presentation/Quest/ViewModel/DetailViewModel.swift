@@ -13,6 +13,7 @@ final class DetailViewModel: ViewModel {
         var viewDidLoad: Observable<Void>
         var updateTrigger: Observable<QuestInfo?>
         var addTrigger: Observable<QuestInfo?>
+        var didBackButtonTap: Observable<Void>
     }
     
     struct Output {
@@ -105,7 +106,9 @@ final class DetailViewModel: ViewModel {
             }
             self.createQuest(quest: quest)
         }
-        
+        input.didBackButtonTap.bind { [weak self] _ in
+            self?.coordinator.finish(to: .quest)
+        }
         return Output(errorMessage: self.errorMessage,
                       userInfo: self.user)
     }

@@ -53,6 +53,13 @@ final class DetailView: UIView {
         return label
     }()
     
+    private lazy var backgroundBottomImageView: UIImageView = {
+        var view = UIImageView()
+        view.frame = CGRect(x: 0, y: 0, width: 430, height: 188)
+        view.image = UIImage(named: "image_background_bottom")
+        return view
+    }()
+    
     // MARK: - 퀘스트 생성 파트
 
     let basicView: UIImageView = {
@@ -221,7 +228,7 @@ final class DetailView: UIView {
         button.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
         let attrString = NSAttributedString(
-            string: "퀘스트 생성하기",
+            string: "퀘스트 저장하기",
             attributes: [
                 NSAttributedString.Key.strokeColor: UIColor.black,
                 NSAttributedString.Key.foregroundColor: UIColor.white,
@@ -239,7 +246,14 @@ final class DetailView: UIView {
         return button
     }()
     
+    lazy var backButton: UIButton = {
+        var button = UIButton()
+        button.setImage(UIImage(named: "btn_back_normal"), for: .normal)
+        button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
+        return button
+    }()
     
+    var didBackButtonTap: Observable<Void> = Observable(())
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -254,11 +268,17 @@ final class DetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc private func tapBackButton() {
+        didBackButtonTap.value = ()
+    }
+    
     func addsubviews() {
         
         addSubview(profileBoxView)
         addSubview(titleBackgroundText)
         addSubview(titleText)
+        addSubview(backgroundBottomImageView)
+        addSubview(backButton)
         
         addSubview(basicView)
         
@@ -281,6 +301,7 @@ final class DetailView: UIView {
         profileBoxView.translatesAutoresizingMaskIntoConstraints = false
         titleText.translatesAutoresizingMaskIntoConstraints = false
         titleBackgroundText.translatesAutoresizingMaskIntoConstraints = false
+        backButton.translatesAutoresizingMaskIntoConstraints = false
         
         titleText.widthAnchor.constraint(equalToConstant: 153).isActive = true
         titleText.heightAnchor.constraint(equalToConstant: 33).isActive = true
@@ -296,12 +317,16 @@ final class DetailView: UIView {
         profileBoxView.topAnchor.constraint(equalTo: titleBackgroundText.bottomAnchor, constant: 20).isActive = true
         profileBoxView.widthAnchor.constraint(equalToConstant: 500).isActive = true
         profileBoxView.heightAnchor.constraint(equalToConstant: 104).isActive = true
+        
+        backButton.centerYAnchor.constraint(equalTo: titleText.centerYAnchor).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
     }
 
     func setupUI() {
         // 베이스 뷰 오토레이아웃
         basicView.translatesAutoresizingMaskIntoConstraints = false
         baseStackView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             basicView.topAnchor.constraint(equalTo: profileBoxView.bottomAnchor, constant: 40),
@@ -358,5 +383,9 @@ final class DetailView: UIView {
             saveButton.heightAnchor.constraint(equalToConstant: 64)
         ])
         
+        backgroundBottomImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        backgroundBottomImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
+        backgroundBottomImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
 }

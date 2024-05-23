@@ -162,8 +162,9 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             cell.questTitle.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
             cell.expAmount.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
             cell.repeatday.textColor = UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00)
-            cell.completeButton.setTitle("미완료하기", for: .normal)
+            cell.completeButton.setTitle("완료", for: .normal)
             cell.completeButton.setTitleColor(UIColor(red: 0.82, green: 0.74, blue: 0.63, alpha: 1.00), for: .normal)
+            cell.completeButton.isEnabled = false
         } else {
             cell.questImage.image = UIImage(named: "img_quest_ing")
             cell.questTitle.textColor = .black

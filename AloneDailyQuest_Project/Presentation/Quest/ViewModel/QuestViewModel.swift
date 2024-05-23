@@ -31,10 +31,13 @@ final class QuestViewModel: ViewModel {
     private let questList: Observable<[QuestInfo]> = Observable([])
     private let errorMessage: Observable<String> = Observable("")
     private let user: Observable<UserInfo?> = Observable(nil)
+    private var timer: DispatchSourceTimer?
+
     
     init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
         self.usecase = usecase
         self.coordinator = coordinator
+        scheduleMidnightUpdate()
     }
     
     private func viewWillAppear() {
@@ -122,4 +125,35 @@ final class QuestViewModel: ViewModel {
                      errorMessage: self.errorMessage,
                      userInfo: self.user)
     }
+    
+    deinit {
+        timer?.cancel()
+        timer = nil
+    }
+}
+
+extension QuestViewModel {
+    private func scheduleMidnightUpdate() {
+            let now = Date()
+            let calendar = Calendar.current
+
+            if let midnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0, second: 0), matchingPolicy: .nextTime) {
+                let timeInterval = midnight.timeIntervalSince(now)
+                
+                timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+                timer?.schedule(deadline: .now() + timeInterval, repeating: 86400)
+
+                timer?.setEventHandler { [weak self] in
+                    Task {
+                        try await self?.usecase.updateDailyQuest()
+                        guard let quests = try await self?.usecase.readQuest() else {
+                            return
+                        }
+                        self?.questList.value = quests
+                    }
+                }
+
+                timer?.resume()
+            }
+        }
 }

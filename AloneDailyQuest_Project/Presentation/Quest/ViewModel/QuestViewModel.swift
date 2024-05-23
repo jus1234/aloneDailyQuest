@@ -41,7 +41,6 @@ final class QuestViewModel: ViewModel {
         Task {
             try await usecase.updateDailyQuest()
             await fetchQuest()
-            fetchUserInfo()
         }
     }
     
@@ -51,12 +50,10 @@ final class QuestViewModel: ViewModel {
     }
     
     private func fetchQuest() async {
-        Task {
-            do {
-                questList.value = try await usecase.readQuest()
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
+        do {
+            questList.value = try await usecase.readQuest()
+        } catch {
+            errorMessage.value = error.localizedDescription
         }
     }
     

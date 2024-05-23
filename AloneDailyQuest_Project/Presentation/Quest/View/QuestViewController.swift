@@ -48,6 +48,7 @@ final class QuestViewController: UIViewController{
         questView.tableView.delegate = self
         configureUI()
         view = questView
+        setupProfile()
         bindViewModel()
     }
     
@@ -60,6 +61,12 @@ final class QuestViewController: UIViewController{
         questView.plusButton.addTarget(self, action: #selector(addQuest), for: .touchUpInside)
     }
     
+    private func setupProfile() {
+        let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
+                 experience: UserDefaults.standard.integer(forKey: "experience"))
+        questView.profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
+        questView.profileBoxView.updateExperienceBar(currentExp: user.fetchExperience() % 10)
+    }
     
     func bindViewModel() {
         output.userInfo.bind { [weak self] user in

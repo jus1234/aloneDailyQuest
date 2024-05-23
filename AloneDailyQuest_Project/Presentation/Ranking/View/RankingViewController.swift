@@ -415,12 +415,12 @@ extension RankingViewController {
     func addViews() {
         view.addSubview(titleBackgroundText)
         view.addSubview(titleText)
+        view.addSubview(backgroundBottomImageView)
         view.addSubview(profileBoxView)
         view.addSubview(backgroundView)
         view.addSubview(topStackView)
         view.addSubview(centerStackView)
         view.addSubview(myRank)
-        view.addSubview(backgroundBottomImageView)
         view.addSubview(tabView)
     }
     

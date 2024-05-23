@@ -40,60 +40,9 @@ final class QuestViewModel: ViewModel {
         scheduleMidnightUpdate()
     }
     
-    private func viewWillAppear() {
-        Task {
-            try await usecase.updateDailyQuest()
-            await fetchQuest()
-        }
-    }
-    
-    private func fetchUserInfo() {
-        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
-                                   experience: UserDefaults.standard.integer(forKey: "experience"))
-    }
-    
-    private func fetchQuest() async {
-        do {
-            questList.value = try await usecase.readQuest()
-        } catch {
-            errorMessage.value = error.localizedDescription
-        }
-    }
-    
-    func deleteQuest(quest: QuestInfo) {
-        Task {
-            do {
-                try await usecase.deleteQuest(questInfo: quest)
-                questList.value = try await usecase.readQuest()
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    func updateQuest(quest: QuestInfo) {
-        Task {
-            do {
-                try await usecase.updateQuest(newQuestInfo: quest)
-                questList.value = try await usecase.readQuest()
-                updateExperience(experienceData: 1)
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    func updateExperience(experienceData: Int) {
-        Task {
-            do {
-                let result = try await usecase.addExperience(userId: UserDefaults.standard.string(forKey: "nickName") ?? "",
-                                                             experience: experienceData)
-                UserDefaults.standard.set(result, forKey: "experience")
-                fetchUserInfo() 
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
+    deinit {
+        timer?.cancel()
+        timer = nil
     }
     
     func transform(input: Input) -> Output {
@@ -126,10 +75,55 @@ final class QuestViewModel: ViewModel {
                      userInfo: self.user)
     }
     
-    deinit {
-        timer?.cancel()
-        timer = nil
+    private func viewWillAppear() {
+        Task {
+            do {
+                try await usecase.updateDailyQuest()
+                try await fetchQuest()
+            } catch {
+                errorMessage.value = error.localizedDescription
+            }
+        }
     }
+    
+    func deleteQuest(quest: QuestInfo) {
+        Task {
+            do {
+                try await usecase.deleteQuest(questInfo: quest)
+                questList.value = try await usecase.readQuest()
+            } catch {
+                errorMessage.value = error.localizedDescription
+            }
+        }
+    }
+    
+    func updateQuest(quest: QuestInfo) {
+        Task {
+            do {
+                try await usecase.updateQuest(newQuestInfo: quest)
+                questList.value = try await usecase.readQuest()
+                try await updateExperience(experienceData: 1)
+            } catch {
+                errorMessage.value = error.localizedDescription
+            }
+        }
+    }
+    
+    private func fetchUserInfo() {
+        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                                   experience: UserDefaults.standard.integer(forKey: "experience"))
+    }
+    
+    private func fetchQuest() async throws {
+        questList.value = try await usecase.readQuest()
+    }
+    
+    func updateExperience(experienceData: Int) async throws {
+        let result = try await usecase.addExperience(userId: UserDefaults.standard.string(forKey: "nickName") ?? "", experience: experienceData)
+        UserDefaults.standard.set(result, forKey: "experience")
+        fetchUserInfo()
+    }
+    
 }
 
 extension QuestViewModel {

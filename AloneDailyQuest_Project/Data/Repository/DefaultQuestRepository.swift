@@ -145,24 +145,6 @@ extension DefaultQuestRepository {
         }
     }
     
-    func repeatingQuestNewDay() async throws {
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        request.predicate = NSPredicate(format: "isMonday == false && isTuesday == false && isWednesday == false && isThursday == false && isFriday == false && isSaturday == false && isSunday == false")
-        
-        guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
-            throw NSError(domain: "Error : Coredata fetch failed error", code: 0)
-        }
-        
-        guard let targetQuest = fetchedQuestList.first else {
-            return
-        }
-        
-        context.delete(targetQuest)
-        if context.hasChanges {
-            try context.save()
-        }
-    }
-    
     func fetchUserInfo(userId: String) async throws -> UserInfo {
         let data = try await networkService.request(.member(userId: UserIdRequestDTO(userId: userId)))
         return try decorder.decode(UserInfoDTO.self, from: data).toEntity()
@@ -178,4 +160,6 @@ extension DefaultQuestRepository {
                                                                                      experience: experience)))
         return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
     }
+    
+    
 }

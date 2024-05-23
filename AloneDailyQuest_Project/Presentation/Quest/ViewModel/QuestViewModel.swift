@@ -39,9 +39,8 @@ final class QuestViewModel: ViewModel {
     
     private func viewWillAppear() {
         Task {
+            try await usecase.updateDailyQuest()
             await fetchQuest()
-            checkUserDefaultsLastVisitDate()
-            await checkUserDefaultsDeleteData()
             fetchUserInfo()
         }
     }
@@ -54,29 +53,7 @@ final class QuestViewModel: ViewModel {
     private func fetchQuest() async {
         Task {
             do {
-                try await usecase.repeatingQuestNewDay()
                 questList.value = try await usecase.readQuest()
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    private func checkUserDefaultsLastVisitDate() {
-        if UserDefaults.standard.object(forKey: "lastVisitDate") == nil {
-            UserDefaults.standard.set(Date(), forKey: "lastVisitDate")
-        }
-    }
-    
-    private func checkUserDefaultsDeleteData() async {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        let lastVisitDate = UserDefaults.standard.object(forKey: "lastVisitDate") as? Date ?? currentDate
-        
-        if calendar.isDate(lastVisitDate, inSameDayAs: currentDate) == false {
-            do {
-                try await usecase.repeatingQuestNewDay()
-                UserDefaults.standard.set(currentDate, forKey: "lastVisitDate")
             } catch {
                 errorMessage.value = error.localizedDescription
             }

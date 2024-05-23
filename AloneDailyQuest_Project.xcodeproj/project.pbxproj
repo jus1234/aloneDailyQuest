@@ -55,6 +55,7 @@
 		BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0632BEB40BD0076E564 /* ViewModel.swift */; };
 		BDB4A0752BEE0AF70076E564 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
+		BDE1BF8D2BFF14790072AEC0 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1BF8C2BFF14790072AEC0 /* Date+.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
 		C12358F32B723BA80084FE36 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12358F22B723BA80084FE36 /* ProfileView.swift */; };
@@ -136,6 +137,7 @@
 		BDB4A0632BEB40BD0076E564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
+		BDE1BF8C2BFF14790072AEC0 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C12358F22B723BA80084FE36 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 				C1EB515C2B6B77AC00744F64 /* UIViewController+.swift */,
 				C1479DE02B8F21160007C896 /* Bundle+Extension.swift */,
 				BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */,
+				BDE1BF8C2BFF14790072AEC0 /* Date+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				BD1035C82BF611F5001EBF0A /* RankingCoordinator.swift in Sources */,
 				BDA4C62D2BFB29770054DF33 /* NoticeCoordinator.swift in Sources */,
 				C1EB515B2B6B75DE00744F64 /* UIColor+.swift in Sources */,
+				BDE1BF8D2BFF14790072AEC0 /* Date+.swift in Sources */,
 				C1FB22F72BF77CC60026079C /* ProfileViewModel.swift in Sources */,
 				BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */,
 				C131B3CA2BF0A58700020CFE /* ProfileRepository.swift in Sources */,
@@ -940,7 +944,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T92LV6HV88;
+				DEVELOPMENT_TEAM = 28JR8T46UT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -968,7 +972,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = T92LV6HV88;
+				DEVELOPMENT_TEAM = 28JR8T46UT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

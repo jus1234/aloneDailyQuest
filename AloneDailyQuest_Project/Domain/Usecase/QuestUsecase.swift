@@ -12,10 +12,10 @@ protocol QuestUsecase {
     func readQuest() async throws -> [QuestInfo]
     func updateQuest(newQuestInfo: QuestInfo) async throws
     func deleteQuest(questInfo: QuestInfo) async throws
-    func repeatingQuestNewDay() async throws
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
     func addExperience(userId: String, experience: Int) async throws -> Int
+    func updateDailyQuest() async throws
 }
 
 final class DefaultQuestUsecase: QuestUsecase {
@@ -41,10 +41,6 @@ final class DefaultQuestUsecase: QuestUsecase {
         try await repository.deleteQuest(questInfo: questInfo)
     }
     
-    func repeatingQuestNewDay() async throws {
-        try await repository.repeatingQuestNewDay()
-    }
-    
     func fetchUserInfo(userId: String) async throws -> UserInfo {
         return try await repository.fetchUserInfo(userId: userId)
     }
@@ -55,5 +51,25 @@ final class DefaultQuestUsecase: QuestUsecase {
     
     func addExperience(userId: String, experience: Int) async throws -> Int {
         return try await repository.addExperience(userId: userId, experience: experience)
+    }
+    
+    func updateDailyQuest() async throws {
+        if UserDefaults.standard.string(forKey: "lastVisitDate") == nil {
+            UserDefaults.standard.setValue(Date().yesterdayString(with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
+        }
+        guard let lastVisitDate = UserDefaults.standard.string(forKey: "lastVisitDate") else {
+            return
+        }
+        if lastVisitDate != Date().toString(day: Date(), with: DateFormatter.yyyyMMdd) {
+            try await repository.readQuest().forEach { quest in
+                Task {
+                    var newQuest = quest
+                    newQuest.completed = false
+                    try await repository.updateQuest(newQuestInfo: newQuest)
+                    UserDefaults.standard.setValue(Date().toString(day: Date(), with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
+                }
+            }
+        }
+        
     }
 }

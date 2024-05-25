@@ -77,6 +77,7 @@ final class DetailView: UIView {
     let questLabel: UILabel = {
         let label = UILabel()
         label.text = "퀘스트 내용"
+        label.textColor = .black
         label.font = UIFont(name: "DungGeunMo", size: 16)
         return label
     }()
@@ -106,6 +107,7 @@ final class DetailView: UIView {
     let repeatLabel: UILabel = {
         let label = UILabel()
         label.text = "반복설정"
+        label.textColor = .black
         label.font = UIFont(name: "DungGeunMo", size: 16)
        return label
     }()

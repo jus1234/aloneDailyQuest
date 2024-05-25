@@ -61,15 +61,7 @@ final class DefaultQuestUsecase: QuestUsecase {
             return
         }
         if lastVisitDate != Date().toString(day: Date(), with: DateFormatter.yyyyMMdd) {
-            try await repository.readQuest().forEach { quest in
-                Task {
-                    var newQuest = quest
-                    newQuest.completed = false
-                    try await repository.updateQuest(newQuestInfo: newQuest)
-                    UserDefaults.standard.setValue(Date().toString(day: Date(), with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
-                }
-            }
+            try await repository.updateDailyQuest()
         }
-        
     }
 }

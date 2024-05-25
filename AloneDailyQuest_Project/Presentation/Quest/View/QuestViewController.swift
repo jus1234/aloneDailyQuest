@@ -172,6 +172,7 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             cell.repeatday.textColor = .black
             cell.completeButton.setTitle("완료하기", for: .normal)
             cell.completeButton.setTitleColor(.black, for: .normal)
+            cell.completeButton.isEnabled = true
         }
         cell.updateButton.addTarget(self , action: #selector(updateQuest), for: .touchUpInside)
         cell.updateButton.tag = indexPath.row

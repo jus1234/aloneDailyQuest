@@ -16,4 +16,5 @@ protocol QuestRepository {
     func fetchExperience(userId: String) async throws -> Int
     func addExperience(userId: String, experience: Int) async throws -> Int
     func deleteQuests() async throws
+    func updateDailyQuest() async throws
 }

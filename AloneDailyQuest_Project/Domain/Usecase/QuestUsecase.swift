@@ -62,6 +62,8 @@ final class DefaultQuestUsecase: QuestUsecase {
             return
         }
         if lastVisitDate != Date().toString(day: Date(), with: DateFormatter.yyyyMMdd) {
+            UserDefaults.standard.setValue(Date().toString(day: Date(), with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
+            UserDefaults.standard.set(0, forKey: "todayExperience")
             try await repository.updateDailyQuest()
         }
     }

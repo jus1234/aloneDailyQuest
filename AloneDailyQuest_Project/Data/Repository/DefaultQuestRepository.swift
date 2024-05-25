@@ -134,7 +134,7 @@ extension DefaultQuestRepository {
     func deleteQuests() async throws {
         let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
         
-         let fetchedQuestList = try context.fetch(request)
+        let fetchedQuestList = try context.fetch(request)
         
         for quest in fetchedQuestList {
             context.delete(quest)
@@ -161,5 +161,19 @@ extension DefaultQuestRepository {
         return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
     }
     
-    
+    func updateDailyQuest() async throws {
+        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
+        
+        guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
+            throw NSError(domain: "Error : Coredata fetch failed error", code: 0)
+        }
+        
+        fetchedQuestList.forEach { quest in
+            quest.completed = false
+        }
+        
+        if context.hasChanges {
+            try context.save()
+        }
+    }
 }

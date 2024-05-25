@@ -31,18 +31,12 @@ final class QuestViewModel: ViewModel {
     private let questList: Observable<[QuestInfo]> = Observable([])
     private let errorMessage: Observable<String> = Observable("")
     private let user: Observable<UserInfo?> = Observable(nil)
-    private var timer: DispatchSourceTimer?
 
     
     init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
         self.usecase = usecase
         self.coordinator = coordinator
         scheduleMidnightUpdate()
-    }
-    
-    deinit {
-        timer?.cancel()
-        timer = nil
     }
     
     func transform(input: Input) -> Output {
@@ -128,26 +122,19 @@ final class QuestViewModel: ViewModel {
 
 extension QuestViewModel {
     private func scheduleMidnightUpdate() {
-            let now = Date()
-            let calendar = Calendar.current
-
-            if let midnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0, second: 0), matchingPolicy: .nextTime) {
-                let timeInterval = midnight.timeIntervalSince(now)
-                
-                timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
-                timer?.schedule(deadline: .now() + timeInterval, repeating: 86400)
-
-                timer?.setEventHandler { [weak self] in
-                    Task {
-                        try await self?.usecase.updateDailyQuest()
-                        guard let quests = try await self?.usecase.readQuest() else {
-                            return
-                        }
-                        self?.questList.value = quests
-                    }
-                }
-
-                timer?.resume()
-            }
+        let now = Date()
+        let calendar = Calendar.current
+        guard let midnight = calendar.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0, second: 0), matchingPolicy: .nextTime) else {
+            return
         }
+        let timeInterval = midnight.timeIntervalSince(now)
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateDailyQuest), userInfo: nil, repeats: false)
+    }
+    
+    @objc private func updateDailyQuest() {
+        Task {
+            try await usecase.updateDailyQuest()
+            questList.value = try await usecase.readQuest()
+        }
+    }
 }

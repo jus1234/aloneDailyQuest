@@ -203,7 +203,7 @@ class ProfileView: UIView {
     
     private lazy var limitExperienceNumerLabel: UILabel = {
         let label = UILabel()
-        label.text = "100"
+        label.text = "5"
         label.font = UIFont(name: "DungGeunMo", size: 16)
         label.textColor = UIColor(hexCode: "000000")
         label.textAlignment = .center

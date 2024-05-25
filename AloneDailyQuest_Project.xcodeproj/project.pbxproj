@@ -271,6 +271,15 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		BD5659872C02188A00DB02BF /* CoreDataEntity */ = {
+			isa = PBXGroup;
+			children = (
+				990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */,
+				990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */,
+			);
+			path = CoreDataEntity;
+			sourceTree = "<group>";
+		};
 		BDA4C62A2BFB294E0054DF33 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,6 +343,7 @@
 		BDB4A03A2BEA20D20076E564 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				BD5659872C02188A00DB02BF /* CoreDataEntity */,
 				BDB4A0512BEA56630076E564 /* Enum */,
 				BDB4A03B2BEA20DA0076E564 /* Repository */,
 			);
@@ -604,8 +614,6 @@
 		C1F3D1212BEE032100EC1B26 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				990F92EB2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift */,
-				990F92EC2B4BFA6400F175C7 /* QuestData+CoreDataProperties.swift */,
 				C1F3D1242BEE039900EC1B26 /* QuestViewModel.swift */,
 				C1F3D1262BEE3E9A00EC1B26 /* DetailViewModel.swift */,
 			);

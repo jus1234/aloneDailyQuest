@@ -16,6 +16,7 @@ protocol QuestUsecase {
     func fetchExperience(userId: String) async throws -> Int
     func addExperience(userId: String, experience: Int) async throws -> Int
     func updateDailyQuest() async throws
+    func isTodayExperienceAcquisitionMax() -> Bool
 }
 
 final class DefaultQuestUsecase: QuestUsecase {
@@ -63,5 +64,14 @@ final class DefaultQuestUsecase: QuestUsecase {
         if lastVisitDate != Date().toString(day: Date(), with: DateFormatter.yyyyMMdd) {
             try await repository.updateDailyQuest()
         }
+    }
+    
+    func isTodayExperienceAcquisitionMax() -> Bool{
+        let todayExperience = UserDefaults.standard.integer(forKey: "todayExperience")
+        if todayExperience == 5 {
+            return true
+        }
+        UserDefaults.standard.set(todayExperience + 1, forKey: "todayExperience")
+        return false
     }
 }

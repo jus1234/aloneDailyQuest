@@ -94,6 +94,10 @@ final class QuestViewModel: ViewModel {
     func updateQuest(quest: QuestInfo) {
         Task {
             do {
+                guard !usecase.isTodayExperienceAcquisitionMax() else {
+                    errorMessage.value = "일일 최대 획득 경험치를 초과했습니다."
+                    return
+                }
                 try await usecase.updateQuest(newQuestInfo: quest)
                 questList.value = try await usecase.readQuest()
                 try await updateExperience(experienceData: 1)

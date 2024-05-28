@@ -31,6 +31,7 @@ final class QuestViewModel: ViewModel {
     private let questList: Observable<[QuestInfo]> = Observable([])
     private let errorMessage: Observable<String> = Observable("")
     private let user: Observable<UserInfo?> = Observable(nil)
+    private var timer: Timer?
 
     
     init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
@@ -56,12 +57,15 @@ final class QuestViewModel: ViewModel {
             return
         }
         input.rankViewEvent.bind { [weak self] _ in
+            self?.timer?.invalidate()
             self?.coordinator.finish(to: .ranking)
         }
         input.profileViewEvent.bind { [weak self] _ in
+            self?.timer?.invalidate()
             self?.coordinator.finish(to: .profile)
         }
         input.didPlusButtonTap.bind { [weak self] _ in
+            self?.timer?.invalidate()
             self?.coordinator.connectDetailCoordinator(quest: nil)
         }
         return .init(questList: self.questList,
@@ -121,7 +125,6 @@ final class QuestViewModel: ViewModel {
         UserDefaults.standard.set(result, forKey: "experience")
         fetchUserInfo()
     }
-    
 }
 
 extension QuestViewModel {
@@ -132,7 +135,10 @@ extension QuestViewModel {
             return
         }
         let timeInterval = midnight.timeIntervalSince(now)
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateDailyQuest), userInfo: nil, repeats: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) {
+            self.updateDailyQuest()
+        }
+        
     }
     
     @objc private func updateDailyQuest() {

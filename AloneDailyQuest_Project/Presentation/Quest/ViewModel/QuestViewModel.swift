@@ -31,7 +31,6 @@ final class QuestViewModel: ViewModel {
     private let questList: Observable<[QuestInfo]> = Observable([])
     private let errorMessage: Observable<String> = Observable("")
     private let user: Observable<UserInfo?> = Observable(nil)
-    private var timer: Timer?
 
     
     init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
@@ -57,15 +56,12 @@ final class QuestViewModel: ViewModel {
             return
         }
         input.rankViewEvent.bind { [weak self] _ in
-            self?.timer?.invalidate()
             self?.coordinator.finish(to: .ranking)
         }
         input.profileViewEvent.bind { [weak self] _ in
-            self?.timer?.invalidate()
             self?.coordinator.finish(to: .profile)
         }
         input.didPlusButtonTap.bind { [weak self] _ in
-            self?.timer?.invalidate()
             self?.coordinator.connectDetailCoordinator(quest: nil)
         }
         return .init(questList: self.questList,

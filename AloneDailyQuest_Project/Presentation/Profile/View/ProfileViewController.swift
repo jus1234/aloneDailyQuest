@@ -51,8 +51,11 @@ class ProfileViewController: UIViewController {
             guard
                 let nickName = user?.fetchNickName(),
                 let level = user?.fetchLevel(),
-                let experience = user?.fetchExperience() else { return }
-            self?.profileView.configureLabel(nickName: nickName, level: String(level))
+                let experience = user?.fetchExperience() 
+            else {
+                return
+            }
+            self?.profileView.configureLabel(nickName: nickName, level: level)
             self?.profileView.updateExperienceBar(currentExp: experience)
         }
         output.ourEmail.bind {[weak self] email in

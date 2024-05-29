@@ -461,9 +461,10 @@ class ProfileView: UIView {
         backgroundBottomImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
     }
     
-    func configureLabel(nickName: String, level: String) {
+    func configureLabel(nickName: String, level: Int) {
         nickNameText.text = nickName
         levelLabel.text = "LV.\(level)"
+        profileImage.image = UIImage(named: configLevelImage(with: level))
     }
     func updateExperienceBar(currentExp: Int) {
         let label = experienceBar.subviews.compactMap { $0 as? UILabel }.first
@@ -478,6 +479,39 @@ class ProfileView: UIView {
         }
 
         experienceLayer?.frame = CGRect(x: 0, y: 0, width: experienceBar.bounds.width * progressFraction, height: experienceBar.bounds.height)
+    }
+    
+    private func configLevelImage(with level: Int) -> String {
+        switch level {
+        case 1...5:
+            return "img_profile_Lv1-10"
+        case 6...10:
+            return "img_profile_Lv6-10"
+        case 11...15:
+            return "img_profile_Lv11-15"
+        case 16...20:
+            return "img_profile_Lv16-20"
+        case 21...25:
+            return "img_profile_Lv21-25"
+        case 26...30:
+            return "img_profile_Lv26-30"
+        case 31...35:
+            return "img_profile_Lv31-35"
+        case 36...40:
+            return "img_profile_Lv36-40"
+        case 41...45:
+            return "img_profile_Lv41-45"
+        case 46...50:
+            return "img_profile_Lv46-50"
+        case 51...55:
+            return "img_profile_Lv51-55"
+        case 56...60:
+            return "img_profile_Lv56-60"
+        case 61...65:
+            return "img_profile_Lv61-65"
+        default:
+            return "img_profile_Lv66-70"
+        }
     }
 }
 

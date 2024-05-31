@@ -49,6 +49,30 @@ extension UIViewController {
         
         self.present(alertViewController, animated: true, completion: completion)
     }
+    
+    func makeAttributedTitle(title: String) -> NSAttributedString {
+        return NSAttributedString(
+            string: title,
+            attributes: [
+                NSAttributedString.Key.strokeColor: UIColor.black,
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 30) ?? UIFont.systemFont(ofSize: 30),
+                NSAttributedString.Key.strokeWidth: -2.5
+            ]
+        )
+    }
+    
+    func makeAttributedTitleBackground(title: String) -> NSAttributedString {
+        return  NSAttributedString(
+            string: title,
+            attributes: [
+                NSAttributedString.Key.strokeColor: UIColor.black,
+                NSAttributedString.Key.foregroundColor: UIColor(red: 0.128, green: 0.345, blue: 0.345, alpha: 1),
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 30) ?? UIFont.systemFont(ofSize: 30),
+                NSAttributedString.Key.strokeWidth: -2.5
+            ]
+        )
+    }
 }
 
 import SwiftUI

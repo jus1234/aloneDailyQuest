@@ -61,6 +61,7 @@
 		BDD416232C0872A2007F8070 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BDD416222C0872A2007F8070 /* RxSwift */; };
 		BDD4162C2C0872B1007F8070 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BDD4162B2C0872B1007F8070 /* SnapKit */; };
 		BDD416302C09AC80007F8070 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4162F2C09AC80007F8070 /* UIStackView+.swift */; };
+		BDD416392C0B0DD3007F8070 /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD416382C0B0DD3007F8070 /* Reactive+.swift */; };
 		BDE1BF8D2BFF14790072AEC0 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1BF8C2BFF14790072AEC0 /* Date+.swift */; };
 		C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C452B2420C5005783BD /* DungGeunMo.ttf */; };
 		C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */; };
@@ -157,6 +158,7 @@
 		BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		BDD4162F2C09AC80007F8070 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
+		BDD416382C0B0DD3007F8070 /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		BDE1BF8C2BFF14790072AEC0 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		C10D6C452B2420C5005783BD /* DungGeunMo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DungGeunMo.ttf; sourceTree = "<group>"; };
 		C10D6C4E2B242538005783BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				BDAA5E4D2BEF51620033CBC7 /* UILabel+.swift */,
 				BDE1BF8C2BFF14790072AEC0 /* Date+.swift */,
 				BDD4162F2C09AC80007F8070 /* UIStackView+.swift */,
+				BDD416382C0B0DD3007F8070 /* Reactive+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				BD1035C42BF60DDC001EBF0A /* DefaultQuestCoordinator.swift in Sources */,
 				C159E3932B1967AC00BB67F8 /* SignupViewController.swift in Sources */,
 				BDAA5E4E2BEF51620033CBC7 /* UILabel+.swift in Sources */,
+				BDD416392C0B0DD3007F8070 /* Reactive+.swift in Sources */,
 				990F92ED2B4BFA6400F175C7 /* QuestData+CoreDataClass.swift in Sources */,
 				BD1035B72BF5E29A001EBF0A /* DefaultAppCoordinator.swift in Sources */,
 				BDA4C6362BFB41D30054DF33 /* DefaultDetailCoordinator.swift in Sources */,

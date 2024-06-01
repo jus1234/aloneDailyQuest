@@ -13,8 +13,8 @@ import SnapKit
 import Then
 
 class RankingViewController: UIViewController {
-    private let profileBoxView: ProfileBoxView = ProfileBoxView()
-    private let tabView: TabView = TabView()
+    private let profileBoxView = ProfileBoxView()
+    private let tabView = TabView()
     private let backgroundBottomImageView = UIImageView()
     private let titleText = UILabel()
     private let titleBackgroundText = UILabel()
@@ -32,19 +32,14 @@ class RankingViewController: UIViewController {
     private var rank9 = UIStackView()
     private var rank10 = UIStackView()
     private lazy var topStackView = UIStackView()
-    private lazy var ranks = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10]
-    
     private lazy var centerStackView = UIStackView()
     private lazy var myRank = UIStackView()
-    lazy var backgroundView = UIImageView()
+    private lazy var backgroundView = UIImageView()
+    
+    private lazy var ranks = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10]
     
     private let viewModel: RankingViewModel
-    private var viewDidLoadEvent: Observable<Void> = Observable(())
-    private lazy var input = RankingViewModel.Input(viewDidLoad: viewDidLoadEvent,
-                                                    qeusetViewEvent: tabView.qeusetViewEvent,
-                                                    rankViewEvent: tabView.rankiViewEvent, 
-                                                    profileViewEvent: tabView.profileViewEvent)
-    private lazy var output = viewModel.transform(input: input)
+    private var disposeBag = DisposeBag()
     
     init(viewModel: RankingViewModel) {
         self.viewModel = viewModel
@@ -61,7 +56,6 @@ class RankingViewController: UIViewController {
         setLayout()
         bindOutput()
         setupProfile()
-        input.viewDidLoad.value = ()
     }
     
 }
@@ -226,15 +220,33 @@ extension RankingViewController {
 
 extension RankingViewController {
     private func bindOutput() {
-        output.rankingList.bind { [weak self] rankingList in
-            self?.setupRankingTable(rankingList: rankingList)
-        }
-        output.myRanking.bind { [weak self] myRanking in
-            self?.setupMyRanking(myRanking: myRanking)
-        }
-        output.errorMessage.bind { [weak self] errorMessage in
-            self?.completedAlert(message: "네트워크 오류가 발생했습니다.")
-        }
+        let input = RankingViewModel.Input(
+            viewWillAppear: rx.viewWillAppear,
+            qeusetViewEvent: tabView.questButton.rx.tap,
+            rankViewEvent: tabView.rankListButton.rx.tap,
+            profileViewEvent: tabView.profileButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.rankingList
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, rankingList in
+                owner.setupRankingTable(rankingList: rankingList)
+            }
+            .disposed(by: disposeBag)
+        
+        output.myRanking
+            .asDriver(onErrorJustReturn: 0)
+            .drive(with: self) { owner, myRanking in
+                owner.setupMyRanking(myRanking: myRanking)
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "네트워크 오류가 발생했습니다.")
+            .drive(with: self) { owner,_ in
+                owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupProfile() {
@@ -253,7 +265,7 @@ extension RankingViewController {
     }
     
     private func setupRankingTable(rankingList: [UserInfo]) {
-        for (user, rankBoxLow) in zip(rankingList, ranks) {
+        zip(rankingList, ranks).forEach { user, rankBoxLow in
             guard
                 let nickName = rankBoxLow.arrangedSubviews[1] as? UILabel,
                 let level = rankBoxLow.arrangedSubviews[2] as? UILabel
@@ -266,11 +278,7 @@ extension RankingViewController {
     }
     
     private func setupMyRanking(myRanking: Int) {
-        guard
-            let ranking = myRank.arrangedSubviews[0] as? UILabel
-        else {
-            return
-        }
+        guard let ranking = myRank.arrangedSubviews[0] as? UILabel else { return }
         ranking.text = "\(myRanking)위"
     }
 }

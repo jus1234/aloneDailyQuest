@@ -42,7 +42,7 @@ final class RankingViewModel: ViewModel {
     func transform(input: Input) -> Output {
         input.viewWillAppear
             .subscribe(with: self) { owner,_ in
-                owner.viewDidLoad()
+                owner.fetchRanking()
             }
             .disposed(by: disposeBag)
         
@@ -67,18 +67,14 @@ final class RankingViewModel: ViewModel {
         return output
     }
     
-    private func viewDidLoad() {
+    private func fetchRanking() {
         Task {
-            await fetchRanking()
-        }
-    }
-    
-    private func fetchRanking() async {
-        do {
-            output.rankingList.accept(try await usecase.fetch())
-            output.myRanking.accept(try await usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? ""))
-        } catch {
-            output.errorMessage.accept(error.localizedDescription)
+            do {
+                output.rankingList.accept(try await usecase.fetch())
+                output.myRanking.accept(try await usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? ""))
+            } catch {
+                output.errorMessage.accept(error.localizedDescription)
+            }
         }
     }
     

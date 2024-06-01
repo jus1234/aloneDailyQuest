@@ -242,7 +242,7 @@ extension RankingViewController {
             .disposed(by: disposeBag)
         
         output.errorMessage
-            .asDriver(onErrorJustReturn: "네트워크 오류가 발생했습니다.")
+            .asDriver(onErrorJustReturn: "")
             .drive(with: self) { owner,_ in
                 owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
             }
@@ -252,12 +252,13 @@ extension RankingViewController {
     private func setupProfile() {
         guard
             let nickName = myRank.arrangedSubviews[1] as? UILabel,
-            let level = myRank.arrangedSubviews[2] as? UILabel
+            let level = myRank.arrangedSubviews[2] as? UILabel,
+            let userNickName = UserDefaults.standard.string(forKey: "nickName")
         else {
             return
         }
-        let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
-                 experience: UserDefaults.standard.integer(forKey: "experience"))
+        let user = UserInfo(nickName: userNickName,
+                            experience: UserDefaults.standard.integer(forKey: "experience"))
         profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
         profileBoxView.updateExperienceBar(currentExp: user.fetchExperience() % 10)
         nickName.text = user.fetchNickName()

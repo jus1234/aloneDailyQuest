@@ -12,6 +12,7 @@ import RxSwift
 
 @MainActor
 final class RankingViewModel: ViewModel {
+    typealias Observable = RxSwift.Observable
     
     private var disposeBag = DisposeBag()
     
@@ -41,9 +42,13 @@ final class RankingViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         input.viewWillAppear
-            .subscribe(with: self) { owner,_ in
-                owner.fetchRanking()
+            .flatMapLatest { _ -> Observable<([UserInfo], Int)> in
+                return Observable.zip(self.usecase.fetch(), self.usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? ""))
             }
+            .subscribe(onNext: {  [weak self] rankingList, myRanking in
+                self?.output.rankingList.accept(rankingList)
+                self?.output.myRanking.accept(myRanking)
+            })
             .disposed(by: disposeBag)
         
         input.qeusetViewEvent
@@ -66,16 +71,4 @@ final class RankingViewModel: ViewModel {
         
         return output
     }
-    
-    private func fetchRanking() {
-        Task {
-            do {
-                output.rankingList.accept(try await usecase.fetch())
-                output.myRanking.accept(try await usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? ""))
-            } catch {
-                output.errorMessage.accept(error.localizedDescription)
-            }
-        }
-    }
-    
 }

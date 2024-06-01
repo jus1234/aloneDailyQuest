@@ -6,24 +6,29 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol RankingUsecase {
-    func fetch() async throws -> [UserInfo]
-    func fetchUserRanking(nickName: String) async throws -> Int
+    typealias Observable = RxSwift.Observable
+    
+    func fetch() -> Observable<[UserInfo]>
+    func fetchUserRanking(nickName: String) -> Observable<Int>
 }
 
 final class DefaultRankingUsecase: RankingUsecase {
+    typealias Observable = RxSwift.Observable
+    
     private let repository: RankingRepository
     
     init(repository: RankingRepository) {
         self.repository = repository
     }
     
-    func fetch() async throws -> [UserInfo] {
-        return try await repository.fetchRanking()
+    func fetch() -> Observable<[UserInfo]> {
+        return repository.fetchRanking()
     }
     
-    func fetchUserRanking(nickName: String) async throws -> Int {
-        return try await repository.fetchUserRanking(nickName: nickName)
+    func fetchUserRanking(nickName: String) -> Observable<Int> {
+        return repository.fetchUserRanking(nickName: nickName)
     }
 }

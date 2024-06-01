@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol RankingRepository {
-    func fetchRanking() async throws -> [UserInfo]
-    func fetchUserRanking(nickName: String) async throws -> Int
+    typealias Observable = RxSwift.Observable
+    
+    func fetchRanking() -> Observable<[UserInfo]>
+    func fetchUserRanking(nickName: String) -> Observable<Int>
 }

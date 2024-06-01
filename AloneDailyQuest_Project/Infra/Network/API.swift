@@ -52,7 +52,8 @@ extension API {
             .setHeaderParameters(API.header)
             .setPath("/check_id")
             .setBodyParameters(userId)
-            .build()    }
+            .build()
+    }
     
     private func makeMemberAPI(userId: UserIdRequestDTO) -> URLRequest? {
         return URLRequestBuilder(baseURL: API.baseURL)
@@ -96,7 +97,5 @@ extension API {
     private static let baseURL = "wooseokjang.shop"
     private static let contentTypeKey = "Content-Type"
     private static let contentType = "application/json"
-    private static let header = [
-        API.contentTypeKey: API.contentType
-    ]
+    private static let header = [API.contentTypeKey: API.contentType]
 }

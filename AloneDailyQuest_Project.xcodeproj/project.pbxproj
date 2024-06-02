@@ -80,6 +80,9 @@
 		C159E3932B1967AC00BB67F8 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159E3912B1967AC00BB67F8 /* SignupViewController.swift */; };
 		C15C48AE2B61F646002EA255 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15C48AD2B61F646002EA255 /* UserInfo.swift */; };
 		C174B4942B2D4D5600692447 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C174B4932B2D4D5600692447 /* UIView+.swift */; };
+		C1C98E7B2C0C594A00C59F7B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C1C98E7A2C0C594A00C59F7B /* Lottie */; };
+		C1C98E7D2C0C597000C59F7B /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C98E7C2C0C597000C59F7B /* LaunchScreenViewController.swift */; };
+		C1C98E7F2C0C59C200C59F7B /* aloneDailyQuestLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = C1C98E7E2C0C59C200C59F7B /* aloneDailyQuestLottie.json */; };
 		C1D40C3C2B0602DE003248C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */; };
 		C1D40C3E2B0602DE003248C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */; };
 		C1E8ED342BEB9C2C00EA8B26 /* QuestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1E8ED332BEB9C2C00EA8B26 /* QuestInfo.swift */; };
@@ -177,6 +180,8 @@
 		C159E3912B1967AC00BB67F8 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		C15C48AD2B61F646002EA255 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		C174B4932B2D4D5600692447 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		C1C98E7C2C0C597000C59F7B /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		C1C98E7E2C0C59C200C59F7B /* aloneDailyQuestLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = aloneDailyQuestLottie.json; sourceTree = "<group>"; };
 		C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AloneDailyQuest_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +211,7 @@
 				BDD4161B2C0872A2007F8070 /* RxCocoa in Frameworks */,
 				BDD416232C0872A2007F8070 /* RxSwift in Frameworks */,
 				BDD4162C2C0872B1007F8070 /* SnapKit in Frameworks */,
+				C1C98E7B2C0C594A00C59F7B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +511,7 @@
 			children = (
 				C10D6C4D2B242538005783BD /* LaunchScreen.storyboard */,
 				C159E3912B1967AC00BB67F8 /* SignupViewController.swift */,
+				C1C98E7C2C0C597000C59F7B /* LaunchScreenViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -687,6 +694,7 @@
 				BD0A16872BF7959B009826E5 /* DIContainer */,
 				BD22DC062BF1E2AB00416D35 /* Coordinator */,
 				C1FC22C52B8F1F9C0077D6FC /* AloneDailyQuest_Project.xcdatamodeld */,
+				C1C98E7E2C0C59C200C59F7B /* aloneDailyQuestLottie.json */,
 				C1FC22A82B8F17F40077D6FC /* Assets.xcassets */,
 				C1D40C3B2B0602DE003248C0 /* AppDelegate.swift */,
 				C1D40C3D2B0602DE003248C0 /* SceneDelegate.swift */,
@@ -717,6 +725,7 @@
 				BDD4161E2C0872A2007F8070 /* RxRelay */,
 				BDD416222C0872A2007F8070 /* RxSwift */,
 				BDD4162B2C0872B1007F8070 /* SnapKit */,
+				C1C98E7A2C0C594A00C59F7B /* Lottie */,
 			);
 			productName = AloneDailyQuest_Project;
 			productReference = C1D40C382B0602DE003248C0 /* AloneDailyQuest_Project.app */;
@@ -750,6 +759,7 @@
 				BDD416122C087295007F8070 /* XCRemoteSwiftPackageReference "Then" */,
 				BDD416152C0872A2007F8070 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				BDD4162A2C0872B1007F8070 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C1C98E792C0C594A00C59F7B /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = C1D40C392B0602DE003248C0 /* Products */;
 			projectDirPath = "";
@@ -768,6 +778,7 @@
 				C10D6C512B242538005783BD /* LaunchScreen.storyboard in Resources */,
 				C1FC22A92B8F17F40077D6FC /* Assets.xcassets in Resources */,
 				C10D6C462B2420C6005783BD /* DungGeunMo.ttf in Resources */,
+				C1C98E7F2C0C59C200C59F7B /* aloneDailyQuestLottie.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,6 +847,7 @@
 				BDB4A0322BE9FF3F0076E564 /* NetworkService.swift in Sources */,
 				C1FB22F52BF77CB70026079C /* DefaultProfileCoordinator.swift in Sources */,
 				C1479DE52B8F4B4C0007C896 /* TabView.swift in Sources */,
+				C1C98E7D2C0C597000C59F7B /* LaunchScreenViewController.swift in Sources */,
 				BDA4C6322BFB2A850054DF33 /* NoticeVewModel.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
 				BDB4A0622BEB40370076E564 /* Observable.swift in Sources */,
@@ -1000,7 +1012,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28JR8T46UT;
+				DEVELOPMENT_TEAM = T92LV6HV88;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1028,7 +1040,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 28JR8T46UT;
+				DEVELOPMENT_TEAM = T92LV6HV88;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AloneDailyQuest_Project/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1097,6 +1109,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		C1C98E792C0C594A00C59F7B /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1124,6 +1144,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BDD4162A2C0872B1007F8070 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		C1C98E7A2C0C594A00C59F7B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1C98E792C0C594A00C59F7B /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 

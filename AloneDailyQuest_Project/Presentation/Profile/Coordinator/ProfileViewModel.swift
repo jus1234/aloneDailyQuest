@@ -43,7 +43,7 @@ final class ProfileViewModel: ViewModel {
     }
     
     func sendOurEmail() {
-        self.email.value = "krsder@naver.com"
+        self.email.value = "aloneDailyQuest@gmail.com"
     }
     
     func sendWarningMessage() {

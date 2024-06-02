@@ -1,5 +1,15 @@
 {
+  "originHash" : "dd26be26462524a2a5baf82fc2508b5c070a2935fba9cf9612903a9e8034ff52",
   "pins" : [
+    {
+      "identity" : "lottie-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
+      "state" : {
+        "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
+        "version" : "4.4.3"
+      }
+    },
     {
       "identity" : "rxswift",
       "kind" : "remoteSourceControl",
@@ -28,5 +38,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

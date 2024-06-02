@@ -10,7 +10,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-@MainActor
 final class RankingViewModel: ViewModel {
     typealias Observable = RxSwift.Observable
     
@@ -31,9 +30,6 @@ final class RankingViewModel: ViewModel {
     
     private let usecase: RankingUsecase
     private let coordinator: RankingCoordinator
-    private let output = Output(rankingList: BehaviorRelay(value: [UserInfo]()),
-                                myRanking: PublishRelay(),
-                                errorMessage: PublishRelay())
     
     init(usecase: RankingUsecase, coordinator: RankingCoordinator) {
         self.usecase = usecase
@@ -41,13 +37,28 @@ final class RankingViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
+        let output = Output(
+            rankingList: BehaviorRelay(value: [UserInfo]()),
+            myRanking: PublishRelay(),
+            errorMessage: PublishRelay())
+        
         input.viewWillAppear
-            .flatMapLatest { _ -> Observable<([UserInfo], Int)> in
-                return Observable.zip(self.usecase.fetch(), self.usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? ""))
+            .flatMapLatest { [weak self] _ -> Observable<([UserInfo], Int)> in
+                guard 
+                    let self = self,
+                    let nickName = UserDefaults.standard.string(forKey: "nickName")
+                else {
+                    return Observable.error(UserDefaultsError.notFound)
+                }
+                return Observable.zip(
+                    self.usecase.fetchRankingList(),
+                    self.usecase.fetchUserRanking(nickName: nickName))
             }
-            .subscribe(onNext: {  [weak self] rankingList, myRanking in
-                self?.output.rankingList.accept(rankingList)
-                self?.output.myRanking.accept(myRanking)
+            .subscribe(onNext: { rankingList, myRanking in
+                output.rankingList.accept(rankingList)
+                output.myRanking.accept(myRanking)
+            }, onError: { error in
+                output.errorMessage.accept(error.localizedDescription)
             })
             .disposed(by: disposeBag)
         

@@ -21,22 +21,22 @@ class RankingViewController: UIViewController {
     private let rankingLabel = UILabel()
     private let nickNameLabel = UILabel()
     private let levelLabel = UILabel()
-    private var rank1 = UIStackView()
-    private var rank2 = UIStackView()
-    private var rank3 = UIStackView()
-    private var rank4 = UIStackView()
-    private var rank5 = UIStackView()
-    private var rank6 = UIStackView()
-    private var rank7 = UIStackView()
-    private var rank8 = UIStackView()
-    private var rank9 = UIStackView()
-    private var rank10 = UIStackView()
+    private var rankFirst = UIStackView()
+    private var rankSecond = UIStackView()
+    private var rankThird = UIStackView()
+    private var rankFourth = UIStackView()
+    private var rankFifth = UIStackView()
+    private var rankSixth = UIStackView()
+    private var rankSeventh = UIStackView()
+    private var rankEighth = UIStackView()
+    private var rankNinth = UIStackView()
+    private var rankTenth = UIStackView()
     private lazy var topStackView = UIStackView()
     private lazy var centerStackView = UIStackView()
     private lazy var myRank = UIStackView()
     private lazy var backgroundView = UIImageView()
     
-    private lazy var ranks = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10]
+    private lazy var ranks = [rankFirst, rankSecond, rankThird, rankFourth, rankFifth, rankSixth, rankSeventh, rankEighth, rankNinth, rankTenth]
     
     private let viewModel: RankingViewModel
     private var disposeBag = DisposeBag()
@@ -58,6 +58,48 @@ class RankingViewController: UIViewController {
         setupProfile()
     }
     
+}
+
+extension RankingViewController {
+    private func bindOutput() {
+        let input = RankingViewModel.Input(
+            viewWillAppear: rx.viewWillAppear,
+            qeusetViewEvent: tabView.questButton.rx.tap,
+            rankViewEvent: tabView.rankListButton.rx.tap,
+            profileViewEvent: tabView.profileButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.rankingList
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, rankingList in
+                zip(rankingList, owner.ranks).forEach { user, rankBoxLow in
+                    guard
+                        let nickName = rankBoxLow.arrangedSubviews[1] as? UILabel,
+                        let level = rankBoxLow.arrangedSubviews[2] as? UILabel
+                    else {
+                        return
+                    }
+                    nickName.text = user.fetchNickName()
+                    level.text = "\(user.fetchLevel())"
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.myRanking
+            .asDriver(onErrorJustReturn: 0)
+            .drive(with: self) { owner, myRanking in
+                guard let ranking = owner.myRank.arrangedSubviews[0] as? UILabel else { return }
+                ranking.text = "\(myRanking)위"
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner,_ in
+                owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
+            }
+            .disposed(by: disposeBag)
+    }
 }
 
 extension RankingViewController {
@@ -219,36 +261,6 @@ extension RankingViewController {
 }
 
 extension RankingViewController {
-    private func bindOutput() {
-        let input = RankingViewModel.Input(
-            viewWillAppear: rx.viewWillAppear,
-            qeusetViewEvent: tabView.questButton.rx.tap,
-            rankViewEvent: tabView.rankListButton.rx.tap,
-            profileViewEvent: tabView.profileButton.rx.tap)
-        let output = viewModel.transform(input: input)
-        
-        output.rankingList
-            .asDriver(onErrorJustReturn: [])
-            .drive(with: self) { owner, rankingList in
-                owner.setupRankingTable(rankingList: rankingList)
-            }
-            .disposed(by: disposeBag)
-        
-        output.myRanking
-            .asDriver(onErrorJustReturn: 0)
-            .drive(with: self) { owner, myRanking in
-                owner.setupMyRanking(myRanking: myRanking)
-            }
-            .disposed(by: disposeBag)
-        
-        output.errorMessage
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner,_ in
-                owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
-            }
-            .disposed(by: disposeBag)
-    }
-    
     private func setupProfile() {
         guard
             let nickName = myRank.arrangedSubviews[1] as? UILabel,
@@ -257,34 +269,14 @@ extension RankingViewController {
         else {
             return
         }
-        let user = UserInfo(nickName: userNickName,
-                            experience: UserDefaults.standard.integer(forKey: "experience"))
+        let experience = UserDefaults.standard.integer(forKey: "experience")
+        let user = UserInfo(nickName: userNickName, experience: experience)
         profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
         profileBoxView.updateExperienceBar(currentExp: user.fetchExperience() % 10)
         nickName.text = user.fetchNickName()
         level.text = "\(user.fetchLevel())"
     }
     
-    private func setupRankingTable(rankingList: [UserInfo]) {
-        zip(rankingList, ranks).forEach { user, rankBoxLow in
-            guard
-                let nickName = rankBoxLow.arrangedSubviews[1] as? UILabel,
-                let level = rankBoxLow.arrangedSubviews[2] as? UILabel
-            else {
-                return
-            }
-            nickName.text = user.fetchNickName()
-            level.text = "\(user.fetchLevel())"
-        }
-    }
-    
-    private func setupMyRanking(myRanking: Int) {
-        guard let ranking = myRank.arrangedSubviews[0] as? UILabel else { return }
-        ranking.text = "\(myRanking)위"
-    }
-}
-
-extension RankingViewController {
     private func makeRankView(rank: Int) -> UIView {
         switch rank{
         case 1, 2, 3:

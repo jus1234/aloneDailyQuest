@@ -11,7 +11,7 @@ import RxSwift
 protocol RankingUsecase {
     typealias Observable = RxSwift.Observable
     
-    func fetch() -> Observable<[UserInfo]>
+    func fetchRankingList() -> Observable<[UserInfo]>
     func fetchUserRanking(nickName: String) -> Observable<Int>
 }
 
@@ -24,7 +24,7 @@ final class DefaultRankingUsecase: RankingUsecase {
         self.repository = repository
     }
     
-    func fetch() -> Observable<[UserInfo]> {
+    func fetchRankingList() -> Observable<[UserInfo]> {
         return repository.fetchRanking()
     }
     

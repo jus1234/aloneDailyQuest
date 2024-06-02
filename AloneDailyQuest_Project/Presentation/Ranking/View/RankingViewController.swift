@@ -7,366 +7,39 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
+import SnapKit
+import Then
+
 class RankingViewController: UIViewController {
-    private let profileBoxView: ProfileBoxView = ProfileBoxView()
-    private let tabView: TabView = TabView()
-    private lazy var backgroundBottomImageView: UIImageView = {
-        var view = UIImageView()
-        
-        view.image = UIImage(named: "image_background_bottom")
-        return view
-    }()
-    private let titleText: UILabel = {
-        var label = UILabel()
-        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
-        
-        let attrString = NSAttributedString(
-            string: "월드랭킹",
-            attributes: [
-                NSAttributedString.Key.strokeColor: UIColor.black,
-                NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 30) ?? UIFont.systemFont(ofSize: 30),
-                NSAttributedString.Key.strokeWidth: -2.5
-            ]
-        )
-        label.attributedText = attrString
-        return label
-    }()
-    private let titleBackgroundText: UILabel = {
-        var label = UILabel()
-        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
-        
-        let attrString = NSAttributedString(
-            string: "월드랭킹",
-            attributes: [
-                NSAttributedString.Key.strokeColor: UIColor.black,
-                NSAttributedString.Key.foregroundColor: UIColor(red: 0.128, green: 0.345, blue: 0.345, alpha: 1),
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 30) ?? UIFont.systemFont(ofSize: 30),
-                NSAttributedString.Key.strokeWidth: -2.5
-            ]
-        )
-        label.attributedText = attrString
-        return label
-    }()
-    private let rankingLabel: UILabel = {
-        var label = UILabel()
-        label.text = "랭킹"
-        label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont(name: "DungGeunMo", size: 14)
-        return label
-    }()
-    private let nickNameLabel: UILabel = {
-        var label = UILabel()
-        label.text = "닉네임"
-        label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont(name: "DungGeunMo", size: 14)
-        return label
-    }()
-    private let levelLabel: UILabel = {
-        var label = UILabel()
-        label.text = "레벨"
-        label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont(name: "DungGeunMo", size: 14)
-        return label
-    }()
-    private var rank1: UIStackView = {
-        var rankImg = UIImage(named: "img_rank_first")
-        var rankImgView = UIImageView(image: rankImg)
-        rankImgView.translatesAutoresizingMaskIntoConstraints = false
-        rankImgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        var imageStackView = UIStackView()
-        imageStackView.translatesAutoresizingMaskIntoConstraints = false
-        imageStackView.addSubview(rankImgView)
-        imageStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        rankImgView.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 35).isActive = true
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [imageStackView, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    private var rank2: UIStackView = {
-        var rankImg = UIImage(named: "img_rank_second")
-        var rankImgView = UIImageView(image: rankImg)
-        rankImgView.translatesAutoresizingMaskIntoConstraints = false
-        rankImgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        var imageStackView = UIStackView()
-        imageStackView.translatesAutoresizingMaskIntoConstraints = false
-        imageStackView.addSubview(rankImgView)
-        imageStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        rankImgView.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 35).isActive = true
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [imageStackView, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        stack.backgroundColor = UIColor(hexCode: "FEE5C8")
-        return stack
-    }()
-    private var rank3: UIStackView = {
-        var rankImg = UIImage(named: "img_rank_third")
-        var rankImgView = UIImageView(image: rankImg)
-        rankImgView.translatesAutoresizingMaskIntoConstraints = false
-        rankImgView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        var imageStackView = UIStackView()
-        imageStackView.translatesAutoresizingMaskIntoConstraints = false
-        imageStackView.addSubview(rankImgView)
-        imageStackView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        rankImgView.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 35).isActive = true
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [imageStackView, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    private var rank4: UIStackView = {
-        var rank = UILabel()
-        rank.text = "4위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        stack.backgroundColor = UIColor(hexCode: "FEE5C8")
-        return stack
-    }()
-    private var rank5: UIStackView = {
-        var rank = UILabel()
-        rank.text = "5위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    private var rank6: UIStackView = {
-        var rank = UILabel()
-        rank.text = "6위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        stack.backgroundColor = UIColor(hexCode: "FEE5C8")
-        return stack
-    }()
-    private var rank7: UIStackView = {
-        var rank = UILabel()
-        rank.text = "7위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    private var rank8: UIStackView = {
-        var rank = UILabel()
-        rank.text = "8위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        stack.backgroundColor = UIColor(hexCode: "FEE5C8")
-        return stack
-    }()
-    private var rank9: UIStackView = {
-        var rank = UILabel()
-        rank.text = "9위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    private var rank10: UIStackView = {
-        var rank = UILabel()
-        rank.text = "10위"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 14)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 14)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 14)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        stack.backgroundColor = UIColor(hexCode: "FEE5C8")
-        return stack
-    }()
-    private lazy var topStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [rankingLabel, nickNameLabel, levelLabel])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    private lazy var ranks = [rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8, rank9, rank10,]
+    private let profileBoxView = ProfileBoxView()
+    private let tabView = TabView()
+    private let backgroundBottomImageView = UIImageView()
+    private let titleText = UILabel()
+    private let titleBackgroundText = UILabel()
+    private let rankingLabel = UILabel()
+    private let nickNameLabel = UILabel()
+    private let levelLabel = UILabel()
+    private var rankFirst = UIStackView()
+    private var rankSecond = UIStackView()
+    private var rankThird = UIStackView()
+    private var rankFourth = UIStackView()
+    private var rankFifth = UIStackView()
+    private var rankSixth = UIStackView()
+    private var rankSeventh = UIStackView()
+    private var rankEighth = UIStackView()
+    private var rankNinth = UIStackView()
+    private var rankTenth = UIStackView()
+    private lazy var topStackView = UIStackView()
+    private lazy var centerStackView = UIStackView()
+    private lazy var myRank = UIStackView()
+    private lazy var backgroundView = UIImageView()
     
-    private lazy var centerStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: ranks)
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.alignment = .bottom
-        return stack
-    }()
-    private lazy var myRank: UIStackView = {
-        var rank = UILabel()
-        rank.text = "-"
-        rank.textColor = .black
-        rank.font = UIFont(name: "DungGeunMo", size: 25)
-        rank.textAlignment = .center
-        var nickName = UILabel()
-        nickName.text = "-"
-        nickName.textColor = .black
-        nickName.font = UIFont(name: "DungGeunMo", size: 25)
-        nickName.textAlignment = .center
-        var level = UILabel()
-        level.text = "-"
-        level.textColor = .black
-        level.font = UIFont(name: "DungGeunMo", size: 25)
-        level.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [rank, nickName, level])
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        return stack
-    }()
-    lazy var backgroundView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "img_background_history")
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
+    private lazy var ranks = [rankFirst, rankSecond, rankThird, rankFourth, rankFifth, rankSixth, rankSeventh, rankEighth, rankNinth, rankTenth]
     
     private let viewModel: RankingViewModel
-    private var viewDidLoadEvent: Observable<Void> = Observable(())
-    private lazy var input = RankingViewModel.Input(viewDidLoad: viewDidLoadEvent,
-                                                    qeusetViewEvent: tabView.qeusetViewEvent,
-                                                    rankViewEvent: tabView.rankiViewEvent, 
-                                                    profileViewEvent: tabView.profileViewEvent)
-    private lazy var output = viewModel.transform(input: input)
+    private var disposeBag = DisposeBag()
     
     init(viewModel: RankingViewModel) {
         self.viewModel = viewModel
@@ -379,142 +52,270 @@ class RankingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        addViews()
-        autoLayoutConstraints()
+        setStyle()
+        setLayout()
         bindOutput()
         setupProfile()
-        input.viewDidLoad.value = ()
     }
     
 }
 
 extension RankingViewController {
     private func bindOutput() {
-        output.rankingList.bind { [weak self] rankingList in
-            self?.setupRankingTable(rankingList: rankingList)
+        let input = RankingViewModel.Input(
+            viewWillAppear: rx.viewWillAppear,
+            qeusetViewEvent: tabView.questButton.rx.tap,
+            rankViewEvent: tabView.rankListButton.rx.tap,
+            profileViewEvent: tabView.profileButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.rankingList
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, rankingList in
+                zip(rankingList, owner.ranks).forEach { user, rankBoxLow in
+                    guard
+                        let nickName = rankBoxLow.arrangedSubviews[1] as? UILabel,
+                        let level = rankBoxLow.arrangedSubviews[2] as? UILabel
+                    else {
+                        return
+                    }
+                    nickName.text = user.fetchNickName()
+                    level.text = "\(user.fetchLevel())"
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        output.myRanking
+            .asDriver(onErrorJustReturn: 0)
+            .drive(with: self) { owner, myRanking in
+                guard let ranking = owner.myRank.arrangedSubviews[0] as? UILabel else { return }
+                ranking.text = "\(myRanking)위"
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner,_ in
+                owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension RankingViewController {
+    private func setStyle() {
+        view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
+        
+        backgroundBottomImageView.do { $0.image = UIImage(named: "image_background_bottom") }
+        
+        titleText.do {
+            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+            $0.textAlignment = .center
+            $0.attributedText = makeAttributedTitle(title: "월드랭킹")
         }
-        output.myRanking.bind { [weak self] myRanking in
-            self?.setupMyRanking(myRanking: myRanking)
+        
+        titleBackgroundText.do {
+            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+            $0.textAlignment = .center
+            $0.attributedText = makeAttributedTitleBackground(title: "월드랭킹")
         }
-        output.errorMessage.bind { [weak self] errorMessage in
-            self?.completedAlert(message: "네트워크 오류가 발생했습니다.")
+        
+        rankingLabel.do {
+            $0.text = "랭킹"
+            $0.textColor = .black
+            $0.textAlignment = .center
+            $0.font = UIFont(name: "DungGeunMo", size: 14)
+        }
+        
+        nickNameLabel.do {
+            $0.text = "닉네임"
+            $0.textColor = .black
+            $0.textAlignment = .center
+            $0.font = UIFont(name: "DungGeunMo", size: 14)
+        }
+        
+        levelLabel.do {
+            $0.text = "레벨"
+            $0.textColor = .black
+            $0.textAlignment = .center
+            $0.font = UIFont(name: "DungGeunMo", size: 14)
+        }
+        
+        topStackView.do {
+            $0.axis = .horizontal
+            $0.distribution = .fillEqually
+            $0.alignment = .center
+        }
+        
+        centerStackView.do {
+            $0.axis = .vertical
+            $0.distribution = .fillEqually
+            $0.alignment = .bottom
+        }
+        
+        backgroundView.do {
+            $0.image = UIImage(named: "img_background_history")
+            $0.contentMode = .scaleToFill
+        }
+        
+        zip(ranks, 1...10).forEach { rankStackView, ranking in
+            rankStackView.do {
+                $0.addArrangedSubviews([makeRankView(rank: ranking), makeLabel(text: "-", size: 14), makeLabel(text: "-", size: 14)])
+                $0.axis = .horizontal
+                $0.distribution = .fillEqually
+                $0.alignment = .center
+                if ranking % 2 == 0 {
+                    $0.backgroundColor =  UIColor(hexCode: "FEE5C8")
+                }
+            }
+        }
+        
+        myRank.do {
+            $0.addArrangedSubviews([makeLabel(text: "-", size: 25), makeLabel(text: "-", size: 25), makeLabel(text: "-", size: 25)])
+            $0.axis = .horizontal
+            $0.distribution = .fillEqually
+            $0.alignment = .center
         }
     }
     
+    private func setLayout() {
+        view.addSubviews([titleBackgroundText, titleText, backgroundBottomImageView,
+                          profileBoxView, backgroundView, topStackView,
+                          centerStackView, myRank, tabView])
+        topStackView.addArrangedSubviews([rankingLabel, nickNameLabel, levelLabel])
+        centerStackView.addArrangedSubviews(ranks)
+        
+        titleText.snp.makeConstraints {
+            $0.width.equalTo(123)
+            $0.height.equalTo(33)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(63)
+        }
+        
+        titleBackgroundText.snp.makeConstraints {
+            $0.width.equalTo(123)
+            $0.height.equalTo(33)
+            $0.centerX.equalToSuperview().inset(3)
+            $0.top.equalToSuperview().inset(66)
+        }
+        
+        profileBoxView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(titleText.snp.bottom).offset(20)
+            $0.width.equalTo(500)
+            $0.height.equalTo(104)
+        }
+        
+        backgroundView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(profileBoxView.snp.bottom).offset(20)
+            $0.width.equalTo(374)
+            $0.height.equalTo(404)
+        }
+        
+        backgroundBottomImageView.snp.makeConstraints {
+            $0.width.equalTo(430)
+            $0.height.equalTo(188)
+            $0.bottom.equalToSuperview()
+        }
+        
+        tabView.snp.makeConstraints {
+            $0.height.equalTo(146)
+            $0.bottom.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
+        
+        topStackView.snp.makeConstraints {
+            $0.top.equalTo(backgroundView.snp.top)
+            $0.leading.equalTo(backgroundView.snp.leading)
+            $0.trailing.equalTo(backgroundView.snp.trailing)
+            $0.height.equalTo(44)
+        }
+        
+        centerStackView.snp.makeConstraints {
+            $0.top.equalTo(topStackView.snp.bottom)
+            $0.leading.equalTo(backgroundView.snp.leading)
+            $0.trailing.equalTo(backgroundView.snp.trailing)
+            $0.bottom.equalTo(backgroundView.snp.bottom).offset(-65)
+        }
+        
+        ranks.forEach {
+            $0.snp.makeConstraints {
+                $0.leading.equalToSuperview().inset(10)
+                $0.trailing.equalToSuperview().inset(4)
+            }
+        }
+        
+        myRank.snp.makeConstraints {
+            $0.top.equalTo(centerStackView.snp.bottom).offset(15)
+            $0.leading.equalTo(backgroundView.snp.leading)
+            $0.trailing.equalTo(backgroundView.snp.trailing)
+            $0.bottom.equalTo(backgroundView.snp.bottom).offset(-20)
+        }
+    }
+}
+
+extension RankingViewController {
     private func setupProfile() {
         guard
             let nickName = myRank.arrangedSubviews[1] as? UILabel,
-            let level = myRank.arrangedSubviews[2] as? UILabel
+            let level = myRank.arrangedSubviews[2] as? UILabel,
+            let userNickName = UserDefaults.standard.string(forKey: "nickName")
         else {
             return
         }
-        let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName")!,
-                 experience: UserDefaults.standard.integer(forKey: "experience"))
+        let experience = UserDefaults.standard.integer(forKey: "experience")
+        let user = UserInfo(nickName: userNickName, experience: experience)
         profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
         profileBoxView.updateExperienceBar(currentExp: user.fetchExperience() % 10)
         nickName.text = user.fetchNickName()
         level.text = "\(user.fetchLevel())"
     }
     
-    private func setupRankingTable(rankingList: [UserInfo]) {
-        for (user, rankBoxLow) in zip(rankingList, ranks) {
-            guard
-                let nickName = rankBoxLow.arrangedSubviews[1] as? UILabel,
-                let level = rankBoxLow.arrangedSubviews[2] as? UILabel
-            else {
-                return
-            }
-            nickName.text = user.fetchNickName()
-            level.text = "\(user.fetchLevel())"
+    private func makeRankView(rank: Int) -> UIView {
+        switch rank{
+        case 1, 2, 3:
+            return makeRankingImage(rank: rank)
+        default:
+            return makeLabel(text: "\(rank)위", size: 14)
         }
     }
     
-    private func setupMyRanking(myRanking: Int) {
-        guard 
-            let ranking = myRank.arrangedSubviews[0] as? UILabel
-        else {
-            return
-        }
-        ranking.text = "\(myRanking)위"
-    }
-}
-
-extension RankingViewController {
-    func configureUI() {
-        view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
+    private func makeLabel(text: String, size: Int) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.textColor = .black
+        label.font = UIFont(name: "DungGeunMo", size: CGFloat(size))
+        label.textAlignment = .center
+        return label
     }
     
-    func addViews() {
-        view.addSubview(titleBackgroundText)
-        view.addSubview(titleText)
-        view.addSubview(backgroundBottomImageView)
-        view.addSubview(profileBoxView)
-        view.addSubview(backgroundView)
-        view.addSubview(topStackView)
-        view.addSubview(centerStackView)
-        view.addSubview(myRank)
-        view.addSubview(tabView)
+    private func makeRankingImage(rank: Int) -> UIStackView {
+        let rankImg = UIImage(named: makeRankerImage(rank: rank))
+        let rankImgView = UIImageView(image: rankImg)
+        let imageStackView = UIStackView()
+        imageStackView.addSubview(rankImgView)
+        imageStackView.snp.makeConstraints { $0.height.equalTo(20) }
+        rankImgView.snp.makeConstraints {
+            $0.width.equalTo(50)
+            $0.leading.equalToSuperview().inset(35)
+        }
+        return imageStackView
     }
     
-    func autoLayoutConstraints() {
-        profileBoxView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
-        tabView.translatesAutoresizingMaskIntoConstraints = false
-        titleText.translatesAutoresizingMaskIntoConstraints = false
-        titleBackgroundText.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
-        centerStackView.translatesAutoresizingMaskIntoConstraints = false
-        myRank.translatesAutoresizingMaskIntoConstraints = false
-        
-        profileBoxView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileBoxView.topAnchor.constraint(equalTo: titleText.bottomAnchor, constant: 20).isActive = true
-        profileBoxView.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        profileBoxView.heightAnchor.constraint(equalToConstant: 104).isActive = true
-        
-        titleText.widthAnchor.constraint(equalToConstant: 123).isActive = true
-        titleText.heightAnchor.constraint(equalToConstant: 33).isActive = true
-        titleText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        titleText.topAnchor.constraint(equalTo: view.topAnchor, constant: 63).isActive = true
-        
-        titleBackgroundText.widthAnchor.constraint(equalToConstant: 123).isActive = true
-        titleBackgroundText.heightAnchor.constraint(equalToConstant: 33).isActive = true
-        titleBackgroundText.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -3).isActive = true
-        titleBackgroundText.topAnchor.constraint(equalTo: view.topAnchor, constant: 66).isActive = true
-        
-        backgroundView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        backgroundView.topAnchor.constraint(equalTo: profileBoxView.bottomAnchor, constant: 20).isActive = true
-        backgroundView.widthAnchor.constraint(equalToConstant: 374).isActive = true
-        backgroundView.heightAnchor.constraint(equalToConstant: 404).isActive = true
-        
-        backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
-        backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
-        backgroundBottomImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        
-        tabView.heightAnchor.constraint(equalToConstant: 146).isActive = true
-        tabView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-        tabView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        tabView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        
-        topStackView.topAnchor.constraint(equalTo: backgroundView.topAnchor).isActive = true
-        topStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
-        topStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        topStackView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
-        centerStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor).isActive = true
-        centerStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 6).isActive = true
-        centerStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        centerStackView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -65).isActive = true
-        
-        ranks.forEach { rank in
-            rank.leadingAnchor.constraint(equalTo: centerStackView.leadingAnchor, constant: 1).isActive = true
-            rank.trailingAnchor.constraint(equalTo: centerStackView.trailingAnchor, constant: -4).isActive = true
+    private func makeRankerImage(rank: Int) -> String {
+        return switch rank {
+        case 1:
+            "img_rank_first"
+        case 2:
+            "img_rank_second"
+        default:
+            "img_rank_third"
         }
-        
-        myRank.topAnchor.constraint(equalTo: centerStackView.bottomAnchor, constant: 15).isActive = true
-        myRank.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor).isActive = true
-        myRank.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor).isActive = true
-        myRank.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -20).isActive = true
     }
 }

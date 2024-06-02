@@ -7,26 +7,29 @@
 
 import Foundation
 
-@MainActor
+import RxCocoa
+import RxSwift
+
 final class RankingViewModel: ViewModel {
+    typealias Observable = RxSwift.Observable
+    
+    private var disposeBag = DisposeBag()
+    
     struct Input {
-        var viewDidLoad: Observable<Void>
-        var qeusetViewEvent: Observable<Void>
-        var rankViewEvent: Observable<Void>
-        var profileViewEvent: Observable<Void>
+        var viewWillAppear: ControlEvent<Bool>
+        var qeusetViewEvent: ControlEvent<Void>
+        var rankViewEvent: ControlEvent<Void>
+        var profileViewEvent: ControlEvent<Void>
     }
     
     struct Output {
-        var rankingList: Observable<[UserInfo]>
-        var myRanking: Observable<Int>
-        var errorMessage: Observable<String>
+        var rankingList: BehaviorRelay<[UserInfo]>
+        var myRanking: PublishRelay<Int>
+        var errorMessage: PublishRelay<String>
     }
     
     private let usecase: RankingUsecase
     private let coordinator: RankingCoordinator
-    private var rankingList: Observable<[UserInfo]> = Observable([])
-    private var myRanking: Observable<Int> = Observable(0)
-    private var errorMessage: Observable<String> = Observable("")
     
     init(usecase: RankingUsecase, coordinator: RankingCoordinator) {
         self.usecase = usecase
@@ -34,36 +37,49 @@ final class RankingViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewDidLoad.bind { [weak self] _ in
-            self?.viewDidLoad()
-        }
-        input.qeusetViewEvent.bind { [weak self] _ in
-            self?.coordinator.finish(to: .quest)
-        }
-        input.rankViewEvent.bind { _ in
-            return
-        }
-        input.profileViewEvent.bind { [weak self] _ in
-            self?.coordinator.finish(to: .profile)
-        }
-        return .init(rankingList: rankingList,
-                     myRanking: myRanking,
-                     errorMessage: errorMessage)
+        let output = Output(
+            rankingList: BehaviorRelay(value: [UserInfo]()),
+            myRanking: PublishRelay(),
+            errorMessage: PublishRelay())
+        
+        input.viewWillAppear
+            .flatMapLatest { [weak self] _ -> Observable<([UserInfo], Int)> in
+                guard 
+                    let self = self,
+                    let nickName = UserDefaults.standard.string(forKey: "nickName")
+                else {
+                    return Observable.error(UserDefaultsError.notFound)
+                }
+                return Observable.zip(
+                    self.usecase.fetchRankingList(),
+                    self.usecase.fetchUserRanking(nickName: nickName))
+            }
+            .subscribe(onNext: { rankingList, myRanking in
+                output.rankingList.accept(rankingList)
+                output.myRanking.accept(myRanking)
+            }, onError: { error in
+                output.errorMessage.accept(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
+        
+        input.qeusetViewEvent
+            .subscribe(with: self) { owner, _ in
+                owner.coordinator.finish(to: .quest)
+            }
+            .disposed(by: disposeBag)
+        
+        input.rankViewEvent
+            .subscribe(with: self) { owner, _ in
+                owner.coordinator.finish(to: .ranking)
+            }
+            .disposed(by: disposeBag)
+        
+        input.profileViewEvent
+            .subscribe(with: self) { owner, _ in
+                owner.coordinator.finish(to: .profile)
+            }
+            .disposed(by: disposeBag)
+        
+        return output
     }
-    
-    private func viewDidLoad() {
-        Task {
-            await fetchRanking()
-        }
-    }
-    
-    private func fetchRanking() async {
-        do {
-            rankingList.value = try await usecase.fetch()
-            myRanking.value = try await usecase.fetchUserRanking(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "")
-        } catch {
-            errorMessage.value = error.localizedDescription
-        }
-    }
-    
 }

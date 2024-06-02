@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import RxSwift
 
 final class DefaultRankingRepository: RankingRepository {
+    typealias Observable = RxSwift.Observable
+    
     private let networkService: NetworkService
     private let decorder: JSONDecoder = JSONDecoder()
     
@@ -15,13 +18,27 @@ final class DefaultRankingRepository: RankingRepository {
         self.networkService = networkService
     }
     
-    func fetchRanking() async throws -> [UserInfo] {
-        let data = try await networkService.request(.ranking)
-        return try decorder.decode([UserInfoDTO].self, from: data).map { $0.toEntity() }
+    func fetchRanking() -> Observable<[UserInfo]> {
+        return networkService.requestObservable(.ranking)
+            .flatMap { data -> Observable<[UserInfo]> in
+                do {
+                    let rankList = try self.decorder.decode([UserInfoDTO].self, from: data).map { $0.toEntity() }
+                    return Observable.just(rankList)
+                } catch {
+                    return Observable.error(NetworkError.dataError)
+                }
+            }
     }
     
-    func fetchUserRanking(nickName: String) async throws -> Int {
-        let data = try await networkService.request(.myRanking(userId: UserIdRequestDTO(userId: nickName)))
-        return try decorder.decode(MyRankingResponseDTO.self, from: data).rank
+    func fetchUserRanking(nickName: String) -> Observable<Int> {
+        return networkService.requestObservable(.myRanking(userId: UserIdRequestDTO(userId: nickName)))
+            .flatMap { data in
+                do {
+                    let myRank = try self.decorder.decode(MyRankingResponseDTO.self, from: data).rank
+                    return Observable.just(myRank)
+                } catch {
+                    return Observable.error(NetworkError.dataError)
+                }
+            }
     }
 }

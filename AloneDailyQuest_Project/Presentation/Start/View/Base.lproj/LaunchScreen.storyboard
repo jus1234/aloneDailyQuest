@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,8 +15,28 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_text" translatesAutoresizingMaskIntoConstraints="NO" id="XKj-iB-3UD">
+                                <rect key="frame" x="95" y="179" width="203" height="83"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="83" id="1oe-bo-uW6"/>
+                                    <constraint firstAttribute="width" constant="203" id="vrb-cm-zPU"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_background_bottom" translatesAutoresizingMaskIntoConstraints="NO" id="eNO-HU-DrG">
+                                <rect key="frame" x="0.0" y="672" width="393" height="188"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.2196078431372549" green="0.78431372549019607" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eNO-HU-DrG" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2i1-bo-xK7"/>
+                            <constraint firstAttribute="trailing" secondItem="eNO-HU-DrG" secondAttribute="trailing" id="aig-ar-LTx"/>
+                            <constraint firstItem="XKj-iB-3UD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="120" id="bCt-Md-qfi"/>
+                            <constraint firstAttribute="bottom" secondItem="eNO-HU-DrG" secondAttribute="bottom" constant="-8" id="dym-MI-sNV"/>
+                            <constraint firstItem="XKj-iB-3UD" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lvP-Bv-ELk"/>
+                            <constraint firstItem="eNO-HU-DrG" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qhr-fu-f09"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +44,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="image_background_bottom" width="429" height="188"/>
+        <image name="logo_text" width="609" height="249"/>
+    </resources>
 </document>

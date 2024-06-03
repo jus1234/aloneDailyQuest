@@ -11,8 +11,6 @@ import RxCocoa
 import RxSwift
 
 final class RankingViewModel: ViewModel {
-    typealias Observable = RxSwift.Observable
-    
     private var disposeBag = DisposeBag()
     
     struct Input {
@@ -43,14 +41,14 @@ final class RankingViewModel: ViewModel {
             errorMessage: PublishRelay())
         
         input.viewWillAppear
-            .flatMapLatest { [weak self] _ -> Observable<([UserInfo], Int)> in
-                guard 
+            .flatMapLatest { [weak self] _ -> Single<([UserInfo], Int)> in
+                guard
                     let self = self,
                     let nickName = UserDefaults.standard.string(forKey: "nickName")
                 else {
-                    return Observable.error(UserDefaultsError.notFound)
+                    return Single.error(UserDefaultsError.notFound)
                 }
-                return Observable.zip(
+                return Single.zip(
                     self.usecase.fetchRankingList(),
                     self.usecase.fetchUserRanking(nickName: nickName))
             }

@@ -27,6 +27,7 @@
 		BD22DC082BF1E2C500416D35 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22DC072BF1E2C500416D35 /* Coordinator.swift */; };
 		BD22DC0A2BF1E31F00416D35 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22DC092BF1E31F00416D35 /* AppCoordinator.swift */; };
 		BD5C26082C0C6AC9005599B2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = BD5C26072C0C6AC9005599B2 /* Lottie */; };
+		BD5C260A2C0CE6B1005599B2 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C26092C0CE6B0005599B2 /* CoreDataError.swift */; };
 		BDA4C62D2BFB29770054DF33 /* NoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */; };
 		BDA4C62F2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */; };
 		BDA4C6322BFB2A850054DF33 /* NoticeVewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */; };
@@ -132,6 +133,7 @@
 		BD1035C92BF61316001EBF0A /* DefaultRankingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRankingCoordinator.swift; sourceTree = "<group>"; };
 		BD22DC072BF1E2C500416D35 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		BD22DC092BF1E31F00416D35 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		BD5C26092C0CE6B0005599B2 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 		BDA4C62C2BFB29770054DF33 /* NoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCoordinator.swift; sourceTree = "<group>"; };
 		BDA4C62E2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoticeCoordinator.swift; sourceTree = "<group>"; };
 		BDA4C6312BFB2A850054DF33 /* NoticeVewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVewModel.swift; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 				BDB4A0632BEB40BD0076E564 /* ViewModel.swift */,
 				BD1035B22BF5E162001EBF0A /* CoordinatorCase.swift */,
 				BDAE998E2C0C3DE8009898E6 /* UserDefaultsError.swift */,
+				BD5C26092C0CE6B0005599B2 /* CoreDataError.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -830,6 +833,7 @@
 				994C590F2B50C25B00D5808B /* DetailView.swift in Sources */,
 				BDA4C62F2BFB29D20054DF33 /* DefaultNoticeCoordinator.swift in Sources */,
 				C1F3D1272BEE3E9A00EC1B26 /* DetailViewModel.swift in Sources */,
+				BD5C260A2C0CE6B1005599B2 /* CoreDataError.swift in Sources */,
 				C1EB515D2B6B77AC00744F64 /* UIViewController+.swift in Sources */,
 				C174B4942B2D4D5600692447 /* UIView+.swift in Sources */,
 				BDB4A0462BEA498E0076E564 /* AccountRepository.swift in Sources */,

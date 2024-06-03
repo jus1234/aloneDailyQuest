@@ -31,5 +31,46 @@ extension QuestData {
 }
 
 extension QuestData : Identifiable {
-
+    func toDomain() -> QuestInfo {
+        return QuestInfo(id: self.id,
+                         quest: self.quest ?? "",
+                         date: self.date ?? Date(),
+                         selectedDate: [self.isMonday,
+                                        self.isTuesday,
+                                        self.isWednesday,
+                                        self.isThursday,
+                                        self.isFriday,
+                                        self.isSaturday,
+                                        self.isSunday],
+                         repeatDay: self.repeatDay ?? "",
+                         completed: self.completed)
+    }
+    
+    func make(from questInfo: QuestInfo) {
+        self.id = UUID()
+        self.quest = questInfo.quest
+        self.date = Date()
+        self.isMonday = questInfo.selectedDate[0]
+        self.isTuesday = questInfo.selectedDate[1]
+        self.isWednesday = questInfo.selectedDate[2]
+        self.isThursday = questInfo.selectedDate[3]
+        self.isFriday = questInfo.selectedDate[4]
+        self.isSaturday = questInfo.selectedDate[5]
+        self.isSunday = questInfo.selectedDate[6]
+        self.repeatDay = questInfo.repeatDay
+        self.completed = questInfo.completed
+    }
+    
+    func update(from questInfo: QuestInfo) {
+        self.quest = questInfo.quest
+        self.isMonday = questInfo.selectedDate[0]
+        self.isTuesday = questInfo.selectedDate[1]
+        self.isWednesday = questInfo.selectedDate[2]
+        self.isThursday = questInfo.selectedDate[3]
+        self.isFriday = questInfo.selectedDate[4]
+        self.isSaturday = questInfo.selectedDate[5]
+        self.isSunday = questInfo.selectedDate[6]
+        self.repeatDay = questInfo.repeatDay
+        self.completed = questInfo.completed
+    }
 }

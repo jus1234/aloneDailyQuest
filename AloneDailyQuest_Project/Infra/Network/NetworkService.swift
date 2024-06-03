@@ -18,10 +18,8 @@ enum NetworkError: Error {
 }
 
 protocol NetworkService {
-    typealias Observable = RxSwift.Observable
-    
     func request(_ api: API) async throws -> Data
-    func requestObservable(_ api: API) -> Observable<Data>
+    func request(_ api: API) -> Single<Data>
 }
 
 extension NetworkService {
@@ -39,8 +37,6 @@ extension NetworkService {
 }
 
 final class DefaultNetworkService: NetworkService {
-    typealias Observable = RxSwift.Observable
-    
     func request(_ api: API) async throws -> Data {
         guard let urlRequest = api.toURLRequest() else {
             throw NetworkError.urlRequestBuildError
@@ -57,13 +53,13 @@ final class DefaultNetworkService: NetworkService {
         }
     }
     
-    func requestObservable(_ api: API) -> Observable<Data> {
-        return Observable.create { observer in
+    func request(_ api: API) -> Single<Data> {
+        return Single.create { observer in
             Task {
                 do {
-                    try await observer.onNext(self.request(api))
+                    observer(.success(try await self.request(api)))
                 } catch {
-                    observer.onError(error)
+                    observer(.failure(error))
                 }
             }
             return Disposables.create()

@@ -25,7 +25,7 @@ protocol QuestUsecase {
     func fetchUserInfo(userId: String) -> Single<UserInfo>
     func fetchExperience(userId: String) -> Single<Int>
     func addExperience(userId: String, experience: Int) -> Single<Int>
-    func resetDailyQuests() -> Maybe<Void>
+    func resetDailyQuests() -> Single<Void>
     func isTodayExperienceAcquisitionMax() -> Single<Void>
 }
 
@@ -106,8 +106,8 @@ final class DefaultQuestUsecase: QuestUsecase {
         }
     }
     
-    func resetDailyQuests() -> Maybe<Void> {
-        return Maybe.create { [weak self] observer  in
+    func resetDailyQuests() -> Single<Void> {
+        return Single.create { [weak self] observer  in
             do {
                 if UserDefaults.standard.string(forKey: "lastVisitDate") == nil {
                     UserDefaults.standard.setValue(Date().yesterdayString(with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
@@ -120,14 +120,15 @@ final class DefaultQuestUsecase: QuestUsecase {
                     UserDefaults.standard.set(0, forKey: "todayExperience")
                     self?.repository.resetDailyQuests()
                         .subscribe(onError: { error in
-                            observer(.completed)
+                            observer(.failure(error))
                         })
                         .disposed(by: DisposeBag())
+                    return Disposables.create()
                 }
                 observer(.success(()))
             } catch {
-                observer(.error(error))
-            }           
+                observer(.failure(error))
+            }
             return Disposables.create()
         }
     }

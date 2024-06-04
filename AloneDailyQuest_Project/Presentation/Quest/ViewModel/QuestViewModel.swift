@@ -7,31 +7,36 @@
 
 import Foundation
 
-@MainActor
+import RxSwift
+import RxCocoa
+
 final class QuestViewModel: ViewModel {
+    private var disposeBag = DisposeBag()
+    
     struct Input {
-        var viewWillAppear: Observable<Void>
-        var deleteTrigger: Observable<QuestInfo?>
-        var qeusetViewEvent: Observable<Void>
-        var rankViewEvent: Observable<Void>
-        var profileViewEvent: Observable<Void>
-        var didPlusButtonTap: Observable<Void>
-        var updateQuestEvent: Observable<QuestInfo>
-        var completeQuestEvent: Observable<QuestInfo>
+        var viewWillAppear: ControlEvent<Bool>
+        var deleteQuestEvent: PublishRelay<QuestInfo?>
+        var qeusetViewEvent: ControlEvent<Void>
+        var rankViewEvent: ControlEvent<Void>
+        var profileViewEvent: ControlEvent<Void>
+        var didPlusButtonTap: ControlEvent<Void>
+        var updateQuestEvent: PublishRelay<QuestInfo>
+        var completeQuestEvent: PublishRelay<QuestInfo>
     }
     
     struct Output {
-        var questList: Observable<[QuestInfo]>
-        var errorMessage: Observable<String>
-        var userInfo: Observable<UserInfo?>
+        var questList: PublishRelay<[QuestInfo]>
+        var errorMessage: PublishRelay<String>
+        var userInfo: PublishRelay<UserInfo?>
     }
     
     private let usecase: QuestUsecase
     private let coordinator: QuestCoordinator
-    private let questList: Observable<[QuestInfo]> = Observable([])
-    private let errorMessage: Observable<String> = Observable("")
-    private let user: Observable<UserInfo?> = Observable(nil)
-
+    
+    private let output = Output(
+        questList: PublishRelay(),
+        errorMessage: PublishRelay(),
+        userInfo: PublishRelay())
     
     init(usecase: QuestUsecase, coordinator: QuestCoordinator) {
         self.usecase = usecase
@@ -40,86 +45,109 @@ final class QuestViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppear.bind { [weak self] _ in
-            self?.viewWillAppear()
-        }
-        input.updateQuestEvent.bind { [weak self] quest in
-            self?.coordinator.connectDetailCoordinator(quest: quest)
-        }
-        input.deleteTrigger.bind { [weak self] quest in
-            self?.deleteQuest(quest: quest!)
-        }
-        input.completeQuestEvent.bind { [weak self] quest in
-            self?.updateQuest(quest: quest)
-        }
-        input.qeusetViewEvent.bind { _ in
-            return
-        }
-        input.rankViewEvent.bind { [weak self] _ in
-            self?.coordinator.finish(to: .ranking)
-        }
-        input.profileViewEvent.bind { [weak self] _ in
-            self?.coordinator.finish(to: .profile)
-        }
-        input.didPlusButtonTap.bind { [weak self] _ in
-            self?.coordinator.connectDetailCoordinator(quest: nil)
-        }
-        return .init(questList: self.questList,
-                     errorMessage: self.errorMessage,
-                     userInfo: self.user)
-    }
-    
-    private func viewWillAppear() {
-        Task {
-            do {
-                try await usecase.updateDailyQuest()
-                try await fetchQuest()
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    func deleteQuest(quest: QuestInfo) {
-        Task {
-            do {
-                try await usecase.deleteQuest(questInfo: quest)
-                questList.value = try await usecase.readQuest()
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    func updateQuest(quest: QuestInfo) {
-        Task {
-            do {
-                guard !usecase.isTodayExperienceAcquisitionMax() else {
-                    errorMessage.value = "일일 최대 획득 경험치를 초과했습니다."
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateDailyQuest()
+            })
+            .disposed(by: disposeBag)
+        
+        input.deleteQuestEvent
+            .subscribe(onNext: { [weak self] quest in
+                guard let quest else {
                     return
                 }
-                try await usecase.updateQuest(newQuestInfo: quest)
-                questList.value = try await usecase.readQuest()
-                try await updateExperience(experienceData: 1)
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
+                self?.delete(quest: quest)
+                self?.fetchQuests()
+            })
+            .disposed(by: disposeBag)
+        
+        input.updateQuestEvent
+            .subscribe(onNext: { [weak self] quest in
+                self?.coordinator.connectDetailCoordinator(quest: quest)
+            })
+            .disposed(by: disposeBag)
+        
+        input.completeQuestEvent
+            .subscribe(onNext: { [weak self] quest in
+                guard let self, let nickName = UserDefaults.standard.string(forKey: "nickName") else {
+                    return
+                }
+                usecase.isTodayExperienceAcquisitionMax()
+                    .subscribe(onSuccess: {
+                        self.update(quest: quest)
+                        self.addExperience(nickName: nickName)
+                        self.fetchQuests()
+                    }, onFailure: {_ in 
+                        self.output.errorMessage.accept("일일 최대 획득 경험치를 초과했습니다.")
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.rankViewEvent
+            .subscribe(onNext: { [weak self] _ in
+                self?.coordinator.finish(to: .ranking)
+            })
+            .disposed(by: disposeBag)
+        
+        input.profileViewEvent
+            .subscribe(onNext: { [weak self] _ in
+                self?.coordinator.finish(to: .profile)
+            })
+            .disposed(by: disposeBag)
+        
+        input.didPlusButtonTap
+            .subscribe(onNext: { [weak self] _ in
+                self?.coordinator.connectDetailCoordinator(quest: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        return output
     }
     
-    private func fetchUserInfo() {
-        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
-                                   experience: UserDefaults.standard.integer(forKey: "experience"))
+    private func fetchQuests() {
+        usecase.fetchQuests()
+            .subscribe(onSuccess: { [weak self] quests in
+                self?.output.questList.accept(quests)
+            })
+            .disposed(by: disposeBag)
     }
     
-    private func fetchQuest() async throws {
-        questList.value = try await usecase.readQuest()
+    private func update(quest: QuestInfo) {
+        usecase.update(quest: quest)
+            .subscribe( onError: { [weak self] error in
+                self?.output.errorMessage.accept(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
     }
     
-    func updateExperience(experienceData: Int) async throws {
-        let result = try await usecase.addExperience(userId: UserDefaults.standard.string(forKey: "nickName") ?? "", experience: experienceData)
-        UserDefaults.standard.set(result, forKey: "experience")
-        fetchUserInfo()
+    private func addExperience(nickName: String) {
+        usecase.addExperience(userId: nickName, experience: 1)
+            .subscribe(onSuccess: { [weak self] experience in
+                UserDefaults.standard.set(experience, forKey: "experience")
+                self?.output.userInfo.accept(UserInfo(nickName: nickName, experience: experience))
+            }, onFailure: { [weak self] error in
+                self?.output.errorMessage.accept(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func delete(quest: QuestInfo) {
+        usecase.delete(quest: quest)
+            .subscribe(onError: { [weak self] _ in
+                self?.output.errorMessage.accept("퀘스트 삭제를 실패했습니다.")
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateDailyQuest() {
+        Single.zip(usecase.resetDailyQuests(), usecase.fetchQuests())
+            .subscribe(onSuccess: { [weak self] _, quests in
+                self?.output.questList.accept(quests)
+            }, onFailure: { [weak self] _ in
+                self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -135,12 +163,5 @@ extension QuestViewModel {
             self.updateDailyQuest()
         }
         
-    }
-    
-    @objc private func updateDailyQuest() {
-        Task {
-            try await usecase.updateDailyQuest()
-            questList.value = try await usecase.readQuest()
-        }
     }
 }

@@ -7,109 +7,92 @@
 
 import Foundation
 
-@MainActor
+import RxSwift
+import RxCocoa
+
 final class DetailViewModel: ViewModel {
+    private var disposeBag = DisposeBag()
+    
     struct Input {
-        var viewDidLoad: Observable<Void>
-        var updateTrigger: Observable<QuestInfo?>
-        var addTrigger: Observable<QuestInfo?>
-        var didBackButtonTap: Observable<Void>
+        var viewWillAppear: ControlEvent<Bool>
+        var updateEvent: PublishRelay<QuestInfo?>
+        var createEvent: PublishRelay<QuestInfo?>
+        var didBackButtonTapEvent: ControlEvent<Void>
     }
     
     struct Output {
-        var errorMessage: Observable<String>
-        var userInfo: Observable<UserInfo?>
+        var errorMessage: PublishRelay<String>
+        var userInfo: PublishRelay<UserInfo>
     }
     
     private let usecase: QuestUsecase
     private let coordinator: DetailCoordinator
-    private var quest: Observable<QuestInfo?>
-    private let errorMessage: Observable<String> = Observable("")
-    private let user: Observable<UserInfo?> = Observable(nil)
     
-    init(usecase: QuestUsecase, coordinator: DetailCoordinator, quest: QuestInfo?) {
+    private let output = Output(
+        errorMessage: PublishRelay(),
+        userInfo: PublishRelay())
+    
+    init(usecase: QuestUsecase, coordinator: DetailCoordinator) {
         self.usecase = usecase
         self.coordinator = coordinator
-        self.quest = Observable(quest)
-    }
-    
-    private func fetchQuest() async throws {
-        let coreQuests = try await self.usecase.readQuest()
-        for coreQuest in coreQuests {
-            if let quest = self.quest.value, quest.id == coreQuest.id {
-                self.quest.value = quest
-            }
-        }
-    }
-    
-    private func fetchUserInfo() {
-        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
-                                   experience: UserDefaults.standard.integer(forKey: "experience"))
-    }
-    
-    private func viewDidLoad() {
-        Task {
-            do {
-                try await fetchQuest()
-                fetchUserInfo()
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    private func coreDataCreate(quest: QuestInfo) async throws {
-        try await self.usecase.createQuest(questInfo: quest)
-    }
-    
-    private func createQuest(quest: QuestInfo) {
-        Task {
-            do {
-                try await coreDataCreate(quest: quest)
-                coordinator.finish(to: .quest)
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
-    }
-    
-    private func coreDataUpdate(newQuest: QuestInfo) async throws {
-        try await self.usecase.updateQuest(newQuestInfo: newQuest)
-    }
-    
-    private func updateQuest(newQuest: QuestInfo) {
-        Task {
-            do {
-                try await coreDataUpdate(newQuest: newQuest)
-                coordinator.finish(to: .quest)
-            } catch {
-                errorMessage.value = error.localizedDescription
-            }
-        }
     }
     
     func transform(input: Input) -> Output {
-        input.viewDidLoad.bind { _ in
-            self.viewDidLoad()
-        }
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                                    experience: UserDefaults.standard.integer(forKey: "experience"))
+                self?.output.userInfo.accept(user)
+            })
+            .disposed(by: disposeBag)
         
-        input.updateTrigger.bind { quest in
-            guard let quest else {
-                return
-            }
-            self.updateQuest(newQuest: quest)
-        }
+        input.updateEvent
+            .subscribe(onNext: { [weak self] quest in
+                guard let self, let quest else {
+                    self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                    return
+                }
+                if quest.selectedDate.filter({ $0 }).count == 0 {
+                    output.errorMessage.accept("하나 이상의 요일을 선택해 주세요.")
+                    return
+                }
+                usecase.update(quest: quest)
+                    .subscribe(onCompleted: {
+                        self.coordinator.finish(to: .quest)
+                    },onError: { _ in
+                        self.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+            
+        input.createEvent
+            .subscribe(onNext: { [weak self] quest in
+                guard let self, let quest else {
+                    self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                    return
+                }
+                if quest.selectedDate.filter({ $0 }).count == 0 {
+                    output.errorMessage.accept("하나 이상의 요일을 선택해 주세요.")
+                    return
+                }
+                usecase.create(quest: quest)
+                    .subscribe(onCompleted: {
+                        self.coordinator.finish(to: .quest)
+                    },onError: { _ in
+                        self.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
-        input.addTrigger.bind { quest in
-            guard let quest else {
-                return
-            }
-            self.createQuest(quest: quest)
-        }
-        input.didBackButtonTap.bind { [weak self] _ in
-            self?.coordinator.finish(to: .quest)
-        }
-        return Output(errorMessage: self.errorMessage,
-                      userInfo: self.user)
+        input.didBackButtonTapEvent
+            .subscribe(onNext: { [weak self] _ in
+                self?.coordinator.finish(to: .quest)
+            })
+            .disposed(by: disposeBag)
+        
+        return output
     }
+    
 }

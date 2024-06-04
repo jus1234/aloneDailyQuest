@@ -19,17 +19,17 @@ final class DefaultQuestCoordinator: QuestCoordinator {
         self.depengencyManager = depengencyManager
     }
     
-    @MainActor func start() {
+    func start() {
         showQuestViewController()
     }
     
-    @MainActor func showQuestViewController() {
+    func showQuestViewController() {
         let videwModel = QuestViewModel(usecase: depengencyManager.makeQuestUsecase(), coordinator: self)
         let questViewController = QuestViewController(viewModel: videwModel)
         navigationController.pushViewController(questViewController, animated: false)
     }
     
-    @MainActor func connectDetailCoordinator(quest: QuestInfo?) {
+    func connectDetailCoordinator(quest: QuestInfo?) {
         let detailCoordinator = DefaultDetailCoordinator(self.navigationController, self.depengencyManager)
         detailCoordinator.finishDelegate = self
         self.childCoordinators.append(detailCoordinator)

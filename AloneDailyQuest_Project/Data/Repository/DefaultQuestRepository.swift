@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import RxSwift
 
 final class DefaultQuestRepository: QuestRepository {
     private let networkService: NetworkService
@@ -32,148 +33,198 @@ final class DefaultQuestRepository: QuestRepository {
 
 // MARK: - Public Method
 extension DefaultQuestRepository {
-    func createQuest(questInfo: QuestInfo) async throws {
-        guard let entity = NSEntityDescription.entity(forEntityName: self.modelName, in: context) else {
-            throw NSError(domain: "Error : Coredata not found entity quest error", code: 0)
-        }
-        
-        guard let questData = NSManagedObject(entity: entity, insertInto: context) as? QuestData else {
-            throw NSError(domain: "Error : Coredata not found quest error ", code: 0)
-        }
-
-        questData.id = UUID()
-        questData.quest = questInfo.quest
-        questData.date = Date()
-        questData.isMonday = questInfo.selectedDate[0]
-        questData.isTuesday = questInfo.selectedDate[1]
-        questData.isWednesday = questInfo.selectedDate[2]
-        questData.isThursday = questInfo.selectedDate[3]
-        questData.isFriday = questInfo.selectedDate[4]
-        questData.isSaturday = questInfo.selectedDate[5]
-        questData.isSunday = questInfo.selectedDate[6]
-        questData.repeatDay = questInfo.repeatDay
-        questData.completed = questInfo.completed
-        
-        if context.hasChanges {
-            try context.save()
+    func create(quest: QuestInfo) -> Completable {
+        return Completable.create { [weak self] observer in
+            do {
+                guard 
+                    let self,
+                    let entity = NSEntityDescription.entity(forEntityName: modelName, in: context),
+                    let questData = NSManagedObject(entity: entity, insertInto: context) as? QuestData
+                else {
+                    throw CoreDataError.create
+                }
+                questData.make(from: quest)
+                if context.hasChanges {
+                    try context.save()
+                }
+                observer(.completed)
+            } catch {
+                observer(.error(error))
+            }
+            return Disposables.create()
         }
     }
     
-    func readQuest() async throws -> [QuestInfo] {
-        var questList: [QuestInfo] = []
-        
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        
-        guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
-            throw NSError(domain: "Error : Coredata fetch failed error", code: 0)
-        }
-        
-        questList = fetchedQuestList.map { data in
-           return QuestInfo(id: data.id,
-                            quest: data.quest ?? "",
-                            date: data.date ?? Date(),
-                            selectedDate: [data.isMonday,
-                                           data.isTuesday,
-                                           data.isWednesday,
-                                           data.isThursday,
-                                           data.isFriday,
-                                           data.isSaturday,
-                                           data.isSunday],
-                            repeatDay: data.repeatDay ?? "",
-                            completed: data.completed)
-        }
-        return questList
-    }
-    
-    func updateQuest(newQuestInfo: QuestInfo) async throws {
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        request.predicate = NSPredicate(format: "id = %@", newQuestInfo.id as CVarArg)
-        
-        guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
-            throw NSError(domain: "Error : Coredata fetch failed error", code: 0)
-        }
-
-        guard let targetQuest = fetchedQuestList.first else {
-            throw NSError(domain: "Error : Coredata not found first fetch data error", code: 0)
-        }
-        
-        targetQuest.quest = newQuestInfo.quest
-        targetQuest.isMonday = newQuestInfo.selectedDate[0]
-        targetQuest.isTuesday = newQuestInfo.selectedDate[1]
-        targetQuest.isWednesday = newQuestInfo.selectedDate[2]
-        targetQuest.isThursday = newQuestInfo.selectedDate[3]
-        targetQuest.isFriday = newQuestInfo.selectedDate[4]
-        targetQuest.isSaturday = newQuestInfo.selectedDate[5]
-        targetQuest.isSunday = newQuestInfo.selectedDate[6]
-        targetQuest.repeatDay = newQuestInfo.repeatDay
-        targetQuest.completed = newQuestInfo.completed
-        
-        if context.hasChanges {
-            try context.save()
+    func fetchQuests() -> Single<[QuestInfo]> {
+        return Single.create { [weak self] observer in
+            do {
+                guard
+                    let modelName = self?.modelName,
+                    let quests = try self?.context.fetch(NSFetchRequest<NSManagedObject>(entityName: modelName)) as? [QuestData]
+                else {
+                    throw CoreDataError.fetch
+                }
+                observer(.success(quests.map { $0.toDomain() }))
+            } catch {
+                observer(.failure(error))
+            }
+            return Disposables.create()
         }
     }
     
-    func deleteQuest(questInfo: QuestInfo) async throws {
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        request.predicate = NSPredicate(format: "id = %@", questInfo.id as CVarArg)
-        
-        guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
-            throw NSError(domain: "Error : Coredata fetch failed error", code: 0)
-        }
-
-        guard let targetQuest = fetchedQuestList.first else {
-            throw NSError(domain: "Error : Coredata not found first fetch data error", code: 0)
-        }
-            
-        context.delete(targetQuest)
-        if context.hasChanges {
-            try context.save()
-        }
-    }
-    
-    func deleteQuests() async throws {
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        
-        let fetchedQuestList = try context.fetch(request)
-        
-        for quest in fetchedQuestList {
-            context.delete(quest)
-        }
-        
-        if context.hasChanges {
-            try context.save()
+    func update(quest: QuestInfo) -> Completable {
+        return Completable.create { [weak self] observer in
+            do {
+                guard let self else { throw CoreDataError.general }
+                
+                let request = NSFetchRequest<NSManagedObject>(entityName: modelName)
+                request.predicate = NSPredicate(format: "id = %@", quest.id as CVarArg)
+                
+                guard
+                    let fetchedQuestList = try context.fetch(request) as? [QuestData],
+                    let targetQuest = fetchedQuestList.first
+                else {
+                    throw CoreDataError.update
+                }
+                
+                targetQuest.update(from: quest)
+                
+                if context.hasChanges {
+                    try context.save()
+                }
+                
+                observer(.completed)
+            } catch {
+                observer(.error(CoreDataError.update))
+            }
+            return Disposables.create()
         }
     }
     
-    func fetchUserInfo(userId: String) async throws -> UserInfo {
-        let data = try await networkService.request(.member(userId: UserIdRequestDTO(userId: userId)))
-        return try decorder.decode(UserInfoDTO.self, from: data).toEntity()
-    }
-    
-    func fetchExperience(userId: String) async throws -> Int {
-        let data = try await networkService.request(.experience(userId: UserIdRequestDTO(userId: userId)))
-        return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
-    }
-    
-    func addExperience(userId: String, experience: Int) async throws -> Int {
-        let data = try await networkService.request(.addExperience(user: UserInfoDTO(userId: userId,
-                                                                                     experience: experience)))
-        return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
-    }
-    
-    func updateDailyQuest() async throws {
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        
-        guard let fetchedQuestList = try context.fetch(request) as? [QuestData] else {
-            throw NSError(domain: "Error : Coredata fetch failed error", code: 0)
+    func delete(quest: QuestInfo) -> Completable {
+        return Completable.create { [weak self] observer in
+            do {
+                guard let self else { throw CoreDataError.general }
+                
+                let request = NSFetchRequest<NSManagedObject>(entityName: modelName)
+                request.predicate = NSPredicate(format: "id = %@", quest.id as CVarArg)
+                
+                guard
+                    let fetchedQuestList = try context.fetch(request) as? [QuestData],
+                    let targetQuest = fetchedQuestList.first
+                else {
+                    throw CoreDataError.update
+                }
+                
+                context.delete(targetQuest)
+                
+                if context.hasChanges {
+                    try context.save()
+                }
+                
+                observer(.completed)
+            } catch {
+                observer(.error(CoreDataError.update))
+            }
+            return Disposables.create()
         }
-        
-        fetchedQuestList.forEach { quest in
-            quest.completed = false
+    }
+    
+    func deleteQuests() -> Completable {
+        return Completable.create { [weak self] observer in
+            do {
+                guard let self else { throw CoreDataError.general }
+                let request = NSFetchRequest<NSManagedObject>(entityName: modelName)
+                
+                let quests = try context.fetch(request)
+                quests.forEach { quest in
+                    self.context.delete(quest)
+                }
+                
+                if context.hasChanges {
+                    try context.save()
+                }
+                observer(.completed)
+            } catch {
+                observer(.error(error))
+            }
+            return Disposables.create()
         }
-        
-        if context.hasChanges {
-            try context.save()
+    }
+    
+    func fetchUserInfo(userId: String) -> Single<UserInfo> {
+        return networkService
+            .request(.member(userId: UserIdRequestDTO(userId: userId)))
+            .flatMap { [weak self] data in
+                do {
+                    guard 
+                        let userInfo = try self?.decorder.decode(UserInfoDTO.self, from: data).toEntity()
+                    else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(userInfo)
+                } catch {
+                    return Single.error(NetworkError.dataError)
+                }
+            }
+    }
+    
+    func fetchExperience(userId: String) -> Single<Int> {
+        return networkService
+            .request(.experience(userId: UserIdRequestDTO(userId: userId)))
+            .flatMap { [weak self] data in
+                do {
+                    guard 
+                        let experience = try self?.decorder.decode(ExperienceResponseDTO.self, from: data).experience
+                    else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(experience)
+                } catch {
+                    return Single.error(error)
+                }
+            }
+    }
+    
+    func addExperience(userId: String, experience: Int) -> Single<Int> {
+        return networkService
+            .request(.addExperience(user: UserInfoDTO(userId: userId,experience: experience)))
+            .flatMap { [weak self] data in
+                do {
+                    guard
+                        let addedExperience = try self?.decorder.decode(ExperienceResponseDTO.self, from: data).experience
+                    else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(addedExperience)
+                } catch {
+                    return Single.error(error)
+                }
+            }
+    }
+    
+    func resetDailyQuests() -> Completable {
+        return Completable.create { [weak self] observer in
+            do {
+                guard
+                    let self,
+                    let quests = try context.fetch(NSFetchRequest<NSManagedObject>(entityName: modelName)) as? [QuestData]
+                else {
+                    throw CoreDataError.fetch
+                }
+                
+                quests.forEach { quest in
+                    quest.completed = false
+                }
+                
+                if context.hasChanges {
+                    try context.save()
+                }
+                observer(.completed)
+            } catch {
+                observer(.error(error))
+            }
+            return Disposables.create()
         }
     }
 }

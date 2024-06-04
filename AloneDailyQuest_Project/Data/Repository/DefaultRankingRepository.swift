@@ -9,8 +9,6 @@ import Foundation
 import RxSwift
 
 final class DefaultRankingRepository: RankingRepository {
-    typealias Observable = RxSwift.Observable
-    
     private let networkService: NetworkService
     private let decorder: JSONDecoder = JSONDecoder()
     
@@ -18,26 +16,34 @@ final class DefaultRankingRepository: RankingRepository {
         self.networkService = networkService
     }
     
-    func fetchRanking() -> Observable<[UserInfo]> {
-        return networkService.requestObservable(.ranking)
-            .flatMap { data -> Observable<[UserInfo]> in
+    func fetchRanking() -> Single<[UserInfo]> {
+        return networkService
+            .request(.ranking)
+            .flatMap { [weak self] data -> Single<[UserInfo]> in
                 do {
-                    let rankList = try self.decorder.decode([UserInfoDTO].self, from: data).map { $0.toEntity() }
-                    return Observable.just(rankList)
+                    guard let rankList = try self?.decorder.decode([UserInfoDTO].self, from: data) 
+                    else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(rankList.map { $0.toEntity() })
                 } catch {
-                    return Observable.error(NetworkError.dataError)
+                    return Single.error(error)
                 }
             }
     }
     
-    func fetchUserRanking(nickName: String) -> Observable<Int> {
-        return networkService.requestObservable(.myRanking(userId: UserIdRequestDTO(userId: nickName)))
-            .flatMap { data in
+    func fetchUserRanking(nickName: String) -> Single<Int> {
+        return networkService
+            .request(.myRanking(userId: UserIdRequestDTO(userId: nickName)))
+            .flatMap { [weak self] data in
                 do {
-                    let myRank = try self.decorder.decode(MyRankingResponseDTO.self, from: data).rank
-                    return Observable.just(myRank)
+                    guard let myRank = try self?.decorder.decode(MyRankingResponseDTO.self, from: data).rank 
+                    else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(myRank)
                 } catch {
-                    return Observable.error(NetworkError.dataError)
+                    return Single.error(NetworkError.dataError)
                 }
             }
     }

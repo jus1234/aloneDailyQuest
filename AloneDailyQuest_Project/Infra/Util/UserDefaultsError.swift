@@ -7,4 +7,5 @@
 
 enum UserDefaultsError: Error {
     case notFound
+    case todayExperienceExceed
 }

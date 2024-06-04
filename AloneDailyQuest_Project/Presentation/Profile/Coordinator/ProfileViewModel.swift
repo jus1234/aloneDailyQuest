@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import RxSwift
 
 @MainActor
 final class ProfileViewModel: ViewModel {
+    private let disosebag = DisposeBag()
+    
     struct Input {
         var viewDidLoad: Observable<Void>
         var qeusetViewEvent: Observable<Void>
@@ -51,10 +54,11 @@ final class ProfileViewModel: ViewModel {
     }
     
     func dropMembership() {
-        Task {
-            try await usecase.dropMembership()
-            coordinator.finish(to: .app)
-        }
+            usecase.dropMembership()
+                .subscribe(onCompleted: { [weak self] in
+                    self?.coordinator.finish(to: .app)
+                })
+                .disposed(by: disosebag)
     }
     
     func transform(input: Input) -> Output {

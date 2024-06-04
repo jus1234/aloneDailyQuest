@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ProfileUsecase {
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
-    func dropMembership() async throws
+    func dropMembership() -> Completable
 }
 
 final class DefaultProfileUsecase: ProfileUsecase {
@@ -30,7 +31,7 @@ final class DefaultProfileUsecase: ProfileUsecase {
         return try await repository.fetchExperience(userId: userId)
     }
     
-    func dropMembership() async throws {
-        try await questRepository.deleteQuests()
+    func dropMembership() -> Completable {
+     return questRepository.deleteQuests()
     }
 }

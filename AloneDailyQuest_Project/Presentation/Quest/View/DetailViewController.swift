@@ -7,18 +7,22 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class DetailViewController: UIViewController {
+    private var disposeBag = DisposeBag()
     
     private let detailView = DetailView()
     private let viewModel: DetailViewModel
     private var viewDidLoadEvent: Observable<Void> = Observable(())
     private lazy var updateEvent: Observable<QuestInfo?> = Observable(questData)
     private lazy var addEvent: Observable<QuestInfo?> = Observable(nil)
-    private lazy var input = DetailViewModel.Input(viewDidLoad: viewDidLoadEvent,
-                                                   updateTrigger: updateEvent,
-                                                   addTrigger: addEvent, 
-                                                   didBackButtonTap: detailView.didBackButtonTap)
-    private lazy var output = viewModel.transform(input: input)
+    private lazy var input = DetailViewModel.Input(
+        viewWillAppear: rx.viewWillAppear,
+        updateEvent: PublishRelay(),
+        createEvent: PublishRelay(),
+        didBackButtonTapEvent: detailView.backButton.rx.tap)
     
     init(viewModel: DetailViewModel, questData: QuestInfo?) {
         self.viewModel = viewModel
@@ -38,21 +42,25 @@ final class DetailViewController: UIViewController {
         setup()
         configureUI()
         bindViewModel()
-        input.viewDidLoad.value = ()
     }
     
     func bindViewModel() {
-        output.errorMessage.bind { errorMessage in
-            self.completedAlert(message: errorMessage)
-        }
-        output.userInfo.bind { [weak self] user in
-            guard
-                let nickName = user?.fetchNickName(),
-                let level = user?.fetchLevel(),
-                let experience = user?.fetchExperience() else { return }
-            self?.detailView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
-            self?.detailView.profileBoxView.updateExperienceBar(currentExp: experience)
-        }
+        let output = viewModel.transform(input: input)
+        
+        output.userInfo
+            .asDriver(onErrorJustReturn: UserInfo(nickName: "-", experience: 0))
+            .drive(with: self) { owner, user in
+                owner.detailView.profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
+                owner.detailView.profileBoxView.updateExperienceBar(currentExp: user.fetchExperience())
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, error in
+                owner.completedAlert(message: error)
+            }
+            .disposed(by: disposeBag)
     }
     
     func setup() {
@@ -135,7 +143,7 @@ final class DetailViewController: UIViewController {
             questData.selectedDate[5] = isDaySelected[5]
             questData.selectedDate[6] = isDaySelected[6]
             questData.repeatDay = repeatLabel
-            input.updateTrigger.value = questData
+            input.updateEvent.accept(questData)
             
             self.questData = questData
             
@@ -149,8 +157,7 @@ final class DetailViewController: UIViewController {
     
     func registerQuestForSelectedDays(questText: String, repeatLabel: String) {
         let data = QuestInfo(id: UUID(), quest: questText, date: Date(), selectedDate: isDaySelected, repeatDay: repeatLabel, completed: isCompleted)
-        input.addTrigger.value = data
-        self.questData = data
+        input.createEvent.accept(data)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

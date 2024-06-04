@@ -19,11 +19,11 @@ final class DefaultRankingCoordinator: RankingCoordinator {
         self.depengencyManager = depengencyManager
     }
     
-    @MainActor func start() {
+    func start() {
         showRankingViewController()
     }
     
-    @MainActor func showRankingViewController() {
+    func showRankingViewController() {
         let viewModel = RankingViewModel(usecase: depengencyManager.makeRnakingUsecase(), coordinator: self)
         let rankingViewContorller = RankingViewController(viewModel: viewModel)
         navigationController.pushViewController(rankingViewContorller, animated: false)

@@ -19,16 +19,15 @@ final class DefaultDetailCoordinator: DetailCoordinator {
         self.depengencyManager = depengencyManager
     }
     
-    @MainActor func start() {}
+    func start() {}
     
-    @MainActor func start(quest: QuestInfo?) {
+    func start(quest: QuestInfo?) {
         showDetailViewContorller(quest: quest)
     }
     
-    @MainActor func showDetailViewContorller(quest: QuestInfo?) {
+    func showDetailViewContorller(quest: QuestInfo?) {
         let detailViewModel = DetailViewModel(usecase: depengencyManager.makeQuestUsecase(),
-                                              coordinator: self,
-                                              quest: quest)
+                                              coordinator: self)
         let detailViewController = DetailViewController(viewModel: detailViewModel, questData: quest)
         navigationController.pushViewController(detailViewController, animated: true)
     }

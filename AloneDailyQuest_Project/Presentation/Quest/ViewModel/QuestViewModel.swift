@@ -46,16 +46,8 @@ final class QuestViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         input.viewWillAppear
-            .flatMap { [weak self] _ -> Single<([QuestInfo], Void)> in
-                guard let self else {
-                    return Single.error(NSError())
-                }
-                return Single.zip(usecase.fetchQuests(), usecase.resetDailyQuests())
-            }
-            .subscribe(onNext: { quests, _ in
-                self.output.questList.accept(quests)
-            }, onError: { [weak self] _ in
-                self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateDailyQuest()
             })
             .disposed(by: disposeBag)
         
@@ -76,21 +68,19 @@ final class QuestViewModel: ViewModel {
             .disposed(by: disposeBag)
         
         input.completeQuestEvent
-            .flatMapLatest { [weak self] quest -> Single<(Void, QuestInfo)> in
-                guard let self else {
-                    return Single.error(NSError())
-                }
-                return Single.zip(usecase.isTodayExperienceAcquisitionMax(), Single.just(quest))
-            }
-            .subscribe(onNext: { [weak self] _, quest in
-                guard let nickName = UserDefaults.standard.string(forKey: "nickName") else {
+            .subscribe(onNext: { [weak self] quest in
+                guard let self, let nickName = UserDefaults.standard.string(forKey: "nickName") else {
                     return
                 }
-                self?.update(quest: quest)
-                self?.addExperience(nickName: nickName)
-                self?.fetchQuests()
-            }, onError: { _ in
-                self.output.errorMessage.accept("일일 최대 획득 경험치를 초과했습니다.")
+                usecase.isTodayExperienceAcquisitionMax()
+                    .subscribe(onSuccess: {
+                        self.update(quest: quest)
+                        self.addExperience(nickName: nickName)
+                        self.fetchQuests()
+                    }, onFailure: {_ in 
+                        self.output.errorMessage.accept("일일 최대 획득 경험치를 초과했습니다.")
+                    })
+                    .disposed(by: disposeBag)
             })
             .disposed(by: disposeBag)
         
@@ -125,19 +115,19 @@ final class QuestViewModel: ViewModel {
     
     private func update(quest: QuestInfo) {
         usecase.update(quest: quest)
-            .subscribe( onError: { error in
-                self.output.errorMessage.accept(error.localizedDescription)
+            .subscribe( onError: { [weak self] error in
+                self?.output.errorMessage.accept(error.localizedDescription)
             })
             .disposed(by: disposeBag)
     }
     
     private func addExperience(nickName: String) {
         usecase.addExperience(userId: nickName, experience: 1)
-            .subscribe(onSuccess: { experience in
+            .subscribe(onSuccess: { [weak self] experience in
                 UserDefaults.standard.set(experience, forKey: "experience")
-                self.output.userInfo.accept(UserInfo(nickName: nickName, experience: experience))
-            }, onFailure: { error in
-                self.output.errorMessage.accept(error.localizedDescription)
+                self?.output.userInfo.accept(UserInfo(nickName: nickName, experience: experience))
+            }, onFailure: { [weak self] error in
+                self?.output.errorMessage.accept(error.localizedDescription)
             })
             .disposed(by: disposeBag)
     }
@@ -146,6 +136,16 @@ final class QuestViewModel: ViewModel {
         usecase.delete(quest: quest)
             .subscribe(onError: { [weak self] _ in
                 self?.output.errorMessage.accept("퀘스트 삭제를 실패했습니다.")
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateDailyQuest() {
+        Single.zip(usecase.resetDailyQuests(), usecase.fetchQuests())
+            .subscribe(onSuccess: { [weak self] _, quests in
+                self?.output.questList.accept(quests)
+            }, onFailure: { [weak self] _ in
+                self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
             })
             .disposed(by: disposeBag)
     }
@@ -163,15 +163,5 @@ extension QuestViewModel {
             self.updateDailyQuest()
         }
         
-    }
-    
-    private func updateDailyQuest() {
-        Single.zip(usecase.resetDailyQuests(), usecase.fetchQuests())
-            .subscribe(onSuccess: { [weak self] _, quests in
-                self?.output.questList.accept(quests)
-            }, onFailure: { [weak self] _ in
-                self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
-            })
-            .disposed(by: disposeBag)
     }
 }

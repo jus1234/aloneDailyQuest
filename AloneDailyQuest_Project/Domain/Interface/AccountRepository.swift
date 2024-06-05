@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol AccountRepository {
-    func signup(userId: String) async throws
-    func checkId(userId: String) async throws -> Bool
-    func fetchUserInfo(userId: String) async throws -> UserInfo
-    func fetchExperience(userId: String) async throws -> Int
+    func signup(userId: String) -> Completable
+    func checkId(userId: String) -> Single<Bool>
+    func fetchUserInfo(userId: String) -> Single<UserInfo>
+    func fetchExperience(userId: String) -> Single<Int>
+    func addExperience(user: UserInfo) -> Single<Int>
 }

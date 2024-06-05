@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class DefaultAccountRepository: AccountRepository {
     private let networkService: NetworkService
@@ -15,39 +16,80 @@ final class DefaultAccountRepository: AccountRepository {
         self.networkService = networkService
     }
     
-    func signup(userId: String) async throws {
-        let data = try await networkService.request(.signup(userId: UserIdRequestDTO(userId: userId)))
-        do {
-            _ = try decorder.decode(LoginResponseDTO.self, from: data)
-        } catch {
-            do {
-                let errorMessage = try decorder.decode(ErrorResponseDTO.self, from: data)
-                throw SignupError(errorMessage: errorMessage.error)
-            } catch {
-                throw error
-            }
+    func signup(userId: String) -> Completable {
+        return Completable.create { [weak self] observer in
+            self?.networkService
+                .request(.signup(userId: UserIdRequestDTO(userId: userId)))
+                .subscribe(onSuccess: { _ in
+                    observer(.completed)
+                }, onFailure: { error in
+                    observer(.error(error))
+                })
+                .disposed(by: DisposeBag())
+            return Disposables.create()
         }
     }
     
-    func checkId(userId: String) async throws -> Bool {
-        let data = try await networkService.request(.checkId(userId: UserIdRequestDTO(userId: userId)))
-        return try decorder.decode(CheckIdResponseDTO.self, from: data).exists
+    func checkId(userId: String) -> Single<Bool> {
+        return networkService
+            .request(.checkId(userId: UserIdRequestDTO(userId: userId)))
+            .flatMap { [weak self] data in
+                do {
+                    guard let result = try self?.decorder.decode(CheckIdResponseDTO.self, from: data).exists else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(result)
+                } catch {
+                    return Single.error(error)
+                }
+            }
     }
     
-    func fetchUserInfo(userId: String) async throws -> UserInfo {
-        let data = try await networkService.request(.member(userId: UserIdRequestDTO(userId: userId)))
-        return try decorder.decode(UserInfoDTO.self, from: data).toEntity()
+    func fetchUserInfo(userId: String) -> Single<UserInfo> {
+        return networkService
+            .request(.member(userId: UserIdRequestDTO(userId: userId)))
+            .flatMap { [weak self] data in
+                do {
+                    guard let userInfo = try self?.decorder.decode(UserInfoDTO.self, from: data) else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(userInfo.toEntity())
+                } catch {
+                    return Single.error(error)
+                }
+            }
     }
     
-    func fetchExperience(userId: String) async throws -> Int {
-        let data = try await networkService.request(.experience(userId: UserIdRequestDTO(userId: userId)))
-        return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
+    func fetchExperience(userId: String) -> Single<Int> {
+        return networkService
+            .request(.experience(userId: UserIdRequestDTO(userId: userId)))
+            .flatMap { [weak self] data in
+                do {
+                    guard let experience = try self?.decorder.decode(ExperienceResponseDTO.self, from: data) else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(experience.experience)
+                } catch {
+                    return Single.error(error)
+                }
+            }
     }
     
-    func addExperience(user: UserInfo) async throws -> Int {
-        let data = try await networkService.request(.addExperience(user: UserInfoDTO(userId: user.fetchNickName(), 
-                                                                                     experience: user.fetchExperience())))
-        return try decorder.decode(ExperienceResponseDTO.self, from: data).experience
+    func addExperience(user: UserInfo) -> Single<Int> {
+        return networkService
+            .request(.addExperience(user: UserInfoDTO(userId: user.fetchNickName(), experience: user.fetchExperience())))
+            .flatMap { [weak self] data in
+                do {
+                    guard
+                        let addedExperience = try self?.decorder.decode(ExperienceResponseDTO.self, from: data).experience
+                    else {
+                        throw NetworkError.dataError
+                    }
+                    return Single.just(addedExperience)
+                } catch {
+                    return Single.error(error)
+                }
+            }
     }
 }
 

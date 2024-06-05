@@ -7,24 +7,24 @@
 
 import Foundation
 
-@MainActor
+import RxSwift
+import RxCocoa
+
 class SignupViewModel: ViewModel {
+    private let disposeBag = DisposeBag()
+    
     struct Input {
-        var signupEvent: Observable<String>
-        var nickNameValidationEvent: Observable<String>
+        var signupEvent: PublishRelay<String>
+        var nickNameValidationEvent: ControlProperty<String>
     }
     
     struct Output {
-        var isValidNickName: Observable<Bool?>
-        var isSignupSucess: Observable<Bool?>
-        var errorMessage: Observable<String>
+        var isValidNickName: PublishRelay<Bool>
+        var errorMessage: PublishRelay<String>
     }
     
     private let usecase: AccountUsecase
     private let coordinator: SignupCoordinator
-    private var isValidNickName: Observable<Bool?> = Observable(false)
-    private var isSignupSucess: Observable<Bool?> = Observable(false)
-    private var errorMessage: Observable<String> = Observable("")
     
     init(usecase: AccountUsecase, coordinator: SignupCoordinator) {
         self.usecase = usecase
@@ -32,40 +32,42 @@ class SignupViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.signupEvent.bind { [weak self] nickName in
-            Task {
-                do {
-                    self?.isSignupSucess.value = try await self?.signup(nickName: nickName)
-                } catch {
-                    self?.errorMessage.value = error.localizedDescription
+        let output = Output(
+            isValidNickName: PublishRelay(),
+            errorMessage: PublishRelay())
+        
+        input.signupEvent
+            .subscribe(onNext: { [weak self] nickName in
+                guard let self else {
+                    return
                 }
-            }
-        }
-        input.nickNameValidationEvent.bind { [weak self] nickName in
-            self?.isValidNickName.value = self?.vaildateNickname(nickName)
-        }
-        return .init(isValidNickName: isValidNickName,
-                     isSignupSucess: isSignupSucess,
-                     errorMessage: errorMessage)
-    }
-    
-    private func signup(nickName: String) async throws -> Bool {
-        let isExists = try await usecase.checkId(userId: nickName)
-        if !isExists {
-            try await usecase.signup(userId: nickName)
-            UserDefaults.standard.set(nickName, forKey: "nickName")
-            UserDefaults.standard.setValue(0, forKey: "experience")
-            self.coordinator.finish(to: .ranking)
-        }
-        return isExists
-    }
-    
-    private func vaildateNickname(_ text: String) -> Bool {
-        guard text.count > 0 else {
-            return false
-        }
-        let nicknameRegex = "^[a-zA-Z0-9가-힣]{1,8}$"
-        let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
-        return nicknamePredicate.evaluate(with: text)
+                usecase
+                    .signup(userId: nickName)
+                    .subscribe(onSuccess: { result in
+                        result ? self.coordinator.finish(to: .quest) : output.errorMessage.accept("중복된 닉네임입니다.")
+                    }, onFailure: { error in
+                        output.errorMessage.accept(error.localizedDescription)
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        input.nickNameValidationEvent
+            .subscribe(onNext: { [weak self] nickName in
+                guard let self else {
+                    return
+                }
+                usecase
+                    .validata(nickName: nickName)
+                    .subscribe(onCompleted: {
+                        output.isValidNickName.accept(true)
+                    }, onError: { _ in
+                        output.isValidNickName.accept(false)
+                    })
+                    .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        return output
     }
 }

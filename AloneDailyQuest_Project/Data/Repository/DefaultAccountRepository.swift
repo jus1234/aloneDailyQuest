@@ -9,6 +9,8 @@ import Foundation
 import RxSwift
 
 final class DefaultAccountRepository: AccountRepository {
+    private let dispoeseBag = DisposeBag()
+    
     private let networkService: NetworkService
     private let decorder: JSONDecoder = JSONDecoder()
     
@@ -18,14 +20,18 @@ final class DefaultAccountRepository: AccountRepository {
     
     func signup(userId: String) -> Completable {
         return Completable.create { [weak self] observer in
-            self?.networkService
+            guard let self else {
+                observer(.error(NSError()))
+                return Disposables.create()
+            }
+            networkService
                 .request(.signup(userId: UserIdRequestDTO(userId: userId)))
                 .subscribe(onSuccess: { _ in
                     observer(.completed)
                 }, onFailure: { error in
                     observer(.error(error))
                 })
-                .disposed(by: DisposeBag())
+                .disposed(by: dispoeseBag)
             return Disposables.create()
         }
     }

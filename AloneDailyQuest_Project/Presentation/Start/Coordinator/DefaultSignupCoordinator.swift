@@ -19,17 +19,17 @@ final class DefaultSignupCoordinator: SignupCoordinator {
         self.depengencyManager = depengencyManager
     }
     
-    @MainActor func start() {
+    func start() {
         showSignupViewController()
     }
     
-    @MainActor func showSignupViewController() {
+    func showSignupViewController() {
         let viewModel = SignupViewModel(usecase: depengencyManager.makeAccountUsecase(), coordinator: self)
         let signupViewController = SignupViewController(viewModel: viewModel)
         navigationController.pushViewController(signupViewController, animated: false)
     }
     
-    func finish() {
+    @MainActor func finish() {
         finishDelegate?.didFinish(childCoordinator: self, to: .quest)
     }
 }

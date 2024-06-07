@@ -14,6 +14,8 @@ protocol AccountUsecase {
 }
 
 final class DefaultAccountUsecase: AccountUsecase {
+    private let dispoeseBag = DisposeBag()
+    
     private let repository: AccountRepository
     
     init(repository: AccountRepository) {
@@ -22,25 +24,31 @@ final class DefaultAccountUsecase: AccountUsecase {
     
     func signup(userId: String) -> Single<Bool> {
         return Single.create { [weak self] observer in
-            self?.repository
+            guard let self else {
+                observer(.failure(NSError()))
+                return Disposables.create()
+            }
+            repository
                 .checkId(userId: userId)
                 .subscribe(onSuccess: { result in
-                    guard result else {
+                    if result {
                         observer(.success(false))
                         return
                     }
-                    self?.repository
+                    self.repository
                         .signup(userId: userId)
                         .subscribe(onCompleted: {
+                            UserDefaults.standard.set(userId, forKey: "nickName")
+                            UserDefaults.standard.setValue(0, forKey: "experience")
                             observer(.success(true))
                         }, onError: { error in
                             observer(.failure(error))
                         })
-                        .disposed(by: DisposeBag())
+                        .disposed(by: self.dispoeseBag)
                 }, onFailure: { error in
                     observer(.failure(error))
                 })
-                .disposed(by: DisposeBag())
+                .disposed(by: dispoeseBag)
             return Disposables.create()
         }
     }

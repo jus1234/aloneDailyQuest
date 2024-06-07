@@ -20,7 +20,7 @@ final class DefaultAppCoordinator: AppCoordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
     }
     
-    @MainActor func start() {
+    func start() {
         guard let _ = UserDefaults.standard.string(forKey: "nickName") else {
             showSignupFlow()
             return
@@ -28,21 +28,21 @@ final class DefaultAppCoordinator: AppCoordinator {
         showQuestFlow()
     }
     
-    @MainActor func showSignupFlow() {
+    func showSignupFlow() {
         let signupCoordinator = DefaultSignupCoordinator(self.navigationController, self.depengencyManager)
         signupCoordinator.finishDelegate = self
         signupCoordinator.start()
         childCoordinators.append(signupCoordinator)
     }
     
-    @MainActor func showQuestFlow() {
+    func showQuestFlow() {
         let questCoordinator = DefaultQuestCoordinator(self.navigationController, self.depengencyManager)
         questCoordinator.finishDelegate = self
         questCoordinator.start()
         childCoordinators.append(questCoordinator)
     }
     
-    @MainActor func showRankingFlow() {
+    func showRankingFlow() {
         let rankingCoordinator = DefaultRankingCoordinator(self.navigationController, self.depengencyManager)
         rankingCoordinator.finishDelegate = self
         rankingCoordinator.start()

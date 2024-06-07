@@ -44,7 +44,9 @@ class SignupViewModel: ViewModel {
                 usecase
                     .signup(userId: nickName)
                     .subscribe(onSuccess: { result in
-                        result ? self.coordinator.finish(to: .quest) : output.errorMessage.accept("중복된 닉네임입니다.")
+                        DispatchQueue.main.async {
+                            result ? self.coordinator.finish(to: .quest) : output.errorMessage.accept("중복된 닉네임입니다.")
+                        }
                     }, onFailure: { error in
                         output.errorMessage.accept(error.localizedDescription)
                     })

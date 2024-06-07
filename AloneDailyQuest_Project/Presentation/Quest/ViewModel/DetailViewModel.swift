@@ -14,7 +14,6 @@ final class DetailViewModel: ViewModel {
     private var disposeBag = DisposeBag()
     
     struct Input {
-        var viewWillAppear: ControlEvent<Bool>
         var updateEvent: PublishRelay<QuestInfo?>
         var createEvent: PublishRelay<QuestInfo?>
         var didBackButtonTapEvent: ControlEvent<Void>
@@ -28,30 +27,28 @@ final class DetailViewModel: ViewModel {
     private let usecase: QuestUsecase
     private let coordinator: DetailCoordinator
     
-    private let output = Output(
-        errorMessage: PublishRelay(),
-        userInfo: PublishRelay())
-    
     init(usecase: QuestUsecase, coordinator: DetailCoordinator) {
         self.usecase = usecase
         self.coordinator = coordinator
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppear
-            .subscribe(onNext: { [weak self] _ in
-                let user = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
-                                    experience: UserDefaults.standard.integer(forKey: "experience"))
-                self?.output.userInfo.accept(user)
-            })
-            .disposed(by: disposeBag)
+        let output = Output(
+            errorMessage: PublishRelay(),
+            userInfo: PublishRelay())
         
         input.updateEvent
             .subscribe(onNext: { [weak self] quest in
                 guard let self, let quest else {
-                    self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                    output.errorMessage.accept("처리 중 문제가 발생했습니다.")
                     return
                 }
+
+                if quest.quest.isEmpty  || quest.quest == "퀘스트를 입력하세요." {
+                    output.errorMessage.accept("퀘스트 내용을 입력해 주세요.")
+                    return
+                }
+                
                 if quest.selectedDate.filter({ $0 }).count == 0 {
                     output.errorMessage.accept("하나 이상의 요일을 선택해 주세요.")
                     return
@@ -60,7 +57,7 @@ final class DetailViewModel: ViewModel {
                     .subscribe(onCompleted: {
                         self.coordinator.finish(to: .quest)
                     },onError: { _ in
-                        self.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                        output.errorMessage.accept("처리 중 문제가 발생했습니다.")
                     })
                     .disposed(by: disposeBag)
             })
@@ -69,9 +66,16 @@ final class DetailViewModel: ViewModel {
         input.createEvent
             .subscribe(onNext: { [weak self] quest in
                 guard let self, let quest else {
-                    self?.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                    output.errorMessage.accept("처리 중 문제가 발생했습니다.")
                     return
                 }
+                
+                if quest.quest.isEmpty  || quest.quest == "퀘스트를 입력하세요." {
+                    output.errorMessage.accept("퀘스트 내용을 입력해 주세요.")
+                    return
+                }
+                
+                
                 if quest.selectedDate.filter({ $0 }).count == 0 {
                     output.errorMessage.accept("하나 이상의 요일을 선택해 주세요.")
                     return
@@ -80,7 +84,7 @@ final class DetailViewModel: ViewModel {
                     .subscribe(onCompleted: {
                         self.coordinator.finish(to: .quest)
                     },onError: { _ in
-                        self.output.errorMessage.accept("처리 중 문제가 발생했습니다.")
+                        output.errorMessage.accept("처리 중 문제가 발생했습니다.")
                     })
                     .disposed(by: disposeBag)
             })

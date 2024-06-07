@@ -7,8 +7,14 @@
 
 import UIKit
 
-class SignupViewController: UIViewController {
+import RxSwift
+import RxCocoa
+import SnapKit
+import Then
 
+class SignupViewController: UIViewController {
+    private let disposeBag = DisposeBag()
+    
     private lazy var startButton: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
@@ -128,9 +134,9 @@ class SignupViewController: UIViewController {
     }()
     
     private let viewModel: SignupViewModel
-    private lazy var input = SignupViewModel.Input(signupEvent: Observable(""),
-                                                  nickNameValidationEvent: Observable(""))
-    private lazy var output = viewModel.transform(input: input)
+    private lazy var input = SignupViewModel.Input(
+        signupEvent: PublishRelay(),
+        nickNameValidationEvent: nickNameTextField.rx.text.orEmpty)
     
     init(viewModel: SignupViewModel) {
         self.viewModel = viewModel
@@ -153,50 +159,44 @@ class SignupViewController: UIViewController {
 
 extension SignupViewController {
     private func bindOutput() {
-        output.isValidNickName.bind { [weak self] isValid in
-            guard let isValid, isValid else {
-                self?.startButton.isEnabled = false
-                self?.validationText.text = "잘못된 형식의 닉네임입니다."
-                self?.validationText.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
-                return
+        
+        let output = viewModel.transform(input: input)
+        
+        output.isValidNickName
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self) {owner, isValid in
+                guard isValid else {
+                    owner.startButton.isEnabled = false
+                    owner.validationText.text = "잘못된 형식의 닉네임입니다."
+                    owner.validationText.textColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+                    return
+                }
+                owner.startButton.isEnabled = true
+                owner.validationText.text = "올바른 닉네임입니다."
+                owner.validationText.textColor = UIColor(hexCode: "21C131")
             }
-            self?.startButton.isEnabled = true
-            self?.validationText.text = "올바른 닉네임입니다."
-            self?.validationText.textColor = UIColor(hexCode: "21C131")
-        }
-        output.isSignupSucess.bind { [weak self] result in
-            guard let result, !result else {
-                self?.completedAlert(message: "중복된 닉네임입니다.")
-                return
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .asDriver(onErrorJustReturn: "")
+            .drive(with: self) { owner, error in
+                owner.completedAlert(message: error)
             }
-        }
-        output.errorMessage.bind { [weak self] error in
-            self?.completedAlert(message: error)
-        }
+            .disposed(by: disposeBag)
     }
 }
 
 extension SignupViewController {
     private func setupAddTarget() {
         startButton.addTarget(self, action: #selector(signup), for: .touchUpInside)
-        nickNameTextField.addTarget(self, action: #selector(checkText(_:)), for: .editingChanged)
-    }
-    
-    @objc private func checkText(_ textField: UITextField) {
-        guard let nickName = textField.text else {
-            return
-        }
-        input.nickNameValidationEvent.value = nickName
     }
     
     @objc private func signup() {
         guard let nickName = nickNameTextField.text else {
             return
         }
-        input.signupEvent.value = nickName
+        input.signupEvent.accept(nickName)
     }
-    
-    
 }
 
 extension SignupViewController {

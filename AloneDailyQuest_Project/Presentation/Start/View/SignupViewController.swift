@@ -52,6 +52,7 @@ class SignupViewController: UIViewController {
         tf.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         tf.textAlignment = .center
         tf.font = UIFont(name: "DungGeunMo", size: 16)
+        tf.textColor = .black
         return tf
     }()
     
@@ -155,6 +156,16 @@ class SignupViewController: UIViewController {
         configureUI()
         bindOutput()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        regiterNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unRegisterNotification()
+    }
 }
 
 extension SignupViewController {
@@ -196,6 +207,28 @@ extension SignupViewController {
             return
         }
         input.signupEvent.accept(nickName)
+    }
+    
+    func regiterNotifications() {
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
+        
+    func unRegisterNotification() {
+        NotificationCenter.default.removeObserver(self,name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,name:UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardEvent(notiInfo: Notification){
+        guard let userInfo = notiInfo.userInfo else { return }
+        guard let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        if notiInfo.name == UIResponder.keyboardWillShowNotification {
+//            self.nextBtnBottomConstraint.constant = keyboardFrame.height - self.view.safeAreaInsets.bottom
+            nickNameImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120).isActive = true
+        }else{
+            nickNameImageView.topAnchor.constraint(equalTo: logoBackgroundText.bottomAnchor, constant: 60).isActive = true
+        }
     }
 }
 

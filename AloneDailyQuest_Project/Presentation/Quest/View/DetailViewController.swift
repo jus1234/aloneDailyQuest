@@ -19,7 +19,6 @@ final class DetailViewController: UIViewController {
     private lazy var updateEvent: Observable<QuestInfo?> = Observable(questData)
     private lazy var addEvent: Observable<QuestInfo?> = Observable(nil)
     private lazy var input = DetailViewModel.Input(
-        viewWillAppear: rx.viewWillAppear,
         updateEvent: PublishRelay(),
         createEvent: PublishRelay(),
         didBackButtonTapEvent: detailView.backButton.rx.tap)
@@ -46,14 +45,6 @@ final class DetailViewController: UIViewController {
     
     func bindViewModel() {
         let output = viewModel.transform(input: input)
-        
-        output.userInfo
-            .asDriver(onErrorJustReturn: UserInfo(nickName: "-", experience: 0))
-            .drive(with: self) { owner, user in
-                owner.detailView.profileBoxView.configureLabel(nickName: user.fetchNickName(), level: String(user.fetchLevel()))
-                owner.detailView.profileBoxView.updateExperienceBar(currentExp: user.fetchExperience())
-            }
-            .disposed(by: disposeBag)
         
         output.errorMessage
             .asDriver(onErrorJustReturn: "")
@@ -167,7 +158,7 @@ final class DetailViewController: UIViewController {
 
 extension DetailViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "퀘스트를 여기에 입력하세요." {
+        if textView.text == "퀘스트를 입력하세요." {
             textView.text = nil
             textView.textColor = .black
         }
@@ -175,7 +166,7 @@ extension DetailViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = "퀘스트를 여기에 입력하세요."
+            textView.text = "퀘스트를 입력하세요."
             textView.textColor = .lightGray
         }
     }

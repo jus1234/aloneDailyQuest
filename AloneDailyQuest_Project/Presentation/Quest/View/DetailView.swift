@@ -8,10 +8,6 @@
 import UIKit
 
 final class DetailView: UIView {
-
-    // MARK: - 프로필 부분
-    
-    let profileBoxView: ProfileBoxView = ProfileBoxView()
     
     let titleText: UILabel = {
         var label = UILabel()
@@ -276,7 +272,6 @@ final class DetailView: UIView {
     
     func addsubviews() {
         
-        addSubview(profileBoxView)
         addSubview(titleBackgroundText)
         addSubview(titleText)
         addSubview(backgroundBottomImageView)
@@ -300,7 +295,6 @@ final class DetailView: UIView {
     }
     
     func profileAutoLayout() {
-        profileBoxView.translatesAutoresizingMaskIntoConstraints = false
         titleText.translatesAutoresizingMaskIntoConstraints = false
         titleBackgroundText.translatesAutoresizingMaskIntoConstraints = false
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -315,11 +309,6 @@ final class DetailView: UIView {
         titleBackgroundText.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -3).isActive = true
         titleBackgroundText.topAnchor.constraint(equalTo: topAnchor, constant: 66).isActive = true
         
-        profileBoxView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        profileBoxView.topAnchor.constraint(equalTo: titleBackgroundText.bottomAnchor, constant: 20).isActive = true
-        profileBoxView.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        profileBoxView.heightAnchor.constraint(equalToConstant: 104).isActive = true
-        
         backButton.centerYAnchor.constraint(equalTo: titleText.centerYAnchor).isActive = true
         backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
     }
@@ -331,7 +320,7 @@ final class DetailView: UIView {
         backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            basicView.topAnchor.constraint(equalTo: profileBoxView.bottomAnchor, constant: 40),
+            basicView.topAnchor.constraint(equalTo: titleBackgroundText.bottomAnchor, constant: 20),
             basicView.heightAnchor.constraint(equalToConstant: 264),
             basicView.widthAnchor.constraint(equalToConstant: 374),
             basicView.centerXAnchor.constraint(equalTo: centerXAnchor),

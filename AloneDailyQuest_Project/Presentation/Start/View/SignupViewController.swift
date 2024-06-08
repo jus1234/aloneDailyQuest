@@ -15,124 +15,15 @@ import Then
 class SignupViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
-    private lazy var startButton: UIButton = {
-        var button = UIButton()
-        button.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
-        let attrString = NSAttributedString(
-            string: "시작하기",
-            attributes: [
-                NSAttributedString.Key.strokeColor: UIColor.black,
-                NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 22) ?? UIFont.systemFont(ofSize: 22),
-                NSAttributedString.Key.strokeWidth: -2.0
-            ]
-        )
-        button.setAttributedTitle(attrString, for: .normal)
-        button.titleLabel!.layer.shadowColor = UIColor.black.cgColor
-        button.titleLabel!.layer.shadowOffset = CGSize(width: -2.0, height: 2.0)
-        button.titleLabel!.layer.shadowOpacity = 1.0
-        button.titleLabel!.layer.shadowRadius = 0
-        button.titleLabel!.layer.masksToBounds = false
-        button.isEnabled = false
-        return button
-    }()
-    
-    private lazy var validationText: UILabel = {
-        var text = UILabel()
-        text.font = UIFont(name: "DungGeunMo", size: 14)
-        text.textAlignment = .center
-        text.text = ""
-        return text
-    }()
-    
-    private lazy var nickNameTextField: UITextField = {
-        var tf = UITextField()
-        tf.frame = CGRect(x: 0, y: 0, width: 350, height: 50)
-        tf.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
-        tf.textAlignment = .center
-        tf.font = UIFont(name: "DungGeunMo", size: 16)
-        tf.textColor = .black
-        return tf
-    }()
-    
-    private lazy var info2Text: UILabel = {
-        var text = UILabel()
-        text.frame = CGRect(x: 0, y: 0, width: 222, height: 12)
-        text.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
-        text.font = UIFont(name: "DungGeunMo", size: 12)
-        text.textAlignment = .left
-        text.text = "* 닉네임에는 영문자와 숫자, 한글만 사용할 수 있습니다. \n* 닉네임은 설정시 변경할 수 없습니다."
-        text.numberOfLines = 0
-        text.setLineSpacing(spacing: 8.0)
-        return text
-    }()
-    
-    private lazy var infoText: UILabel = {
-        var text = UILabel()
-        text.frame = CGRect(x: 0, y: 0, width: 279, height: 18)
-        text.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        text.font = UIFont(name: "DungGeunMo", size: 18)
-        text.textAlignment = .center
-        text.text = "사용하실 닉네임을 입력해주세요."
-        return text
-    }()
-    
-    private lazy var backgroundBottomImageView: UIImageView = {
-        var view = UIImageView()
-        view.frame = CGRect(x: 0, y: 0, width: 430, height: 188)
-        view.image = UIImage(named: "image_background_bottom")
-        return view
-    }()
-    
-    private lazy var nickNameImageView: UIImageView = {
-        var view = UIImageView()
-        view.frame = CGRect(x: 0, y: 0, width: 394, height: 204)
-        view.image = UIImage(named: "img_account_background")
-        return view
-    }()
-    
-    private var logoText: UILabel = {
-        var label = UILabel()
-        label.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
-        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
-        
-        let attrString = NSAttributedString(
-            string: "나혼자만\n일일퀘스트",
-            attributes: [
-                NSAttributedString.Key.strokeColor: UIColor.black,
-                NSAttributedString.Key.foregroundColor: UIColor.white,
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 40) ?? UIFont.systemFont(ofSize: 40),
-                NSAttributedString.Key.strokeWidth: -2.5
-            ]
-        )
-        label.attributedText = attrString
-        return label
-    }()
-    
-    private var logoBackgroundText: UILabel = {
-        var label = UILabel()
-        label.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
-        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
-        
-        let attrString = NSAttributedString(
-            string: "나혼자만\n일일퀘스트",
-            attributes: [
-                NSAttributedString.Key.strokeColor: UIColor.black,
-                NSAttributedString.Key.foregroundColor: UIColor(red: 0.128, green: 0.345, blue: 0.345, alpha: 1),
-                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 40) ?? UIFont.systemFont(ofSize: 40),
-                NSAttributedString.Key.strokeWidth: -2.5
-            ]
-        )
-        label.attributedText = attrString
-        return label
-    }()
+    private let startButton = UIButton()
+    private let validationText = UILabel()
+    private let nickNameTextField = UITextField()
+    private let info2Text = UILabel()
+    private let infoText = UILabel()
+    private let backgroundBottomImageView = UIImageView()
+    private let nickNameImageView = UIImageView()
+    private let logoText = UILabel()
+    private let logoBackgroundText = UILabel()
     
     private let viewModel: SignupViewModel
     private lazy var input = SignupViewModel.Input(
@@ -150,10 +41,9 @@ class SignupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addViews()
-        autoLayoutConstraints()
+        setStyle()
+        setLayour()
         setupAddTarget()
-        configureUI()
         bindOutput()
     }
     
@@ -209,22 +99,18 @@ extension SignupViewController {
         input.signupEvent.accept(nickName)
     }
     
-    func regiterNotifications() {
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillHideNotification, object: nil)
-        }
+    private func regiterNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
         
-    func unRegisterNotification() {
+    private func unRegisterNotification() {
         NotificationCenter.default.removeObserver(self,name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self,name:UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc func keyboardEvent(notiInfo: Notification){
-        guard let userInfo = notiInfo.userInfo else { return }
-        guard let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-        
+    @objc private func keyboardEvent(notiInfo: Notification){
         if notiInfo.name == UIResponder.keyboardWillShowNotification {
-//            self.nextBtnBottomConstraint.constant = keyboardFrame.height - self.view.safeAreaInsets.bottom
             nickNameImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120).isActive = true
         }else{
             nickNameImageView.topAnchor.constraint(equalTo: logoBackgroundText.bottomAnchor, constant: 60).isActive = true
@@ -233,71 +119,141 @@ extension SignupViewController {
 }
 
 extension SignupViewController {
-    func configureUI() {
+    private func setStyle() {
         view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
+        
+        backgroundBottomImageView.do { $0.image = UIImage(named: "image_background_bottom") }
+        
+        startButton.do {
+            $0.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
+            $0.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
+            $0.setAttributedTitle(makeAttribueTitleButton(title: "시작하기"), for: .normal)
+            $0.titleLabel?.layer.shadowColor = UIColor.black.cgColor
+            $0.titleLabel?.layer.shadowOffset = CGSize(width: -2.0, height: 2.0)
+            $0.titleLabel?.layer.shadowOpacity = 1.0
+            $0.titleLabel?.layer.shadowRadius = 0
+            $0.titleLabel?.layer.masksToBounds = false
+            $0.isEnabled = false
+        }
+        
+        validationText.do {
+            $0.font = UIFont(name: "DungGeunMo", size: 14)
+            $0.textAlignment = .center
+            $0.text = ""
+        }
+        
+        nickNameTextField.do {
+            $0.frame = CGRect(x: 0, y: 0, width: 350, height: 50)
+            $0.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+            $0.textAlignment = .center
+            $0.font = UIFont(name: "DungGeunMo", size: 16)
+            $0.textColor = .black
+        }
+        
+        info2Text.do {
+            $0.frame = CGRect(x: 0, y: 0, width: 222, height: 12)
+            $0.textColor = UIColor(red: 0.443, green: 0.218, blue: 0.04, alpha: 1)
+            $0.font = UIFont(name: "DungGeunMo", size: 12)
+            $0.textAlignment = .left
+            $0.text = "* 닉네임에는 영문자와 숫자, 한글만 사용할 수 있습니다. \n* 닉네임은 설정시 변경할 수 없습니다."
+            $0.numberOfLines = 0
+            $0.setLineSpacing(spacing: 8.0)
+        }
+        
+        infoText.do {
+            $0.frame = CGRect(x: 0, y: 0, width: 279, height: 18)
+            $0.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            $0.font = UIFont(name: "DungGeunMo", size: 18)
+            $0.textAlignment = .center
+            $0.text = "사용하실 닉네임을 입력해주세요."
+        }
+        
+        nickNameImageView.do {
+            $0.frame = CGRect(x: 0, y: 0, width: 394, height: 204)
+            $0.image = UIImage(named: "img_account_background")
+        }
+        
+        logoText.do {
+            $0.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+            $0.textAlignment = .center
+            $0.attributedText = makeAttributedTitle(title: "나혼자만\n일일퀘스트")
+        }
+        
+        logoBackgroundText.do {
+            $0.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+            $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+            $0.textAlignment = .center
+            $0.attributedText = makeAttributedTitleBackground(title: "나혼자만\n일일퀘스트")
+        }
     }
     
-    func addViews() {
-        view.addSubview(logoBackgroundText)
-        view.addSubview(logoText)
-        view.addSubview(backgroundBottomImageView)
-        view.addSubview(nickNameImageView)
-        view.addSubview(nickNameTextField)
-        view.addSubview(infoText)
-        view.addSubview(info2Text)
-        view.addSubview(validationText)
-        view.addSubview(startButton)
+    private func setLayour() {
+        view.addSubviews(
+            [logoBackgroundText, logoText, backgroundBottomImageView,
+             nickNameImageView, nickNameTextField, infoText,
+             info2Text, validationText, startButton])
         
-    }
-    func autoLayoutConstraints() {
-        logoText.translatesAutoresizingMaskIntoConstraints = false
-        logoBackgroundText.translatesAutoresizingMaskIntoConstraints = false
-        backgroundBottomImageView.translatesAutoresizingMaskIntoConstraints = false
-        nickNameImageView.translatesAutoresizingMaskIntoConstraints = false
-        infoText.translatesAutoresizingMaskIntoConstraints = false
-        info2Text.translatesAutoresizingMaskIntoConstraints = false
-        nickNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        validationText.translatesAutoresizingMaskIntoConstraints = false
-        startButton.translatesAutoresizingMaskIntoConstraints = false
+        logoText.snp.makeConstraints {
+            $0.width.equalTo(200)
+            $0.height.equalTo(80)
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(120)
+        }
         
-        logoText.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        logoText.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        logoText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        logoText.topAnchor.constraint(equalTo: view.topAnchor, constant: 120).isActive = true
+        logoBackgroundText.snp.makeConstraints {
+            $0.width.equalTo(200)
+            $0.height.equalTo(80)
+            $0.centerX.equalToSuperview().inset(3)
+            $0.top.equalToSuperview().inset(123)
+        }
         
-        logoBackgroundText.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        logoBackgroundText.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        logoBackgroundText.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -3).isActive = true
-        logoBackgroundText.topAnchor.constraint(equalTo: view.topAnchor, constant: 123).isActive = true
+        backgroundBottomImageView.snp.makeConstraints {
+            $0.width.equalTo(430)
+            $0.height.equalTo(188)
+            $0.bottom.equalToSuperview()
+        }
         
-        backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
-        backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
-        backgroundBottomImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        nickNameImageView.snp.makeConstraints {
+            $0.width.equalTo(394)
+            $0.height.equalTo(204)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(logoBackgroundText.snp.bottom).offset(60)
+        }
         
-        nickNameImageView.widthAnchor.constraint(equalToConstant: 394).isActive = true
-        nickNameImageView.heightAnchor.constraint(equalToConstant: 204).isActive = true
-        nickNameImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nickNameImageView.topAnchor.constraint(equalTo: logoBackgroundText.bottomAnchor, constant: 60).isActive = true
+        infoText.snp.makeConstraints {
+            $0.width.equalTo(279)
+            $0.height.equalTo(18)
+            $0.top.equalTo(nickNameImageView.snp.top).offset(20)
+            $0.centerX.equalTo(nickNameImageView.snp.centerX)
+        }
         
-        infoText.widthAnchor.constraint(equalToConstant: 279).isActive = true
-        infoText.heightAnchor.constraint(equalToConstant: 18).isActive = true
-        infoText.topAnchor.constraint(equalTo: nickNameImageView.topAnchor, constant: 20).isActive = true
-        infoText.centerXAnchor.constraint(equalTo: nickNameImageView.centerXAnchor).isActive = true
+        info2Text.snp.makeConstraints {
+            $0.width.equalTo(324)
+            $0.height.equalTo(50)
+            $0.top.equalTo(nickNameImageView.snp.top).offset(40)
+            $0.centerX.equalTo(nickNameImageView.snp.centerX)
+        }
         
-        info2Text.widthAnchor.constraint(equalToConstant: 324).isActive = true
-        info2Text.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        info2Text.topAnchor.constraint(equalTo: nickNameImageView.topAnchor, constant: 40).isActive = true
-        info2Text.centerXAnchor.constraint(equalTo: nickNameImageView.centerXAnchor).isActive = true
+        nickNameTextField.snp.makeConstraints {
+            $0.width.equalTo(350)
+            $0.height.equalTo(50)
+            $0.top.equalTo(nickNameImageView.snp.top).offset(96)
+            $0.centerX.equalTo(nickNameImageView.snp.centerX)
+        }
         
-        nickNameTextField.widthAnchor.constraint(equalToConstant: 350).isActive = true
-        nickNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        nickNameTextField.topAnchor.constraint(equalTo: nickNameImageView.topAnchor, constant: 96).isActive = true
-        nickNameTextField.centerXAnchor.constraint(equalTo: nickNameImageView.centerXAnchor).isActive = true
+        validationText.snp.makeConstraints {
+            $0.top.equalTo(nickNameImageView.snp.top).offset(156)
+            $0.centerX.equalTo(nickNameImageView.snp.centerX)
+        }
         
-        validationText.topAnchor.constraint(equalTo: nickNameImageView.topAnchor, constant: 156).isActive = true
-        validationText.centerXAnchor.constraint(equalTo: nickNameImageView.centerXAnchor).isActive = true
-        
-        startButton.topAnchor.constraint(equalTo: nickNameImageView.bottomAnchor, constant: 36).isActive = true
-        startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        startButton.snp.makeConstraints {
+            $0.top.equalTo(nickNameImageView.snp.bottom).offset(36)
+            $0.centerX.equalToSuperview()
+        }
     }
 }

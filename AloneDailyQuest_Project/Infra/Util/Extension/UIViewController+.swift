@@ -73,6 +73,18 @@ extension UIViewController {
             ]
         )
     }
+    
+    func makeAttribueTitleButton(title: String) -> NSAttributedString {
+        return NSAttributedString(
+            string: title,
+            attributes: [
+                NSAttributedString.Key.strokeColor: UIColor.black,
+                NSAttributedString.Key.foregroundColor: UIColor.white,
+                NSAttributedString.Key.font : UIFont(name: "DungGeunMo", size: 22) ?? UIFont.systemFont(ofSize: 22),
+                NSAttributedString.Key.strokeWidth: -2.0
+            ]
+        )
+    }
 }
 
 import SwiftUI

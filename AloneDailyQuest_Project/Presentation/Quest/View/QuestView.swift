@@ -35,6 +35,7 @@ final class QuestView: UIView {
         var view = UIImageView()
         view.frame = CGRect(x: 0, y: 0, width: 430, height: 188)
         view.image = UIImage(named: "image_background_bottom")
+        view.contentMode = .scaleAspectFill
         return view
     }()
     
@@ -115,9 +116,10 @@ final class QuestView: UIView {
         plusButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
+        backgroundBottomImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        backgroundBottomImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
-        backgroundBottomImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        backgroundBottomImageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         tabView.heightAnchor.constraint(equalToConstant: 146).isActive = true
         tabView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true

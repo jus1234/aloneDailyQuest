@@ -122,7 +122,10 @@ extension SignupViewController {
     private func setStyle() {
         view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
         
-        backgroundBottomImageView.do { $0.image = UIImage(named: "image_background_bottom") }
+        backgroundBottomImageView.do {
+            $0.image = UIImage(named: "image_background_bottom")
+            $0.contentMode = .scaleAspectFill
+        }
         
         startButton.do {
             $0.setBackgroundImage(UIImage(named: "btn_account_normal"), for: .normal)
@@ -213,7 +216,8 @@ extension SignupViewController {
         }
         
         backgroundBottomImageView.snp.makeConstraints {
-            $0.width.equalTo(430)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(188)
             $0.bottom.equalToSuperview()
         }

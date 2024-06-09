@@ -127,6 +127,7 @@ class NoticeView: UIView {
     private lazy var noticeImageView: UIImageView = {
         var view = UIImageView()
         view.image = UIImage(named: "img_notice_background")
+        view.contentMode = .scaleAspectFill
         return view
     }()
     

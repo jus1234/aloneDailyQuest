@@ -106,7 +106,10 @@ extension RankingViewController {
     private func setStyle() {
         view.backgroundColor = UIColor(red: 0.22, green: 0.784, blue: 0.784, alpha: 1)
         
-        backgroundBottomImageView.do { $0.image = UIImage(named: "image_background_bottom") }
+        backgroundBottomImageView.do {
+            $0.image = UIImage(named: "image_background_bottom")
+            $0.contentMode = .scaleAspectFill
+        }
         
         titleText.do {
             $0.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -175,7 +178,7 @@ extension RankingViewController {
         }
         
         myRank.do {
-            $0.addArrangedSubviews([makeLabel(text: "-", size: 25), makeLabel(text: "-", size: 25), makeLabel(text: "-", size: 25)])
+            $0.addArrangedSubviews([makeLabel(text: "-", size: 20), makeLabel(text: "-", size: 20), makeLabel(text: "-", size: 20)])
             $0.axis = .horizontal
             $0.distribution = .fillEqually
             $0.alignment = .center
@@ -218,7 +221,8 @@ extension RankingViewController {
         }
         
         backgroundBottomImageView.snp.makeConstraints {
-            $0.width.equalTo(430)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(188)
             $0.bottom.equalToSuperview()
         }

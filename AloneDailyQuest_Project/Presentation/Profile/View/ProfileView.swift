@@ -13,8 +13,8 @@ class ProfileView: UIView {
     
     private lazy var backgroundBottomImageView: UIImageView = {
         var view = UIImageView()
-        
         view.image = UIImage(named: "image_background_bottom")
+        view.contentMode = .scaleAspectFill
         return view
     }()
     
@@ -456,9 +456,10 @@ class ProfileView: UIView {
         titleBackgroundText.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -3).isActive = true
         titleBackgroundText.topAnchor.constraint(equalTo: topAnchor, constant: 66).isActive = true
         
-        backgroundBottomImageView.widthAnchor.constraint(equalToConstant: 430).isActive = true
+        backgroundBottomImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        backgroundBottomImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         backgroundBottomImageView.heightAnchor.constraint(equalToConstant: 188).isActive = true
-        backgroundBottomImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        backgroundBottomImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
     func configureLabel(nickName: String, level: Int) {

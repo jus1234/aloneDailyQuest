@@ -11,7 +11,7 @@ import RxSwift
 protocol ProfileUsecase {
     func fetchUserInfo(userId: String) async throws -> UserInfo
     func fetchExperience(userId: String) async throws -> Int
-    func dropMembership() -> Completable
+    func dropMembership() -> Single<Void>
 }
 
 final class DefaultProfileUsecase: ProfileUsecase {
@@ -31,7 +31,11 @@ final class DefaultProfileUsecase: ProfileUsecase {
         return try await repository.fetchExperience(userId: userId)
     }
     
-    func dropMembership() -> Completable {
-     return questRepository.deleteQuests()
+    func dropMembership() -> Single<Void> {
+        return questRepository.deleteQuests()
+            .do(onSuccess: {
+                UserDefaults.standard.removeObject(forKey: "nickName")
+                UserDefaults.standard.removeObject(forKey: "experience")
+            })
     }
 }

@@ -158,7 +158,7 @@ class NoticeView: UIView {
         return button
     }()
     
-    var didBackButtonTap: Observable<Void> = Observable(())
+//    var didBackButtonTap: Observable<Void> = Observable(())
     
     func addSubviews() {
         addSubview(tabView)
@@ -188,7 +188,7 @@ class NoticeView: UIView {
     }
     
     @objc private func tapBackButton() {
-        didBackButtonTap.value = ()
+//        didBackButtonTap.value = ()
     }
     
     func setupConstraint() {

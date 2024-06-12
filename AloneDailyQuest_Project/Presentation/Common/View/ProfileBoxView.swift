@@ -139,8 +139,6 @@ class ProfileBoxView: UIView {
         return stack
     }()
     
-    var user: Observable<UserInfo?>?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
@@ -173,26 +171,6 @@ class ProfileBoxView: UIView {
         }
 
         experienceLayer?.frame = CGRect(x: 0, y: 0, width: experienceBar.bounds.width * progressFraction, height: 18)
-    }
-    
-    private func bindExperience() {
-        user?.bind { [weak self] newValue in
-            self?.levelLabel.text = "LV. \(newValue?.fetchLevel())"
-            guard 
-                let level = newValue?.fetchLevel(),
-                let levelImage = self?.configLevelImage(with: level)
-            else {
-                return
-            }
-            self?.profileImage.image = UIImage(named: levelImage)
-        }
-    }
-    
-    func setupProfile(user: Observable<UserInfo?>) {
-        self.user = user
-        nickNameText.text = user.value?.fetchNickName()
-        levelLabel.text = "LV.\(user.value?.fetchLevel())"
-        bindExperience()
     }
     
     private func configLevelImage(with level: Int) -> String {

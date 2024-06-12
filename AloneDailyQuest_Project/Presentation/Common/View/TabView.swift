@@ -8,12 +8,6 @@
 import UIKit
 
 class TabView: UIStackView {
-    
-//    weak var delegate: delegateViewController? = nil
-    var qeusetViewEvent: Observable<Void> = Observable(())
-    var rankiViewEvent: Observable<Void> = Observable(())
-    var profileViewEvent: Observable<Void> = Observable(())
-    
     lazy var questLabel: UILabel = {
         let label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: 77, height: 14)
@@ -49,23 +43,8 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(didQuestButtonTap), for: .touchUpInside)
         return button
     }()
-    
-    @objc func didQuestButtonTap() {
-//        questViewDelegate?()
-        qeusetViewEvent.value = ()
-    }
-    
-    @objc func didrankButtonTap() {
-//        rankiViewDelegate?()
-        rankiViewEvent.value = ()
-    }
-    
-    @objc func didProfileButtonTap() {
-        profileViewEvent.value = ()
-    }
     
     lazy var questStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [questButton, questLabel])
@@ -111,7 +90,6 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(didrankButtonTap), for: .touchUpInside)
         return button
     }()
     
@@ -159,7 +137,6 @@ class TabView: UIStackView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        button.addTarget(self, action: #selector(didProfileButtonTap), for: .touchUpInside)
         return button
     }()
     

@@ -251,7 +251,7 @@ final class DetailView: UIView {
         return button
     }()
     
-    var didBackButtonTap: Observable<Void> = Observable(())
+//    var didBackButtonTap: Observable<Void> = Observable(())
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -267,7 +267,7 @@ final class DetailView: UIView {
     }
     
     @objc private func tapBackButton() {
-        didBackButtonTap.value = ()
+//        didBackButtonTap.value = ()
     }
     
     func addsubviews() {

@@ -54,7 +54,6 @@
 		BDB4A0572BEB316F0076E564 /* RankingUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */; };
 		BDB4A0592BEB3ABF0076E564 /* AccountUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */; };
 		BDB4A05F2BEB3FE20076E564 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */; };
-		BDB4A0622BEB40370076E564 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0612BEB40370076E564 /* Observable.swift */; };
 		BDB4A0642BEB40BD0076E564 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0632BEB40BD0076E564 /* ViewModel.swift */; };
 		BDB4A0752BEE0AF70076E564 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */; };
 		BDC88B472BB015BB00FA0A2F /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */; };
@@ -160,7 +159,6 @@
 		BDB4A0562BEB316F0076E564 /* RankingUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingUsecase.swift; sourceTree = "<group>"; };
 		BDB4A0582BEB3ABF0076E564 /* AccountUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountUsecase.swift; sourceTree = "<group>"; };
 		BDB4A05E2BEB3FE20076E564 /* RankingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
-		BDB4A0612BEB40370076E564 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		BDB4A0632BEB40BD0076E564 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		BDB4A0742BEE0AF70076E564 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		BDC88B462BB015BB00FA0A2F /* RankingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
@@ -498,7 +496,6 @@
 			isa = PBXGroup;
 			children = (
 				C174B4922B2D4D3B00692447 /* Extension */,
-				BDB4A0612BEB40370076E564 /* Observable.swift */,
 				BDB4A0632BEB40BD0076E564 /* ViewModel.swift */,
 				BD1035B22BF5E162001EBF0A /* CoordinatorCase.swift */,
 				BDAE998E2C0C3DE8009898E6 /* UserDefaultsError.swift */,
@@ -854,7 +851,6 @@
 				C1C98E7D2C0C597000C59F7B /* LaunchScreenViewController.swift in Sources */,
 				BDA4C6322BFB2A850054DF33 /* NoticeVewModel.swift in Sources */,
 				C12358F52B7250FD0084FE36 /* ProfileViewController.swift in Sources */,
-				BDB4A0622BEB40370076E564 /* Observable.swift in Sources */,
 				BDB4A0372BEA102D0076E564 /* UserInfoDTO.swift in Sources */,
 				BD1035CA2BF61316001EBF0A /* DefaultRankingCoordinator.swift in Sources */,
 				BD22DC0A2BF1E31F00416D35 /* AppCoordinator.swift in Sources */,

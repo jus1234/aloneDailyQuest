@@ -7,15 +7,13 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class NoticeViewController: UIViewController {
-    
+    private let disosebag = DisposeBag()
     private let viewModel: NoticeVewModel
     private let notice = NoticeView()
-    private lazy var input = NoticeVewModel.Input(didBackButtonTap: notice.didBackButtonTap,
-                                                  qeusetViewEvent: notice.tabView.qeusetViewEvent,
-                                                  rankViewEvent: notice.tabView.rankiViewEvent,
-                                                  profileViewEvent: notice.tabView.profileViewEvent)
-    private lazy var output = viewModel.transform(input: input)
     
     init(viewModel: NoticeVewModel) {
         self.viewModel = viewModel
@@ -33,8 +31,12 @@ final class NoticeViewController: UIViewController {
     }
     
     private func bindOutput() {
-        output.errorMessage.bind { [weak self] errorMessage in
-            self?.completedAlert(message: errorMessage)
-        }
+        let input = NoticeVewModel.Input(didBackButtonTap: notice.backButton.rx.tap)
+        let output = viewModel.transform(input: input)
+        
+        output.viewChangedEvent
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self)
+            .disposed(by: disosebag)
     }
 }

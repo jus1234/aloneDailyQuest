@@ -10,11 +10,10 @@ import RxSwift
 
 protocol AccountUsecase {
     func signup(userId: String) -> Single<Bool>
-    func validata(nickName: String) -> Completable
+    func validata(nickName: String) -> Single<Bool>
 }
 
 final class DefaultAccountUsecase: AccountUsecase {
-    private let dispoeseBag = DisposeBag()
     
     private let repository: AccountRepository
     
@@ -23,47 +22,32 @@ final class DefaultAccountUsecase: AccountUsecase {
     }
     
     func signup(userId: String) -> Single<Bool> {
-        return Single.create { [weak self] observer in
-            guard let self else {
-                observer(.failure(NSError()))
-                return Disposables.create()
-            }
-            repository
-                .checkId(userId: userId)
-                .subscribe(onSuccess: { result in
-                    if result {
-                        observer(.success(false))
-                        return
+        return repository
+            .checkId(userId: userId)
+            .flatMap { [weak self] isExist -> Single<Bool> in
+                switch isExist {
+                case true:
+                    return .just(false)
+                case false:
+                    guard let result = self?.repository.signup(userId: userId) else {
+                        return .error(NSError())
                     }
-                    self.repository
-                        .signup(userId: userId)
-                        .subscribe(onCompleted: {
-                            UserDefaults.standard.set(userId, forKey: "nickName")
-                            UserDefaults.standard.setValue(0, forKey: "experience")
-                            observer(.success(true))
-                        }, onError: { error in
-                            observer(.failure(error))
-                        })
-                        .disposed(by: self.dispoeseBag)
-                }, onFailure: { error in
-                    observer(.failure(error))
-                })
-                .disposed(by: dispoeseBag)
-            return Disposables.create()
-        }
+                    UserDefaults.standard.set(userId, forKey: "nickName")
+                    UserDefaults.standard.setValue(0, forKey: "experience")
+                    return result
+                }
+            }
     }
     
-    func validata(nickName: String) -> Completable {
-        return Completable.create { observer in
+    func validata(nickName: String) -> Single<Bool> {
+        return Single.create { observer in
             guard nickName.count > 0 else {
-                observer(.error(NSError()))
+                observer(.success(false))
                 return Disposables.create()
             }
-            
             let nicknameRegex = "^[a-zA-Z0-9가-힣]{1,8}$"
             let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
-            nicknamePredicate.evaluate(with: nickName) ? observer(.completed) : observer(.error(NSError()))
-            
+            nicknamePredicate.evaluate(with: nickName) ? observer(.success(true)) : observer(.success(false))
             return Disposables.create()
         }
     }

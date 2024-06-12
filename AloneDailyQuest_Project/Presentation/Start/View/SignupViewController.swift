@@ -26,9 +26,6 @@ class SignupViewController: UIViewController {
     private let logoBackgroundText = UILabel()
     
     private let viewModel: SignupViewModel
-    private lazy var input = SignupViewModel.Input(
-        signupEvent: PublishRelay(),
-        nickNameValidationEvent: nickNameTextField.rx.text.orEmpty)
     
     init(viewModel: SignupViewModel) {
         self.viewModel = viewModel
@@ -43,24 +40,21 @@ class SignupViewController: UIViewController {
         super.viewDidLoad()
         setStyle()
         setLayour()
-        setupAddTarget()
         bindOutput()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        regiterNotifications()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        unRegisterNotification()
     }
 }
 
 extension SignupViewController {
     private func bindOutput() {
-        
+        let input = SignupViewModel.Input(
+            signupEvent: startButton.rx.tap
+                .flatMap { [weak self] _ -> Observable<String> in
+                    guard let nickName = self?.nickNameTextField.text else {
+                        return .empty()
+                    }
+                    return .just(nickName)
+                },
+            nickNameValidationEvent: nickNameTextField.rx.text.orEmpty)
         let output = viewModel.transform(input: input)
         
         output.isValidNickName
@@ -78,43 +72,24 @@ extension SignupViewController {
             }
             .disposed(by: disposeBag)
         
-        output.errorMessage
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner, error in
-                owner.completedAlert(message: error)
+        output.signupResult
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self) { owner, result in
+                if !result {
+                    owner.completedAlert(message: "중복된 닉네임입니다.")
+                }
             }
             .disposed(by: disposeBag)
-    }
-}
-
-extension SignupViewController {
-    private func setupAddTarget() {
-        startButton.addTarget(self, action: #selector(signup), for: .touchUpInside)
-    }
-    
-    @objc private func signup() {
-        guard let nickName = nickNameTextField.text else {
-            return
-        }
-        input.signupEvent.accept(nickName)
-    }
-    
-    private func regiterNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardEvent), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
         
-    private func unRegisterNotification() {
-        NotificationCenter.default.removeObserver(self,name:UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self,name:UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc private func keyboardEvent(notiInfo: Notification){
-        if notiInfo.name == UIResponder.keyboardWillShowNotification {
-            nickNameImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 120).isActive = true
-        }else{
-            nickNameImageView.topAnchor.constraint(equalTo: logoBackgroundText.bottomAnchor, constant: 60).isActive = true
-        }
+        NotificationCenter.default.rx
+            .notification(UIResponder.keyboardWillShowNotification)
+            .asDriver(onErrorJustReturn: Notification(name: UIResponder.keyboardWillShowNotification))
+            .drive(with: self) { owner, _ in
+                owner.nickNameImageView.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(120)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -260,4 +235,5 @@ extension SignupViewController {
             $0.centerX.equalToSuperview()
         }
     }
+    
 }

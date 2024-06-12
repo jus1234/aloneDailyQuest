@@ -130,8 +130,8 @@ extension DefaultQuestRepository {
         }
     }
     
-    func deleteQuests() -> Completable {
-        return Completable.create { [weak self] observer in
+    func deleteQuests() -> Single<Void> {
+        return Single.create { [weak self] observer in
             do {
                 guard let self else { throw CoreDataError.general }
                 let request = NSFetchRequest<NSManagedObject>(entityName: modelName)
@@ -144,9 +144,9 @@ extension DefaultQuestRepository {
                 if context.hasChanges {
                     try context.save()
                 }
-                observer(.completed)
+                observer(.success(()))
             } catch {
-                observer(.error(error))
+                observer(.failure(error))
             }
             return Disposables.create()
         }

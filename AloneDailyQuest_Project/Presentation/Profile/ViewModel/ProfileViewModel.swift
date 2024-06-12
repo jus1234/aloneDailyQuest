@@ -7,87 +7,78 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
-@MainActor
 final class ProfileViewModel: ViewModel {
-    private let disosebag = DisposeBag()
-    
     struct Input {
-        var viewDidLoad: Observable<Void>
-        var qeusetViewEvent: Observable<Void>
-        var rankViewEvent: Observable<Void>
-        var profileViewEvent: Observable<Void>
-        var didNoticeTap: Observable<Void>
-        var didContactTap: Observable<Void>
-        var didLeaveTap: Observable<Void>
-        var dropMembershipEvent: Observable<Void>
+        var viewWillAppear: ControlEvent<Bool>
+        var qeusetViewEvent: ControlEvent<Void>
+        var rankViewEvent: ControlEvent<Void>
+        var didNoticeTap: ControlEvent<Void>
+        var didContactTap: ControlEvent<Void>
+        var didLeaveTap: ControlEvent<Void>
+        var dropMembershipEvent: PublishSubject<Void>
     }
     
     struct Output {
         var userInfo: Observable<UserInfo?>
         var ourEmail: Observable<String>
         var warningMessage: Observable<String>
+        var result: Observable<Void>
+        var viewChanged: Observable<Void>
     }
     
     private let usecase: ProfileUsecase
     private let coordinator: ProfileCoordinator
-    private var user: Observable<UserInfo?> = Observable(nil)
-    private var email: Observable<String> = Observable("")
-    private var message: Observable<String> = Observable("")
     
     init(usecase: ProfileUsecase, coordinator: ProfileCoordinator) {
         self.usecase = usecase
         self.coordinator = coordinator
     }
     
-    func viewDidLoad() {
-        self.user.value = UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
-                             experience: UserDefaults.standard.integer(forKey: "experience"))
-    }
-    
-    func sendOurEmail() {
-        self.email.value = "aloneDailyQuest@gmail.com"
-    }
-    
-    func sendWarningMessage() {
-        self.message.value = "회원탈퇴시 회원정보를 복구할 수 없습니다. 정말 탈퇴하시겠습니까?"
-    }
-    
-    func dropMembership() {
-            usecase.dropMembership()
-                .subscribe(onCompleted: { [weak self] in
-                    self?.coordinator.finish(to: .app)
-                })
-                .disposed(by: disosebag)
-    }
-    
     func transform(input: Input) -> Output {
-        input.viewDidLoad.bind { [weak self] _ in
-            self?.viewDidLoad()
-        }
+        let userInfo: Observable<UserInfo?> = input.viewWillAppear
+            .map { _ in
+                UserInfo(nickName: UserDefaults.standard.string(forKey: "nickName") ?? "",
+                         experience: UserDefaults.standard.integer(forKey: "experience"))
+            }
+        let ourEmail = input.didContactTap
+            .map { "aloneDailyQuest@gmail.com" }
         
-        input.qeusetViewEvent.bind { [weak self] _ in
-            self?.coordinator.finish(to: .quest)
-        }
-        input.rankViewEvent.bind { [weak self] _ in
-            self?.coordinator.finish(to: .ranking)
-        }
-        input.profileViewEvent.bind { _ in
-            return
-        }
-        input.didNoticeTap.bind { [weak self] _ in
-            self?.coordinator.connectNoticeCoordinator()
-        }
-        input.didContactTap.bind { [weak self] _ in
-            self?.sendOurEmail()
-        }
-        input.didLeaveTap.bind { [weak self] _ in
-            self?.sendWarningMessage()
-        }
-        input.dropMembershipEvent.bind { [weak self] _ in
-            self?.dropMembership()
-        }
-        return .init(userInfo: self.user, ourEmail: self.email, warningMessage: self.message)
+        let warningMessage = input.didLeaveTap
+            .map { "회원탈퇴시 회원정보를 복구할 수 없습니다. 정말 탈퇴하시겠습니까?" }
+        
+        let result = input.dropMembershipEvent
+            .flatMap { _ in
+                return self.usecase.dropMembership()
+                    .do(onSuccess: {
+                        self.coordinator.finish(to: .app)
+                    })
+                    .asObservable()
+            }
+        
+        let didNoticeTap = input.didNoticeTap
+            .do(onNext: { [weak self] in
+                self?.coordinator.connectNoticeCoordinator()
+            })
+        
+        let questViewEvent =  input.qeusetViewEvent
+            .do(onNext: { [weak self] in
+                self?.coordinator.finish(to: .quest)
+            })
+        
+        let rankViewEvent = input.rankViewEvent
+            .do(onNext: { [weak self] in
+                self?.coordinator.finish(to: .ranking)
+            })
+        
+        let viewChangedEvent = Observable.of(didNoticeTap, questViewEvent, rankViewEvent)
+            .merge()
+        
+        return Output(userInfo: userInfo,
+                      ourEmail: ourEmail,
+                      warningMessage: warningMessage,
+                      result: result, viewChanged: viewChangedEvent)
     }
     
 }

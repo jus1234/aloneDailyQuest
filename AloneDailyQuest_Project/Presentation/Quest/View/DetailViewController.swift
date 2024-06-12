@@ -15,9 +15,9 @@ final class DetailViewController: UIViewController {
     
     private let detailView = DetailView()
     private let viewModel: DetailViewModel
-    private var viewDidLoadEvent: Observable<Void> = Observable(())
-    private lazy var updateEvent: Observable<QuestInfo?> = Observable(questData)
-    private lazy var addEvent: Observable<QuestInfo?> = Observable(nil)
+//    private var viewDidLoadEvent: Observable<Void> = Observable(())
+//    private lazy var updateEvent: Observable<QuestInfo?> = Observable(questData)
+//    private lazy var addEvent: Observable<QuestInfo?> = Observable(nil)
     private lazy var input = DetailViewModel.Input(
         updateEvent: PublishRelay(),
         createEvent: PublishRelay(),

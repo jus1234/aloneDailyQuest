@@ -29,7 +29,7 @@ final class DefaultSignupCoordinator: SignupCoordinator {
         navigationController.pushViewController(signupViewController, animated: false)
     }
     
-    @MainActor func finish() {
+    func finish() {
         finishDelegate?.didFinish(childCoordinator: self, to: .quest)
     }
 }

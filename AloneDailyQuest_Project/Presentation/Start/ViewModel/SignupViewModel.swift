@@ -11,16 +11,14 @@ import RxSwift
 import RxCocoa
 
 class SignupViewModel: ViewModel {
-    private let disposeBag = DisposeBag()
-    
     struct Input {
-        var signupEvent: PublishRelay<String>
+        var signupEvent: Observable<String>
         var nickNameValidationEvent: ControlProperty<String>
     }
     
     struct Output {
-        var isValidNickName: PublishRelay<Bool>
-        var errorMessage: PublishRelay<String>
+        var isValidNickName: Observable<Bool>
+        var signupResult: Observable<Bool>
     }
     
     private let usecase: AccountUsecase
@@ -32,44 +30,27 @@ class SignupViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(
-            isValidNickName: PublishRelay(),
-            errorMessage: PublishRelay())
-        
-        input.signupEvent
-            .subscribe(onNext: { [weak self] nickName in
-                guard let self else {
-                    return
+        let isValidNickName = input.nickNameValidationEvent
+            .flatMap { [weak self] nickName -> Observable<Bool> in
+                guard let result = self?.usecase.validata(nickName: nickName)
+                    .asObservable() else {
+                    return .empty()
                 }
-                usecase
-                    .signup(userId: nickName)
-                    .subscribe(onSuccess: { result in
-                        DispatchQueue.main.async {
-                            result ? self.coordinator.finish(to: .quest) : output.errorMessage.accept("중복된 닉네임입니다.")
-                        }
-                    }, onFailure: { error in
-                        output.errorMessage.accept(error.localizedDescription)
-                    })
-                    .disposed(by: disposeBag)
-            })
-            .disposed(by: disposeBag)
+                return result
+            }
         
-        input.nickNameValidationEvent
-            .subscribe(onNext: { [weak self] nickName in
-                guard let self else {
-                    return
+        let signupResult = input.signupEvent
+            .flatMap { [weak self] nickName in
+                return self?.usecase.signup(userId: nickName) ?? .just(false)
+            }
+            .asDriver(onErrorJustReturn: false)
+            .do { [weak self] result in
+                if result {
+                    self?.coordinator.finish(to: .quest)
                 }
-                usecase
-                    .validata(nickName: nickName)
-                    .subscribe(onCompleted: {
-                        output.isValidNickName.accept(true)
-                    }, onError: { _ in
-                        output.isValidNickName.accept(false)
-                    })
-                    .disposed(by: disposeBag)
-            })
-            .disposed(by: disposeBag)
-        
-        return output
+            }
+            .asObservable()
+
+        return Output(isValidNickName: isValidNickName, signupResult: signupResult)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol AccountRepository {
-    func signup(userId: String) -> Completable
+    func signup(userId: String) -> Single<Bool>
     func checkId(userId: String) -> Single<Bool>
     func fetchUserInfo(userId: String) -> Single<UserInfo>
     func fetchExperience(userId: String) -> Single<Int>

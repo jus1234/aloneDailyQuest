@@ -19,11 +19,11 @@ final class DefaultNoticeCoordinator: NoticeCoordinator {
         self.depengencyManager = depengencyManager
     }
     
-    @MainActor func start() {
+    func start() {
         showNoticeViewContoroller()
     }
     
-    @MainActor func showNoticeViewContoroller() {
+    func showNoticeViewContoroller() {
         let viewModel = NoticeVewModel(coordinator: self)
         let noticeviewController = NoticeViewController(viewModel: viewModel)
         navigationController.pushViewController(noticeviewController, animated: true)

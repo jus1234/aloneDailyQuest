@@ -19,17 +19,17 @@ final class DefaultProfileCoordinator: ProfileCoordinator {
         self.depengencyManager = depengencyManager
     }
     
-    @MainActor func start() {
+    func start() {
         showProfileViewController()
     }
     
-    @MainActor func showProfileViewController() {
+    func showProfileViewController() {
         let videwModel = ProfileViewModel(usecase: depengencyManager.makeProfileUsecase(), coordinator: self)
         let questViewController = ProfileViewController(viewModel: videwModel)
         navigationController.pushViewController(questViewController, animated: false)
     }
     
-    @MainActor func connectNoticeCoordinator() {
+    func connectNoticeCoordinator() {
         let noticeCoordinator = DefaultNoticeCoordinator(self.navigationController, depengencyManager)
         noticeCoordinator.finishDelegate = self
         self.childCoordinators.append(noticeCoordinator)
@@ -42,7 +42,7 @@ final class DefaultProfileCoordinator: ProfileCoordinator {
 }
 
 extension DefaultProfileCoordinator: CoordinatorFinishDelegate {
-    @MainActor func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
+    func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
         if nextCoordinator == .profile {
             self.childCoordinators = self.childCoordinators.filter { $0.type != childCoordinator.type }
             childCoordinator.navigationController.popToRootViewController(animated: true)

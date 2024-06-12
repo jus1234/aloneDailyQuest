@@ -49,7 +49,7 @@ final class DefaultAppCoordinator: AppCoordinator {
         childCoordinators.append(rankingCoordinator)
     }
     
-    @MainActor func showProfileFlow() {
+    func showProfileFlow() {
         let profileCoordinator = DefaultProfileCoordinator(self.navigationController, self.depengencyManager)
         profileCoordinator.finishDelegate = self
         profileCoordinator.start()
@@ -58,7 +58,7 @@ final class DefaultAppCoordinator: AppCoordinator {
 }
 
 extension DefaultAppCoordinator: CoordinatorFinishDelegate {
-    @MainActor func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
+    func didFinish(childCoordinator: Coordinator, to nextCoordinator: CoordinatorCase) {
         self.childCoordinators = self.childCoordinators.filter({ $0.type != childCoordinator.type })
         self.navigationController.viewControllers.removeAll()
         

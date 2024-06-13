@@ -22,16 +22,15 @@ final class QuestViewController: UIViewController{
     
     private lazy var input = QuestViewModel.Input(
         viewWillAppear: rx.viewWillAppear,
-        deleteQuestEvent: PublishRelay(),
-        qeusetViewEvent: questView.tabView.questButton.rx.tap,
-        rankViewEvent: questView.tabView.rankListButton.rx.tap,
-        profileViewEvent: questView.tabView.profileButton.rx.tap,
-        didPlusButtonTap: questView.plusButton.rx.tap,
-        updateQuestEvent: PublishRelay(),
-        completeQuestEvent: PublishRelay())
-    
-    var index: IndexPath?
-    var todayExp = 0
+        loadQuests: PublishRelay(),
+        deleteQuest: PublishRelay(),
+        moveToRankView: questView.tabView.rankListButton.rx.tap,
+        moveToProfileView: questView.tabView.profileButton.rx.tap,
+        createQuest: questView.plusButton.rx.tap,
+        updateQuest: PublishRelay(),
+        completeQuest: PublishRelay(),
+        dayChanged: NotificationCenter.default.rx
+            .notification(UIApplication.significantTimeChangeNotification))
     
     init(viewModel: QuestViewModel) {
         self.viewModel = viewModel
@@ -61,22 +60,7 @@ final class QuestViewController: UIViewController{
     func bindOutput() {
         let output = viewModel.transform(input: input)
         
-        output.userInfo
-            .asDriver(onErrorJustReturn: UserInfo(nickName: "-", experience: 0))
-            .drive(with: self) { owner, user in
-                guard
-                    let nickName = user?.fetchNickName(),
-                    let level = user?.fetchLevel(),
-                    let experience = user?.fetchExperience()
-                else {
-                    return
-                }
-                owner.questView.profileBoxView.configureLabel(nickName: nickName, level: String(level))
-                owner.questView.profileBoxView.updateExperienceBar(currentExp: experience)
-            }
-            .disposed(by: disposeBag)
-        
-        output.questList
+        output.quests
             .asDriver(onErrorJustReturn: [])
             .drive(with: self) { owner, quests in
                 owner.questList = quests
@@ -84,18 +68,47 @@ final class QuestViewController: UIViewController{
             }
             .disposed(by: disposeBag)
         
-        output.errorMessage
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner, error in
-                owner.completedAlert(message: error)
-            }
+        output.updateResult
+            .asDriver(onErrorJustReturn: true)
+            .do(onNext: { [weak self] result in
+                switch result {
+                case true:
+                    self?.input.loadQuests.accept(())
+                    self?.setupProfile()
+                case false:
+                    self?.completedAlert(message: "일일 획득 가능 최대 경험치를\n 초과했습니다.")
+                }
+            })
+            .drive(with: self)
             .disposed(by: disposeBag)
+        
+        output.delereResult
+            .asDriver(onErrorJustReturn: ())
+            .do { [weak self] _ in
+                self?.input.loadQuests.accept(())
+            }
+            .drive(with: self)
+            .disposed(by: disposeBag)
+        
+        output.viewChanged
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self)
+            .disposed(by: disposeBag)
+        
+        output.resetDailyQuests
+            .asDriver(onErrorJustReturn: ())
+            .do(onNext: { [weak self] _ in
+                self?.input.loadQuests.accept(())
+            })
+            .drive(with: self)
+            .disposed(by: disposeBag)
+
     }
     
     @objc func updateQuest(sender: UIButton) {
         let questData = self.filterQuest()
         let quest = questData[sender.tag]
-        input.updateQuestEvent.accept(quest)
+        input.updateQuest.accept(quest)
     }
     
     @objc func deleteQuest(sender: UIButton) {
@@ -105,10 +118,7 @@ final class QuestViewController: UIViewController{
             guard let questData = self?.filterQuest() else {
                 return
             }
-            if questData[sender.tag].completed {
-                self?.todayExp -= 20
-            }
-            self?.input.deleteQuestEvent.accept(questData[sender.tag])
+            self?.input.deleteQuest.accept(questData[sender.tag])
             
         }))
         self.present(alert, animated: true, completion: nil)
@@ -118,7 +128,7 @@ final class QuestViewController: UIViewController{
         let questData = self.filterQuest()
         var questInfo = questData[sender.tag]
         questInfo.completed = true
-        input.completeQuestEvent.accept(questInfo)
+        input.completeQuest.accept(questInfo)
     }
 }
 
@@ -151,14 +161,6 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
         // 테이블뷰 시작시 UI 기본 설정
         cell.repeatday.text = cell.questData?.repeatDay
         cell.questTitle.text = cell.questData?.quest
-        
-        index = indexPath
-    
-        if todayExp < 100 {
-            cell.expAmount.text = "보상 : 1xp"
-        } else {
-            cell.expAmount.text = "보상 : - "
-        }
 
         if cell.questData!.completed {
             cell.questImage.image = UIImage(named: "img_quest_completed")
@@ -189,16 +191,6 @@ extension QuestViewController: UITableViewDataSource, UITableViewDelegate {
             if var questData = cell.self.questData {
                 questData.completed = completedCheck
                 tableView.reloadData()
-            }
-        }
-        
-        func toggleExpAdd() {
-            if cell.questData!.completed {
-                self.userExperience = -20
-                todayExp -= 20
-            } else {
-                self.userExperience = 20
-                todayExp += 20
             }
         }
         

@@ -9,15 +9,12 @@ import Foundation
 import RxSwift
 
 protocol QuestUsecase {
-    func create(quest: QuestInfo) -> Completable
+    func create(quest: QuestInfo) -> Single<Bool>
     func fetchQuests() -> Single<[QuestInfo]>
-    func update(quest: QuestInfo) -> Completable
-    func delete(quest: QuestInfo) -> Completable
-    func fetchUserInfo(userId: String) -> Single<UserInfo>
-    func fetchExperience(userId: String) -> Single<Int>
-    func addExperience(userId: String, experience: Int) -> Single<Int>
+    func complete(quest: QuestInfo) -> Single<Bool>
+    func save(quest: QuestInfo) -> Single<Bool>
+    func delete(quest: QuestInfo) -> Single<Bool>
     func resetDailyQuests() -> Single<Void>
-    func isTodayExperienceAcquisitionMax() -> Single<Void>
 }
 
 final class DefaultQuestUsecase: QuestUsecase {
@@ -27,7 +24,7 @@ final class DefaultQuestUsecase: QuestUsecase {
         self.repository = repository
     }
     
-    func create(quest: QuestInfo) -> Completable {
+    func create(quest: QuestInfo) -> Single<Bool> {
         return repository.create(quest: quest)
     }
     
@@ -35,24 +32,56 @@ final class DefaultQuestUsecase: QuestUsecase {
         return repository.fetchQuests()
     }
     
-    func update(quest: QuestInfo) -> Completable {
-        return repository.update(quest: quest)
+    func complete(quest: QuestInfo) -> Single<Bool> {
+        return isTodayExperienceAcquisitionMax()
+            .flatMap { [weak self] isMax -> Single<Bool> in
+                if isMax {
+                    return .just(false)
+                }
+                guard let updateResult = self?.repository.update(quest: quest) else {
+                    return .error(NSError())
+                }
+                return updateResult
+            }
+            .flatMap { [weak self] result -> Single<Int> in
+                switch result {
+                case true:
+                    let experience = UserDefaults.standard.integer(forKey: "experience")
+                    guard
+                        let nickName = UserDefaults.standard.string(forKey: "nickName"),
+                        let addExperience = self?.repository.addExperience(userId: nickName, experience: experience + 1)
+                    else {
+                        return .error(NSError())
+                    }
+                    UserDefaults.standard.set(experience + 1, forKey: "experience")
+                    return addExperience
+                case false:
+                    return .just(0)
+                }
+            }
+            .map { $0 > 0 ? true : false }
     }
     
-    func delete(quest: QuestInfo) -> Completable {
+    func save(quest: QuestInfo) -> Single<Bool> {
+        return repository.isExisting(quest: quest)
+            .flatMap { [weak self] isExisting in
+                switch isExisting {
+                case true:
+                    guard let update = self?.repository.update(quest: quest) else {
+                        return .error(NSError())
+                    }
+                    return update
+                case false:
+                    guard let create = self?.repository.create(quest: quest) else {
+                        return .error(NSError())
+                    }
+                    return create
+                }
+            }
+    }
+    
+    func delete(quest: QuestInfo) -> Single<Bool> {
         return repository.delete(quest: quest)
-    }
-    
-    func fetchUserInfo(userId: String) -> Single<UserInfo> {
-        return repository.fetchUserInfo(userId: userId)
-    }
-    
-    func fetchExperience(userId: String) -> Single<Int> {
-        return repository.fetchExperience(userId: userId)
-    }
-    
-    func addExperience(userId: String, experience: Int) -> Single<Int> {
-        return repository.addExperience(userId: userId, experience: experience)
     }
     
     func resetDailyQuests() -> Single<Void> {
@@ -82,14 +111,14 @@ final class DefaultQuestUsecase: QuestUsecase {
         }
     }
     
-    func isTodayExperienceAcquisitionMax() -> Single<Void> {
+    private func isTodayExperienceAcquisitionMax() -> Single<Bool> {
         return Single.create { observer in
             let todayExperience = UserDefaults.standard.integer(forKey: "todayExperience")
             if todayExperience == 5 {
-                observer(.failure(UserDefaultsError.todayExperienceExceed))
+                observer(.success(true))
             } else {
                 UserDefaults.standard.set(todayExperience + 1, forKey: "todayExperience")
-                observer(.success(()))
+                observer(.success(false))
             }
             return Disposables.create()
         }

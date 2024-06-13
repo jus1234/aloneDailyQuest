@@ -36,6 +36,7 @@ final class DefaultProfileUsecase: ProfileUsecase {
             .do(onSuccess: {
                 UserDefaults.standard.removeObject(forKey: "nickName")
                 UserDefaults.standard.removeObject(forKey: "experience")
+                UserDefaults.standard.removeObject(forKey: "todayExperience")
             })
     }
 }

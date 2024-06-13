@@ -11,19 +11,15 @@ import RxCocoa
 import RxSwift
 
 final class RankingViewModel: ViewModel {
-    private var disposeBag = DisposeBag()
-    
     struct Input {
         var viewWillAppear: ControlEvent<Bool>
         var qeusetViewEvent: ControlEvent<Void>
-        var rankViewEvent: ControlEvent<Void>
         var profileViewEvent: ControlEvent<Void>
     }
     
     struct Output {
-        var rankingList: BehaviorRelay<[UserInfo]>
-        var myRanking: PublishRelay<Int>
-        var errorMessage: PublishRelay<String>
+        var rankData: Observable<([UserInfo], Int)>
+        var viewChanged: Observable<Void>
     }
     
     private let usecase: RankingUsecase
@@ -35,49 +31,30 @@ final class RankingViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(
-            rankingList: BehaviorRelay(value: [UserInfo]()),
-            myRanking: PublishRelay(),
-            errorMessage: PublishRelay())
-        
-        input.viewWillAppear
-            .flatMapLatest { [weak self] _ -> Single<([UserInfo], Int)> in
+        let rankData = input.viewWillAppear
+            .flatMap { [weak self] _ -> Observable<([UserInfo], Int)> in
                 guard
-                    let self = self,
-                    let nickName = UserDefaults.standard.string(forKey: "nickName")
+                    let nickName = UserDefaults.standard.string(forKey: "nickName"),
+                    let rankList = self?.usecase.fetchRankingList().asObservable(),
+                    let myRank = self?.usecase.fetchUserRanking(nickName: nickName).asObservable()
                 else {
-                    return Single.error(UserDefaultsError.notFound)
+                    return .empty()
                 }
-                return Single.zip(
-                    self.usecase.fetchRankingList(),
-                    self.usecase.fetchUserRanking(nickName: nickName))
+                return Observable.zip(rankList, myRank)
             }
-            .subscribe(onNext: { rankingList, myRanking in
-                output.rankingList.accept(rankingList)
-                output.myRanking.accept(myRanking)
-            }, onError: { error in
-                output.errorMessage.accept(error.localizedDescription)
+        
+        let toQuestView = input.qeusetViewEvent
+            .do(onNext: { [weak self] _ in
+                self?.coordinator.finish(to: .quest)
             })
-            .disposed(by: disposeBag)
         
-        input.qeusetViewEvent
-            .subscribe(with: self) { owner, _ in
-                owner.coordinator.finish(to: .quest)
-            }
-            .disposed(by: disposeBag)
+        let toProfileView = input.profileViewEvent
+            .do(onNext: { [weak self] _ in
+                self?.coordinator.finish(to: .profile)
+            })
         
-        input.rankViewEvent
-            .subscribe(with: self) { owner, _ in
-                owner.coordinator.finish(to: .ranking)
-            }
-            .disposed(by: disposeBag)
+        let viewChanged = Observable.merge([toQuestView, toProfileView])
         
-        input.profileViewEvent
-            .subscribe(with: self) { owner, _ in
-                owner.coordinator.finish(to: .profile)
-            }
-            .disposed(by: disposeBag)
-        
-        return output
+        return Output(rankData: rankData, viewChanged: viewChanged)
     }
 }

@@ -65,14 +65,16 @@ extension RankingViewController {
         let input = RankingViewModel.Input(
             viewWillAppear: rx.viewWillAppear,
             qeusetViewEvent: tabView.questButton.rx.tap,
-            rankViewEvent: tabView.rankListButton.rx.tap,
             profileViewEvent: tabView.profileButton.rx.tap)
         let output = viewModel.transform(input: input)
         
-        output.rankingList
-            .asDriver(onErrorJustReturn: [])
-            .drive(with: self) { owner, rankingList in
-                zip(rankingList, owner.ranks).forEach { user, rankBoxLow in
+        output.rankData
+            .asDriver(onErrorJustReturn: ([], 0))
+            .drive(with: self) { owner, rankData in
+                if rankData.1 == 0 && rankData.0.isEmpty {
+                    owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
+                }
+                zip(rankData.0, owner.ranks).forEach { user, rankBoxLow in
                     guard
                         let nickName = rankBoxLow.arrangedSubviews[1] as? UILabel,
                         let level = rankBoxLow.arrangedSubviews[2] as? UILabel
@@ -82,22 +84,14 @@ extension RankingViewController {
                     nickName.text = user.fetchNickName()
                     level.text = "\(user.fetchLevel())"
                 }
-            }
-            .disposed(by: disposeBag)
-        
-        output.myRanking
-            .asDriver(onErrorJustReturn: 0)
-            .drive(with: self) { owner, myRanking in
                 guard let ranking = owner.myRank.arrangedSubviews[0] as? UILabel else { return }
-                ranking.text = "\(myRanking)위"
+                ranking.text = "\(rankData.1)위"
             }
             .disposed(by: disposeBag)
         
-        output.errorMessage
-            .asDriver(onErrorJustReturn: "")
-            .drive(with: self) { owner,_ in
-                owner.completedAlert(message: "네트워크 오류가 발생했습니다.")
-            }
+        output.viewChanged
+            .asDriver(onErrorJustReturn: ())
+            .drive(with: self)
             .disposed(by: disposeBag)
     }
 }

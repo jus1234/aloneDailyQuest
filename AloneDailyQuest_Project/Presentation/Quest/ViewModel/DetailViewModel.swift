@@ -11,17 +11,14 @@ import RxSwift
 import RxCocoa
 
 final class DetailViewModel: ViewModel {
-    private var disposeBag = DisposeBag()
-    
     struct Input {
-        var updateEvent: PublishRelay<QuestInfo?>
-        var createEvent: PublishRelay<QuestInfo?>
+        var saveQuest: Observable<QuestInfo?>
         var didBackButtonTapEvent: ControlEvent<Void>
     }
     
     struct Output {
-        var errorMessage: PublishRelay<String>
-        var userInfo: PublishRelay<UserInfo>
+        var saveResult: Observable<Bool>
+        var viewChanged: Observable<Void>
     }
     
     private let usecase: QuestUsecase
@@ -33,70 +30,30 @@ final class DetailViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let output = Output(
-            errorMessage: PublishRelay(),
-            userInfo: PublishRelay())
-        
-        input.updateEvent
-            .subscribe(onNext: { [weak self] quest in
-                guard let self, let quest else {
-                    output.errorMessage.accept("처리 중 문제가 발생했습니다.")
-                    return
+        let saveResult = input.saveQuest
+            .flatMap { [weak self] quest -> Single<Bool> in
+                guard let quest else {
+                    return .just(false)
                 }
-
-                if quest.quest.isEmpty  || quest.quest == "퀘스트를 입력하세요." {
-                    output.errorMessage.accept("퀘스트 내용을 입력해 주세요.")
-                    return
+                guard let saveResult = self?.usecase.save(quest: quest) else {
+                    return .just(false)
                 }
-                
-                if quest.selectedDate.filter({ $0 }).count == 0 {
-                    output.errorMessage.accept("하나 이상의 요일을 선택해 주세요.")
-                    return
+                return saveResult
+            }
+            .do(onNext: { [weak self] result in
+                if result {
+                    self?.coordinator.finish(to: .quest)
                 }
-                usecase.update(quest: quest)
-                    .subscribe(onCompleted: {
-                        self.coordinator.finish(to: .quest)
-                    },onError: { _ in
-                        output.errorMessage.accept("처리 중 문제가 발생했습니다.")
-                    })
-                    .disposed(by: disposeBag)
             })
-            .disposed(by: disposeBag)
-            
-        input.createEvent
-            .subscribe(onNext: { [weak self] quest in
-                guard let self, let quest else {
-                    output.errorMessage.accept("처리 중 문제가 발생했습니다.")
-                    return
-                }
-                
-                if quest.quest.isEmpty  || quest.quest == "퀘스트를 입력하세요." {
-                    output.errorMessage.accept("퀘스트 내용을 입력해 주세요.")
-                    return
-                }
-                
-                
-                if quest.selectedDate.filter({ $0 }).count == 0 {
-                    output.errorMessage.accept("하나 이상의 요일을 선택해 주세요.")
-                    return
-                }
-                usecase.create(quest: quest)
-                    .subscribe(onCompleted: {
-                        self.coordinator.finish(to: .quest)
-                    },onError: { _ in
-                        output.errorMessage.accept("처리 중 문제가 발생했습니다.")
-                    })
-                    .disposed(by: disposeBag)
-            })
-            .disposed(by: disposeBag)
+            .asObservable()
         
-        input.didBackButtonTapEvent
-            .subscribe(onNext: { [weak self] _ in
+        let viewChanged =  input.didBackButtonTapEvent
+            .do(onNext: { [weak self] _ in
                 self?.coordinator.finish(to: .quest)
             })
-            .disposed(by: disposeBag)
+            .asObservable()
         
-        return output
+        return Output(saveResult: saveResult, viewChanged: viewChanged)
     }
     
 }

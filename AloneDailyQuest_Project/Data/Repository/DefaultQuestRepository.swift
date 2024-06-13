@@ -31,10 +31,9 @@ final class DefaultQuestRepository: QuestRepository {
     private let modelName: String = "QuestData"
 }
 
-// MARK: - Public Method
 extension DefaultQuestRepository {
-    func create(quest: QuestInfo) -> Completable {
-        return Completable.create { [weak self] observer in
+    func create(quest: QuestInfo) -> Single<Bool> {
+        return Single.create { [weak self] observer in
             do {
                 guard 
                     let self,
@@ -47,9 +46,9 @@ extension DefaultQuestRepository {
                 if context.hasChanges {
                     try context.save()
                 }
-                observer(.completed)
+                observer(.success(true))
             } catch {
-                observer(.error(error))
+                observer(.failure(error))
             }
             return Disposables.create()
         }
@@ -72,8 +71,8 @@ extension DefaultQuestRepository {
         }
     }
     
-    func update(quest: QuestInfo) -> Completable {
-        return Completable.create { [weak self] observer in
+    func update(quest: QuestInfo) -> Single<Bool> {
+        return Single.create { [weak self] observer in
             do {
                 guard let self else { throw CoreDataError.general }
                 
@@ -93,16 +92,16 @@ extension DefaultQuestRepository {
                     try context.save()
                 }
                 
-                observer(.completed)
+                observer(.success(true))
             } catch {
-                observer(.error(CoreDataError.update))
+                observer(.failure(CoreDataError.update))
             }
             return Disposables.create()
         }
     }
     
-    func delete(quest: QuestInfo) -> Completable {
-        return Completable.create { [weak self] observer in
+    func delete(quest: QuestInfo) -> Single<Bool> {
+        return Single.create { [weak self] observer in
             do {
                 guard let self else { throw CoreDataError.general }
                 
@@ -122,9 +121,27 @@ extension DefaultQuestRepository {
                     try context.save()
                 }
                 
-                observer(.completed)
+                observer(.success(true))
             } catch {
-                observer(.error(CoreDataError.update))
+                observer(.failure(CoreDataError.update))
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func isExisting(quest: QuestInfo) -> Single<Bool> {
+        return Single.create { [weak self] observer in
+            do {
+                guard let self else { throw CoreDataError.general }
+                
+                let request = NSFetchRequest<NSManagedObject>(entityName: modelName)
+                request.predicate = NSPredicate(format: "id = %@", quest.id as CVarArg)
+                
+                let fetchedQuests = try context.fetch(request)
+                
+                observer(.success(!fetchedQuests.isEmpty))
+            } catch {
+                observer(.failure(CoreDataError.update))
             }
             return Disposables.create()
         }

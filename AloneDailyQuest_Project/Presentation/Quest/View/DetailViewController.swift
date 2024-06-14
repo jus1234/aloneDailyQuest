@@ -40,7 +40,7 @@ final class DetailViewController: UIViewController {
     func bind() {
         let input = DetailViewModel.Input(
             saveQuest: detailView.saveButton.rx.tap
-                .subscribe(on: MainScheduler())
+                .subscribe(on: MainScheduler.instance)
                 .map { [weak self] _ -> Bool in
                     guard
                         let content = self?.detailView.questTextView.text,
@@ -68,8 +68,7 @@ final class DetailViewController: UIViewController {
                         return nil
                     }
                     return quest
-                }
-            ,
+                },
             didBackButtonTapEvent: detailView.backButton.rx.tap)
         let output = viewModel.transform(input: input)
         
@@ -90,7 +89,7 @@ final class DetailViewController: UIViewController {
                 return
             }
             button.rx.tap
-                .subscribe(on: MainScheduler())
+                .subscribe(on: MainScheduler.instance)
                 .subscribe { _ in
                     self?.isDaySelected[index].toggle()
                     guard 

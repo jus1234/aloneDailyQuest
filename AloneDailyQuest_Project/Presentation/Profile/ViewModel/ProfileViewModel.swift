@@ -72,13 +72,16 @@ final class ProfileViewModel: ViewModel {
                 self?.coordinator.finish(to: .ranking)
             })
         
-        let viewChangedEvent = Observable.of(didNoticeTap, questViewEvent, rankViewEvent)
+        let viewChangedEvent = Observable
+            .of(didNoticeTap, questViewEvent, rankViewEvent)
             .merge()
         
-        return Output(userInfo: userInfo,
-                      ourEmail: ourEmail,
-                      warningMessage: warningMessage,
-                      result: result, viewChanged: viewChangedEvent)
+        return Output(
+            userInfo: userInfo,
+            ourEmail: ourEmail,
+            warningMessage: warningMessage,
+            result: result,
+            viewChanged: viewChangedEvent)
     }
     
 }

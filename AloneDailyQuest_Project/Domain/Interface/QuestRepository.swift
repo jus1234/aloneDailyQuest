@@ -18,5 +18,5 @@ protocol QuestRepository {
     func fetchUserInfo(userId: String) -> Single<UserInfo>
     func fetchExperience(userId: String) -> Single<Int>
     func addExperience(userId: String, experience: Int) -> Single<Int>
-    func resetDailyQuests() -> Completable
+    func resetDailyQuests() -> Single<Void>
 }

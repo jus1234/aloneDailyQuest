@@ -220,8 +220,8 @@ extension DefaultQuestRepository {
             }
     }
     
-    func resetDailyQuests() -> Completable {
-        return Completable.create { [weak self] observer in
+    func resetDailyQuests() -> Single<Void> {
+        return Single.create { [weak self] observer in
             do {
                 guard
                     let self,
@@ -237,9 +237,9 @@ extension DefaultQuestRepository {
                 if context.hasChanges {
                     try context.save()
                 }
-                observer(.completed)
+                observer(.success(()))
             } catch {
-                observer(.error(error))
+                observer(.failure(error))
             }
             return Disposables.create()
         }

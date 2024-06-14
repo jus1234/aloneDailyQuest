@@ -85,7 +85,7 @@ final class DefaultQuestUsecase: QuestUsecase {
     }
     
     func resetDailyQuests() -> Single<Void> {
-        return Single.create { [weak self] observer  in
+        return Single<Bool>.create { observer  in
             do {
                 if UserDefaults.standard.string(forKey: "lastVisitDate") == nil {
                     UserDefaults.standard.setValue(Date().yesterdayString(with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
@@ -94,20 +94,25 @@ final class DefaultQuestUsecase: QuestUsecase {
                     throw UserDefaultsError.notFound
                 }
                 if lastVisitDate != Date().toString(day: Date(), with: DateFormatter.yyyyMMdd) {
-                    UserDefaults.standard.setValue(Date().toString(day: Date(), with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
-                    UserDefaults.standard.set(0, forKey: "todayExperience")
-                    self?.repository.resetDailyQuests()
-                        .subscribe(onError: { error in
-                            observer(.failure(error))
-                        })
-                        .disposed(by: DisposeBag())
+                    observer(.success(true))
                     return Disposables.create()
                 }
-                observer(.success(()))
+                observer(.success(false))
             } catch {
                 observer(.failure(error))
             }
             return Disposables.create()
+        }
+        .flatMap { [weak self] result -> Single<Void> in
+            if result {
+                guard let resetDailyQuests = self?.repository.resetDailyQuests() else {
+                    return .error(NSError())
+                }
+                UserDefaults.standard.setValue(Date().toString(day: Date(), with: DateFormatter.yyyyMMdd), forKey: "lastVisitDate")
+                UserDefaults.standard.set(0, forKey: "todayExperience")
+                return resetDailyQuests
+            }
+            return .error(NSError())
         }
     }
     

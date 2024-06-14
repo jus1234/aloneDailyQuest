@@ -86,7 +86,7 @@ final class QuestCell: UITableViewCell {
     lazy var expAmount: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "DungGeunMo", size: 14)
-        label.text = "보상 : 20xp"
+        label.text = "보상 : 1xp"
         return label
     }()
 

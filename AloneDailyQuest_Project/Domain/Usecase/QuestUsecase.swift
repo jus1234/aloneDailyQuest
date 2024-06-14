@@ -112,7 +112,7 @@ final class DefaultQuestUsecase: QuestUsecase {
                 UserDefaults.standard.set(0, forKey: "todayExperience")
                 return resetDailyQuests
             }
-            return .error(NSError())
+            return .just(())
         }
     }
     
